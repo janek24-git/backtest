@@ -1,5 +1,5 @@
 from pydantic import BaseModel
-from typing import Optional
+from typing import Literal, Optional
 
 
 class TradeRecord(BaseModel):
@@ -41,10 +41,50 @@ class TickerResult(BaseModel):
 class BacktestRequest(BaseModel):
     universe_size: int  # 5, 10, or 20
     ema_period: int = 200
-    from_date: str = "2010-01-01"
+    from_date: str = "2000-01-01"
 
 
 class BacktestResponse(BaseModel):
     results: list[TickerResult]
     universe_size: int
     ema_period: int
+
+
+class Big5BacktestRequest(BaseModel):
+    indicator: Literal["EMA", "SMA"] = "EMA"
+    period: int = 200
+    from_date: str = "2000-01-01"
+    to_date: str = "2025-12-31"
+
+
+class Big5Trade(BaseModel):
+    nr: int
+    typ: Literal["KAUF", "VERKAUF"]
+    ticker: str
+    datum: str
+    haltdauer: int
+    open_preis: float
+    perf_pct: float
+    kum_perf_pct: float
+
+
+class Big5ComboMetrics(BaseModel):
+    num_trades: int
+    win_rate: float
+    total_return: float
+    sharpe: float
+    max_drawdown: float
+
+
+class Big5ComboResult(BaseModel):
+    kombination: str
+    trades: list[Big5Trade]
+    metrics: Big5ComboMetrics
+
+
+class Big5BacktestResponse(BaseModel):
+    results: list[Big5ComboResult]
+    indicator: str
+    period: int
+    from_date: str
+    to_date: str
