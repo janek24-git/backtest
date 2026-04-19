@@ -1,0 +1,23 @@
+# Python
+backend/venv/
+backend/.env
+**/__pycache__/
+**/*.pyc
+*.pyc
+.Python
+
+# Parquet cache (data files, not committed)
+backend/cache/*.parquet
+
+# Frontend
+frontend/node_modules/
+frontend/dist/
+
+# OS
+.DS_Store
+*.DS_Store
+
+# Env files
+.env
+.env.local
+.env.production
