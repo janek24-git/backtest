@@ -42,3 +42,13 @@ async def run_backtest_endpoint(req: BacktestRequest):
         universe_size=req.universe_size,
         ema_period=req.ema_period,
     )
+
+
+from app.services.ai_analyst import analyze_backtest_results
+
+
+@router.post("/analyze")
+async def analyze_endpoint(req: BacktestResponse):
+    results_dicts = [r.model_dump() for r in req.results]
+    analysis = await analyze_backtest_results(results_dicts)
+    return {"analysis": analysis}
