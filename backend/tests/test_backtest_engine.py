@@ -59,3 +59,49 @@ def test_trade_has_required_keys():
     trade = trades[0]
     for key in ["entry_date", "exit_date", "entry_price", "exit_price", "return_pct", "hold_days"]:
         assert key in trade, f"Missing key: {key}"
+
+
+def test_metrics_keys():
+    from app.services.backtest_engine import calculate_metrics
+    trades = [
+        {"return_pct": 10.0, "hold_days": 20, "entry_date": "2021-01-01",
+         "exit_date": "2021-01-21", "entry_price": 100, "exit_price": 110},
+        {"return_pct": -5.0, "hold_days": 10, "entry_date": "2021-02-01",
+         "exit_date": "2021-02-11", "entry_price": 110, "exit_price": 104.5},
+    ]
+    metrics = calculate_metrics(trades)
+    for key in ["win_rate", "total_return", "max_drawdown", "sharpe_ratio",
+                "num_trades", "avg_hold_days", "best_trade", "worst_trade"]:
+        assert key in metrics, f"Missing metric: {key}"
+
+
+def test_win_rate_calculation():
+    from app.services.backtest_engine import calculate_metrics
+    trades = [
+        {"return_pct": 10.0, "hold_days": 5, "entry_date": "2021-01-01",
+         "exit_date": "2021-01-06", "entry_price": 100, "exit_price": 110},
+        {"return_pct": -5.0, "hold_days": 5, "entry_date": "2021-02-01",
+         "exit_date": "2021-02-06", "entry_price": 100, "exit_price": 95},
+        {"return_pct": 8.0, "hold_days": 5, "entry_date": "2021-03-01",
+         "exit_date": "2021-03-06", "entry_price": 100, "exit_price": 108},
+    ]
+    metrics = calculate_metrics(trades)
+    assert abs(metrics["win_rate"] - 66.67) < 0.1
+
+
+def test_empty_trades_returns_none():
+    from app.services.backtest_engine import calculate_metrics
+    metrics = calculate_metrics([])
+    assert metrics is None
+
+
+def test_run_backtest_returns_result():
+    from app.services.backtest_engine import run_backtest
+    closes = [90.0] * 210 + [110.0] * 60 + [90.0] * 60
+    opens = [c * 0.999 for c in closes]
+    dates = pd.date_range("2020-01-01", periods=len(closes), freq="B")
+    df = pd.DataFrame({"open": opens, "close": closes}, index=dates)
+    result = run_backtest(df, ema_period=200)
+    assert "trades" in result
+    assert "metrics" in result
+    assert "signals" in result
