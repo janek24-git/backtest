@@ -6,4 +6,5 @@ pyarrow>=16.0.0  # ==16.0.0 on deployment (Python 3.11); >=16.0.0 for local Pyth
 numpy==1.26.4
 python-dotenv==1.0.1
 anthropic==0.28.0
-massive>=2.5.0
+yfinance>=0.2.40
+pandas-market-calendars>=4.3.0
