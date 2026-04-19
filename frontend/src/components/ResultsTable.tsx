@@ -45,7 +45,7 @@ export function ResultsTable({ results, period }: Props) {
     [results, period]
   );
 
-  const columnDefs = useMemo(() => [
+  const columnDefs: any[] = useMemo(() => [
     { field: 'ticker', headerName: 'Ticker', width: 100, pinned: 'left' as const },
     {
       field: 'last_signal', headerName: 'Signal', width: 90,
@@ -82,7 +82,7 @@ export function ResultsTable({ results, period }: Props) {
         rowData={rowData}
         columnDefs={columnDefs}
         defaultColDef={{ sortable: true, resizable: true }}
-        onRowClicked={(e) => navigate(`/stock/${e.data._ticker}`)}
+        onRowClicked={(e) => e.data && navigate(`/stock/${e.data._ticker}`)}
         rowStyle={{ cursor: 'pointer' }}
       />
     </div>

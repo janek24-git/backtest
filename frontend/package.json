@@ -13,6 +13,7 @@
     "@ag-grid-community/client-side-row-model": "^32.3.9",
     "@ag-grid-community/core": "^32.3.9",
     "@ag-grid-community/react": "^32.3.9",
+    "@ag-grid-community/styles": "^32.3.9",
     "@tailwindcss/vite": "^4.2.2",
     "@types/react-router-dom": "^5.3.3",
     "axios": "^1.15.1",
