@@ -1,8 +1,11 @@
 import asyncio
+import logging
 import pandas as pd
 import yfinance as yf
 from pathlib import Path
 from datetime import datetime, timedelta, timezone
+
+logger = logging.getLogger(__name__)
 
 CACHE_DIR = Path(__file__).parent.parent.parent / "cache"
 CACHE_DIR.mkdir(exist_ok=True)
@@ -39,7 +42,7 @@ async def fetch_ticker_data(ticker: str, from_date: str = "2000-01-01") -> pd.Da
     if is_cache_fresh(cache_path):
         return pd.read_parquet(cache_path)
 
-    df = await asyncio.get_event_loop().run_in_executor(
+    df = await asyncio.get_running_loop().run_in_executor(
         None, _fetch_ticker_sync, ticker, from_date
     )
 
@@ -57,7 +60,7 @@ async def fetch_universe_data(tickers: list[str]) -> dict[str, pd.DataFrame]:
     out = {}
     for ticker, result in zip(tickers, results):
         if isinstance(result, Exception):
-            print(f"[WARN] Failed to fetch {ticker}: {result}")
+            logger.warning("Failed to fetch %s: %s", ticker, result)
         else:
             out[ticker] = result
     return out
