@@ -1,5 +1,5 @@
 import axios from 'axios';
-import type { BacktestResponse, AIAnalysis, Big5BacktestResponse } from '../types';
+import type { BacktestResponse, AIAnalysis, Big5BacktestResponse, Big5AnalysisResponse } from '../types';
 
 const api = axios.create({ baseURL: '/api' });
 
@@ -26,6 +26,17 @@ export async function analyzeResults(results: BacktestResponse): Promise<AIAnaly
 export async function getUniverse(size: number): Promise<string[]> {
   const { data } = await api.get<{ tickers: string[] }>(`/universe/${size}`);
   return data.tickers;
+}
+
+export async function analyzeBig5(data: Big5BacktestResponse): Promise<Big5AnalysisResponse> {
+  const { data: res } = await api.post<Big5AnalysisResponse>('/big5/analyze', {
+    results: data.results,
+    indicator: data.indicator,
+    period: data.period,
+    from_date: data.from_date,
+    to_date: data.to_date,
+  });
+  return res;
 }
 
 export async function runBig5Backtest(

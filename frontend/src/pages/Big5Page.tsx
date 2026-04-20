@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { runBig5Backtest } from '../api/client';
 import { Big5Table } from '../components/Big5Table';
+import { AnalysisSection } from '../components/AnalysisSection';
 import type { Big5BacktestResponse, Big5ComboResult } from '../types';
 
 function exportCSV(result: Big5ComboResult, indicator: string, period: number) {
@@ -191,8 +192,9 @@ export function Big5Page() {
                 </div>
               )}
             </div>
-          </>
-        )}
+          <AnalysisSection data={results} />
+        </>
+      )}
       </div>
     </div>
   );

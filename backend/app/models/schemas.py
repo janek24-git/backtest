@@ -90,3 +90,15 @@ class Big5BacktestResponse(BaseModel):
     period: int
     from_date: str
     to_date: str
+
+
+class Big5AnalysisRequest(BaseModel):
+    results: list[Big5ComboResult]
+    indicator: str
+    period: int
+    from_date: str
+    to_date: str
+
+
+class Big5AnalysisResponse(BaseModel):
+    analysis: str

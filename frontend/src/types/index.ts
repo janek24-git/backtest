@@ -85,5 +85,9 @@ export interface Big5BacktestResponse {
   from_date: string;
   to_date: string;
 }
+
+export interface Big5AnalysisResponse {
+  analysis: string;
+}
 export type UniverseSize = 5 | 10 | 20;
 export type PeriodKey = '1M' | '3M' | '6M' | '1Y' | '3Y' | '5Y' | 'ALL';
