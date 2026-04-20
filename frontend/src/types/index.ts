@@ -37,6 +37,7 @@ export interface TickerResult {
 export interface BacktestResponse {
   results: TickerResult[];
   universe_size: number;
+  universe_type: string;
   ema_period: number;
 }
 
@@ -48,5 +49,41 @@ export interface AIAnalysis {
   raw?: string;
 }
 
+export type UniverseType = 'SP500' | 'NAS100';
+
+// ── Big5 Backtest ──────────────────────────────────────────────────────────
+
+export interface Big5Trade {
+  nr: number;
+  typ: 'KAUF' | 'VERKAUF';
+  ticker: string;
+  datum: string;
+  haltdauer: number;
+  open_preis: number;
+  perf_pct: number;
+  kum_perf_pct: number;
+}
+
+export interface Big5ComboMetrics {
+  num_trades: number;
+  win_rate: number;
+  total_return: number;
+  sharpe: number;
+  max_drawdown: number;
+}
+
+export interface Big5ComboResult {
+  kombination: string;
+  trades: Big5Trade[];
+  metrics: Big5ComboMetrics;
+}
+
+export interface Big5BacktestResponse {
+  results: Big5ComboResult[];
+  indicator: string;
+  period: number;
+  from_date: string;
+  to_date: string;
+}
 export type UniverseSize = 5 | 10 | 20;
 export type PeriodKey = '1M' | '3M' | '6M' | '1Y' | '3Y' | '5Y' | 'ALL';

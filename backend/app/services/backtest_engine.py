@@ -9,8 +9,8 @@ def calculate_ema(prices: pd.Series, period: int = 200) -> pd.Series:
 
 def generate_signals(df: pd.DataFrame, ema_period: int = 200) -> pd.DataFrame:
     df = df.copy()
-    df["ema200"] = calculate_ema(df["close"], period=ema_period)
-    df["signal"] = (df["close"] > df["ema200"]).astype(int)
+    df.loc[:, "ema200"] = calculate_ema(df["close"], period=ema_period)
+    df.loc[:, "signal"] = (df["close"] > df["ema200"]).astype(int)
     return df
 
 
@@ -35,8 +35,8 @@ def extract_trades(df: pd.DataFrame) -> list[dict]:
             return_pct = (exit_price - entry_price) / entry_price * 100
             hold_days = (curr_date - entry_date).days
             trades.append({
-                "entry_date": entry_date.date().isoformat(),
-                "exit_date": curr_date.date().isoformat(),
+                "entry_date": entry_date.isoformat() if isinstance(entry_date, date) else entry_date.date().isoformat(),
+                "exit_date": curr_date.isoformat() if isinstance(curr_date, date) else curr_date.date().isoformat(),
                 "entry_price": round(entry_price, 4),
                 "exit_price": round(exit_price, 4),
                 "return_pct": round(return_pct, 4),
@@ -99,7 +99,7 @@ def run_backtest(df: pd.DataFrame, ema_period: int = 200) -> dict:
     metrics = calculate_metrics(trades)
 
     signals_out = df_signals[["open", "close", "ema200", "signal"]].copy()
-    signals_out.index = signals_out.index.strftime("%Y-%m-%d")
+    signals_out.index = [d.isoformat() if isinstance(d, date) else d.strftime("%Y-%m-%d") for d in signals_out.index]
 
     return {
         "trades": trades,

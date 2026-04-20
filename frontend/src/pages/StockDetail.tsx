@@ -30,11 +30,15 @@ export function StockDetail() {
   useEffect(() => {
     async function load() {
       try {
-        // Fetch Top20 to ensure the ticker is included regardless of universe
-        const data = await runBacktest(20);
-        const found = data.results.find(r => r.ticker === ticker);
+        // Try SP500 Top10 first, fallback to NAS100 Top20
+        let data = await runBacktest(10, 'SP500');
+        let found = data.results.find(r => r.ticker === ticker);
+        if (!found) {
+          data = await runBacktest(20, 'NAS100');
+          found = data.results.find(r => r.ticker === ticker);
+        }
         setResult(found ?? null);
-        if (!found) setError(`Ticker ${ticker} not found in Top20 universe`);
+        if (!found) setError(`Ticker ${ticker} not found in any universe`);
       } catch (e: any) {
         setError(e?.message ?? 'Failed to load data');
       } finally {

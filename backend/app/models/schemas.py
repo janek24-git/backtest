@@ -39,7 +39,8 @@ class TickerResult(BaseModel):
 
 
 class BacktestRequest(BaseModel):
-    universe_size: int  # 5, 10, or 20
+    universe_size: int  # 5 or 10 for SP500; 5, 10, or 20 for NAS100
+    universe_type: str = "SP500"  # "SP500" | "NAS100"
     ema_period: int = 200
     from_date: str = "2000-01-01"
 
@@ -47,6 +48,7 @@ class BacktestRequest(BaseModel):
 class BacktestResponse(BaseModel):
     results: list[TickerResult]
     universe_size: int
+    universe_type: str
     ema_period: int
 
 
@@ -61,11 +63,11 @@ class Big5Trade(BaseModel):
     nr: int
     typ: Literal["KAUF", "VERKAUF"]
     ticker: str
-    datum: str
-    haltdauer: int
-    open_preis: float
-    perf_pct: float
-    kum_perf_pct: float
+    datum: str           # Ausführungsdatum (nächster Handelstag nach Signal)
+    haltdauer: int       # Handelstage gehalten (0 bei KAUF)
+    open_preis: float    # Ausführungspreis (9:30 ET Open = 9:00 MESZ Näherung)
+    perf_pct: float      # % Return dieser Halteperiode (0 bei KAUF)
+    kum_perf_pct: float  # Kumulierte Performance aller abgeschlossenen Trades
 
 
 class Big5ComboMetrics(BaseModel):

@@ -7,6 +7,7 @@ const EMA_PERIODS = [50, 100, 150, 200, 250];
 
 interface Props {
   universeSize: number;
+  universeType: string;
   currentResults: BacktestResponse | null;
 }
 
@@ -18,7 +19,7 @@ interface OptRow {
   avgMaxDD: number;
 }
 
-export function OptimizationBook({ universeSize, currentResults }: Props) {
+export function OptimizationBook({ universeSize, universeType, currentResults }: Props) {
   const [optimRows, setOptimRows] = useState<OptRow[]>([]);
   const [analysis, setAnalysis] = useState<AIAnalysis | null>(null);
   const [loadingOptim, setLoadingOptim] = useState(false);
@@ -29,7 +30,7 @@ export function OptimizationBook({ universeSize, currentResults }: Props) {
     try {
       const rows: OptRow[] = [];
       for (const period of EMA_PERIODS) {
-        const res = await runBacktest(universeSize, period);
+        const res = await runBacktest(universeSize, universeType, period);
         const metrics = res.results
           .map(r => r.metrics)
           .filter((m): m is TickerMetrics => m !== null);

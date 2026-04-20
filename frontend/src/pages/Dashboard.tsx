@@ -1,14 +1,17 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { UniverseSelector } from '../components/UniverseSelector';
 import { PeriodSelector } from '../components/PeriodSelector';
 import { ResultsTable } from '../components/ResultsTable';
 import { OptimizationBook } from '../components/OptimizationBook';
 import { runBacktest } from '../api/client';
-import type { UniverseSize, PeriodKey, BacktestResponse } from '../types';
+import type { UniverseType, UniverseSize, PeriodKey, BacktestResponse } from '../types';
 
 export function Dashboard() {
-  const [universeSize, setUniverseSize] = useState<UniverseSize>(10);
-  const [period, setPeriod] = useState<PeriodKey>('1Y');
+  const navigate = useNavigate();
+  const [universeType, setUniverseType] = useState<UniverseType>('SP500');
+  const [universeSize, setUniverseSize] = useState<UniverseSize>(5);
+  const [period, setPeriod] = useState<PeriodKey>('ALL');
   const [results, setResults] = useState<BacktestResponse | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -18,7 +21,7 @@ export function Dashboard() {
     setLoading(true);
     setError(null);
     try {
-      const data = await runBacktest(universeSize);
+      const data = await runBacktest(universeSize, universeType);
       setResults(data);
     } catch (e: any) {
       setError(e?.message ?? 'Backtest failed');
@@ -38,16 +41,28 @@ export function Dashboard() {
               EMA200 Backtest
             </h1>
             <p className="text-xs mt-0.5" style={{ color: '#8B8FA8' }}>
-              NAS100 · Daily Close · Massive Data
+              S&P 500 · Daily Close · yfinance · 2000–2025
             </p>
           </div>
+          <button
+            onClick={() => navigate('/')}
+            className="px-4 py-2 rounded text-sm font-medium"
+            style={{ background: '#1E2130', color: '#00C48C', border: '1px solid #00C48C' }}
+          >
+            ← Big 5 Swing
+          </button>
         </div>
 
         {/* Controls */}
         <div className="flex items-center gap-4 flex-wrap">
           <div>
             <p className="text-xs mb-1.5" style={{ color: '#8B8FA8' }}>Universe</p>
-            <UniverseSelector value={universeSize} onChange={setUniverseSize} />
+            <UniverseSelector
+              universeType={universeType}
+              universeSize={universeSize}
+              onTypeChange={setUniverseType}
+              onSizeChange={setUniverseSize}
+            />
           </div>
           <div>
             <p className="text-xs mb-1.5" style={{ color: '#8B8FA8' }}>Period</p>
@@ -78,7 +93,7 @@ export function Dashboard() {
             <div className="rounded-lg p-4" style={{ background: '#1A1D27' }}>
               <div className="flex items-center justify-between mb-3">
                 <p className="text-sm" style={{ color: '#8B8FA8' }}>
-                  {results.results.length} tickers · EMA{results.ema_period} · Click row for detail
+                  {results.universe_type} Top{results.universe_size} · {results.results.length} tickers · EMA{results.ema_period} · Click row for detail
                 </p>
               </div>
               <ResultsTable results={results.results} period={period} />
@@ -95,7 +110,7 @@ export function Dashboard() {
               </button>
               {showOptim && (
                 <div className="mt-3">
-                  <OptimizationBook universeSize={universeSize} currentResults={results} />
+                  <OptimizationBook universeSize={universeSize} universeType={universeType} currentResults={results} />
                 </div>
               )}
             </div>

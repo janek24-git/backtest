@@ -11,7 +11,7 @@ router = APIRouter()
 @router.post("/run", response_model=BacktestResponse)
 async def run_backtest_endpoint(req: BacktestRequest):
     try:
-        tickers = get_tickers(req.universe_size)
+        tickers = get_tickers(req.universe_size, req.universe_type)
     except ValueError as e:
         raise HTTPException(status_code=400, detail=str(e))
 
@@ -40,6 +40,7 @@ async def run_backtest_endpoint(req: BacktestRequest):
     return BacktestResponse(
         results=results,
         universe_size=req.universe_size,
+        universe_type=req.universe_type,
         ema_period=req.ema_period,
     )
 
