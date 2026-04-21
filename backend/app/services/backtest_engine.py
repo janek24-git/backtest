@@ -102,8 +102,14 @@ def calculate_metrics(trades: list[dict]) -> dict | None:
     }
 
 
-def run_backtest(df: pd.DataFrame, ema_period: int = 200) -> dict:
+def run_backtest(df: pd.DataFrame, ema_period: int = 200, from_date=None) -> dict:
+    # Calculate EMA on full history for TradingView-compatible values
     df_signals = generate_signals(df, ema_period=ema_period)
+
+    # Filter to requested date range AFTER EMA calculation
+    if from_date is not None:
+        df_signals = df_signals[df_signals.index >= from_date]
+
     trades = extract_trades(df_signals)
     metrics = calculate_metrics(trades)
 

@@ -23,11 +23,9 @@ async def run_backtest_endpoint(req: BacktestRequest):
             continue
         df = data[ticker]
 
-        # Filter by from_date — convert to date object to match Parquet cache index type
+        # Calculate EMA on full history first (TradingView-compatible: more history = more stable EMA)
         from_date = pd.to_datetime(req.from_date).date()
-        df = df[df.index >= from_date]
-
-        result = run_backtest(df, ema_period=req.ema_period)
+        result = run_backtest(df, ema_period=req.ema_period, from_date=from_date)
 
         results.append(TickerResult(
             ticker=ticker,
