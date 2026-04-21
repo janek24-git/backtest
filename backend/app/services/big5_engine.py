@@ -35,7 +35,17 @@ FILTER_DAYS = {"E": 1, "F": 5}
 def _calc_indicator(closes: pd.Series, indicator: str, period: int) -> pd.Series:
     if indicator == "SMA":
         return closes.rolling(window=period, min_periods=period).mean()
-    return closes.ewm(span=period, adjust=False).mean()
+    # TradingView-compatible EMA: seed with SMA of first `period` bars
+    k = 2.0 / (period + 1)
+    result = np.full(len(closes), np.nan)
+    vals = closes.values
+    # find first index where we have enough data for SMA seed
+    if len(vals) < period:
+        return pd.Series(result, index=closes.index)
+    result[period - 1] = vals[:period].mean()
+    for i in range(period, len(vals)):
+        result[i] = vals[i] * k + result[i - 1] * (1 - k)
+    return pd.Series(result, index=closes.index)
 
 
 def _run_one_combination(

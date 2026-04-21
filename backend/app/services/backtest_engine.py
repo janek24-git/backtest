@@ -4,7 +4,16 @@ from datetime import date
 
 
 def calculate_ema(prices: pd.Series, period: int = 200) -> pd.Series:
-    return prices.ewm(span=period, adjust=False).mean()
+    # TradingView-compatible EMA: seed with SMA of first `period` bars
+    k = 2.0 / (period + 1)
+    vals = prices.values
+    result = np.full(len(vals), np.nan)
+    if len(vals) < period:
+        return pd.Series(result, index=prices.index)
+    result[period - 1] = vals[:period].mean()
+    for i in range(period, len(vals)):
+        result[i] = vals[i] * k + result[i - 1] * (1 - k)
+    return pd.Series(result, index=prices.index)
 
 
 def generate_signals(df: pd.DataFrame, ema_period: int = 200) -> pd.DataFrame:
