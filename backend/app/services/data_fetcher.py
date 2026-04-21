@@ -25,10 +25,11 @@ def is_cache_fresh(path: Path) -> bool:
 
 
 def _fetch_ticker_sync(ticker: str, from_date: str) -> pd.DataFrame:
-    raw = yf.download(ticker, start=from_date, progress=False, auto_adjust=True)
+    raw = yf.download(ticker, start=from_date, progress=False, auto_adjust=False)
     if raw.empty:
         return pd.DataFrame(columns=["open", "high", "low", "close", "volume"])
 
+    # Use split-adjusted Close (not dividend-adjusted) to match TradingView default
     df = raw[["Open", "High", "Low", "Close", "Volume"]].copy()
     df.columns = ["open", "high", "low", "close", "volume"]
     df.index = pd.to_datetime(df.index).date
