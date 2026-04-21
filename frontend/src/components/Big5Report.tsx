@@ -108,73 +108,82 @@ function niceSteps(min: number, max: number, count: number): number[] {
 }
 
 function EquityChart({ kumValues, exitDates }: { kumValues: number[]; exitDates: string[] }) {
-  const W = 490; const H = 140;
-  const ML = 44; const MB = 22; const MT = 8; const MR = 6;
+  const W = 490; const H = 130;
+  const ML = 42; const MB = 18; const MT = 6; const MR = 4;
   const cW = W - ML - MR; const cH = H - MT - MB;
 
   const minV = Math.min(...kumValues, 0);
   const maxV = Math.max(...kumValues, 0);
-  const yVals = niceSteps(minV, maxV, 6);
+  const yVals = niceSteps(minV, maxV, 5);
   const yMin = yVals[0]; const yMax = yVals[yVals.length - 1];
   const yRange = yMax - yMin || 1;
 
-  const toY = (v: number) => (MT + cH - ((v - yMin) / yRange) * cH).toFixed(1);
-  const toX = (i: number) => (ML + (i / Math.max(kumValues.length - 1, 1)) * cW).toFixed(1);
+  const toY = (v: number) => MT + cH - ((v - yMin) / yRange) * cH;
+  const toX = (i: number) => ML + (i / Math.max(kumValues.length - 1, 1)) * cW;
 
-  const points = kumValues.map((v, i) => `${toX(i)},${toY(v)}`).join(' ');
-  const zeroY = toY(0);
+  const points = kumValues.map((v, i) => `${toX(i).toFixed(1)},${toY(v).toFixed(1)}`).join(' ');
 
-  // X axis: pick ~5 year labels from exit dates
-  const years: { label: string; x: string }[] = [];
+  const yearLabels: { label: string; x: number }[] = [];
   if (exitDates.length > 0) {
     const seen = new Set<number>();
     exitDates.forEach((d, i) => {
       const yr = parseInt(d.slice(0, 4));
       if (!seen.has(yr) && yr % 5 === 0) {
         seen.add(yr);
-        years.push({ label: String(yr), x: toX(i) });
+        yearLabels.push({ label: String(yr), x: toX(i) });
       }
     });
   }
 
   return (
-    <View style={{ backgroundColor: C.surface, borderRadius: 4, padding: 4, marginBottom: 8 }}>
+    <View style={{ backgroundColor: C.surface, borderRadius: 4, marginBottom: 8, position: 'relative', width: W, height: H }}>
+      {/* SVG: nur Linien, keine Texte */}
       <Svg width={W} height={H} viewBox={`0 0 ${W} ${H}`}>
-        {/* Y grid lines + labels */}
-        {yVals.map(v => {
-          const y = toY(v);
-          return (
-            <React.Fragment key={v}>
-              <Line x1={String(ML)} y1={y} x2={String(W - MR)} y2={y}
-                stroke={v === 0 ? C.border : C.gridLine} strokeWidth={v === 0 ? '1' : '0.5'} />
-              <Text style={{ fontSize: 6.5, color: C.muted, position: 'absolute', left: 0, top: parseFloat(y) - 4, width: ML - 3, textAlign: 'right' }}>
-                {v >= 0 ? `+${v}` : String(v)}%
-              </Text>
-            </React.Fragment>
-          );
-        })}
-
-        {/* X axis line */}
-        <Line x1={String(ML)} y1={String(H - MB)} x2={String(W - MR)} y2={String(H - MB)} stroke={C.border} strokeWidth="1" />
-
-        {/* X labels */}
-        {years.map(({ label, x }) => (
-          <React.Fragment key={label}>
-            <Line x1={x} y1={String(H - MB)} x2={x} y2={String(H - MB + 3)} stroke={C.muted} strokeWidth="0.7" />
-            <Text style={{ fontSize: 6.5, color: C.muted, position: 'absolute', left: parseFloat(x) - 10, top: H - MB + 4, width: 22, textAlign: 'center' }}>
-              {label}
-            </Text>
-          </React.Fragment>
+        {yVals.map(v => (
+          <Line key={v}
+            x1={String(ML)} y1={toY(v).toFixed(1)}
+            x2={String(W - MR)} y2={toY(v).toFixed(1)}
+            stroke={v === 0 ? '#3A3D4E' : '#1A1D27'}
+            strokeWidth={v === 0 ? '1' : '0.5'}
+          />
         ))}
-
-        {/* Equity curve */}
+        <Line x1={String(ML)} y1={String(MT)} x2={String(ML)} y2={String(MT + cH)} stroke="#3A3D4E" strokeWidth="0.8" />
+        <Line x1={String(ML)} y1={String(MT + cH)} x2={String(W - MR)} y2={String(MT + cH)} stroke="#3A3D4E" strokeWidth="0.8" />
+        {yearLabels.map(({ x }) => (
+          <Line key={x} x1={x.toFixed(1)} y1={String(MT + cH)} x2={x.toFixed(1)} y2={String(MT + cH + 3)} stroke="#8B8FA8" strokeWidth="0.7" />
+        ))}
         {points && <Polyline points={points} stroke={C.green} strokeWidth="1.5" fill="none" />}
-
-        {/* Zero line label */}
-        <Text style={{ fontSize: 6, color: C.muted, position: 'absolute', left: 0, top: parseFloat(zeroY) - 3, width: ML - 3, textAlign: 'right' }}>
-          0%
-        </Text>
       </Svg>
+
+      {/* Y-Achsen-Labels: absolut positioniert über dem SVG */}
+      {yVals.map(v => (
+        <Text key={v} style={{
+          position: 'absolute',
+          left: 1,
+          top: toY(v) - 4,
+          width: ML - 3,
+          fontSize: 6,
+          color: C.muted,
+          textAlign: 'right',
+        }}>
+          {v > 0 ? `+${v}` : `${v}`}%
+        </Text>
+      ))}
+
+      {/* X-Achsen-Labels: Jahreszahlen */}
+      {yearLabels.map(({ label, x }) => (
+        <Text key={label} style={{
+          position: 'absolute',
+          left: x - 11,
+          top: MT + cH + 5,
+          width: 22,
+          fontSize: 6,
+          color: C.muted,
+          textAlign: 'center',
+        }}>
+          {label}
+        </Text>
+      ))}
     </View>
   );
 }

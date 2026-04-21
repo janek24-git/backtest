@@ -67,7 +67,9 @@ async def analyze_big5(req: Big5AnalysisRequest):
         best = max(req.results, key=lambda r: r.metrics.sharpe)
         worst = min(req.results, key=lambda r: r.metrics.total_return)
 
-        prompt = f"""Du bist ein erfahrener quantitativer Portfolio-Manager und schreibst einen Backtest-Report auf Deutsch für ein Investment-Komitee.
+        prompt = f"""WICHTIG: Antworte AUSSCHLIESSLICH auf Deutsch. Alle Überschriften, alle Texte, alle Begriffe müssen auf Deutsch sein.
+
+Du bist ein erfahrener quantitativer Portfolio-Manager und schreibst einen Backtest-Report auf Deutsch für ein Investment-Komitee.
 
 Strategie: S&P 500 Top-5 nach Marktkapitalisierung, Trendfilter {req.indicator}{req.period}, Zeitraum {req.from_date} bis {req.to_date}.
 8 Kombinationen aus Kauf-Signal, Verkauf-Signal und Top5-Filter wurden getestet. Ergebnisse:
