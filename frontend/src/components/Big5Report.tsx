@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-  Document, Page, Text, View, StyleSheet, Svg, Polyline, Line, Rect,
+  Document, Page, Text, View, StyleSheet, Svg, Polyline, Line,
 } from '@react-pdf/renderer';
 import type { Big5BacktestResponse } from '../types';
 

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { pdf } from '@react-pdf/renderer';
 import { analyzeBig5 } from '../api/client';
 import { Big5Report } from './Big5Report';

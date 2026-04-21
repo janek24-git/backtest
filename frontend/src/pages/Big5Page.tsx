@@ -24,7 +24,6 @@ function exportCSV(result: Big5ComboResult, indicator: string, period: number) {
   URL.revokeObjectURL(url);
 }
 
-const COMBINATIONS = ['ACE', 'ACF', 'ADE', 'ADF', 'BCE', 'BCF', 'BDE', 'BDF'];
 
 const COMBO_LEGEND = {
   A: 'Kauf: Erster Close > EMA nach Top5-Eintritt',
