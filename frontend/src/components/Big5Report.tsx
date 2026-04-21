@@ -306,10 +306,20 @@ export function Big5Report({ data, analysis }: ReportProps) {
             </View>
           );
         })}
-        <View style={{ marginTop: 7, padding: 7, backgroundColor: C.surface, borderRadius: 4 }}>
+        <View style={{ marginTop: 7, padding: 8, backgroundColor: C.surface, borderRadius: 4, gap: 5 }}>
           <Text style={{ fontSize: 7.5, color: C.muted }}>
-            ★ Beste Kombination nach Sharpe Ratio (Rendite/Risiko).  Kumuliert = arithmetische Summe der Einzel-Trades (nicht compounded).  Max. Drawdown = größter Verlust auf der Equity-Kurve.
+            ★ Beste Kombination nach Sharpe Ratio.  Kumuliert = arithmetische Summe der Einzel-Trades (nicht compounded).
           </Text>
+          <View style={{ borderTopWidth: 1, borderTopColor: C.border, paddingTop: 5, gap: 4 }}>
+            <Text style={{ fontSize: 7.5, color: C.muted }}>
+              <Text style={{ fontFamily: 'Helvetica-Bold', color: C.text }}>Sharpe Ratio</Text>
+              {' '}— Misst wie viel Rendite eine Strategie pro Einheit Risiko (Schwankung) erzielt. Unter 1 = schlecht · 1–2 = gut · über 3 = sehr gut. Ein Sharpe von 4 bedeutet: für jedes Prozent Schwankung wurden 4% Rendite erwirtschaftet. Je höher, desto effizienter die Strategie.
+            </Text>
+            <Text style={{ fontSize: 7.5, color: C.muted }}>
+              <Text style={{ fontFamily: 'Helvetica-Bold', color: C.text }}>Max. Drawdown</Text>
+              {' '}— Der größte Verlust vom höchsten zum tiefsten Punkt auf der Equity-Kurve. Entsteht wenn mehrere Verlust-Trades hintereinander kommen, oder ein einzelner Trade stark ins Minus läuft, bevor die Strategie wieder dreht. Ein Drawdown von -49% bedeutet: auf dem Weg zum Endwert war man zeitweise 49% unter dem vorherigen Höchststand. Kein Drawdown = keine einzige Verlustphase.
+            </Text>
+          </View>
         </View>
         <Footer />
       </Page>
