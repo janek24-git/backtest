@@ -31,12 +31,114 @@ const s = StyleSheet.create({
   footer: { position: 'absolute', bottom: 20, left: 36, right: 36, flexDirection: 'row', justifyContent: 'space-between' },
   footerText: { fontSize: 8, color: C.muted },
   analysisSection: { marginBottom: 10 },
-  analysisHeader: { fontSize: 10, fontFamily: 'Helvetica-Bold', color: C.green, marginBottom: 3 },
+  analysisHeader: { fontSize: 10, fontFamily: 'Helvetica-Bold', color: C.green, marginBottom: 4 },
   analysisText: { fontSize: 8, color: C.text, lineHeight: 1.6 },
+  bullet: { flexDirection: 'row', marginBottom: 3, paddingLeft: 4 },
+  bulletDot: { fontSize: 8, color: C.muted, width: 12 },
+  bulletText: { fontSize: 8, color: C.text, lineHeight: 1.6, flex: 1 },
 });
 
 const COL = { combo: 55, ret: 72, sharpe: 55, wr: 60, dd: 72, trades: 50 };
 
+// ── Inline bold renderer ──────────────────────────────────────────────────────
+function InlineText({ text, style }: { text: string; style?: any }) {
+  const parts = text.split(/\*\*(.*?)\*\*/g);
+  if (parts.length === 1) return <Text style={style}>{text}</Text>;
+  return (
+    <Text style={style}>
+      {parts.map((part, i) =>
+        i % 2 === 1
+          ? <Text key={i} style={{ fontFamily: 'Helvetica-Bold' }}>{part}</Text>
+          : part
+      )}
+    </Text>
+  );
+}
+
+// ── Markdown table parser ─────────────────────────────────────────────────────
+function parseMarkdownTable(lines: string[]): { headers: string[]; rows: string[][] } {
+  const dataLines = lines.filter(l => !l.match(/^\|[\s\-|]+\|$/));
+  const parse = (line: string) =>
+    line.split('|').filter((_, i, a) => i > 0 && i < a.length - 1).map(c => c.trim());
+  const [headerLine, ...rowLines] = dataLines;
+  return {
+    headers: parse(headerLine || ''),
+    rows: rowLines.map(parse),
+  };
+}
+
+function MarkdownTable({ lines }: { lines: string[] }) {
+  const { headers, rows } = parseMarkdownTable(lines);
+  if (!headers.length) return null;
+  // Risk table: Risk(25%) | Severity(30%) | Mitigation(45%)
+  const isRisk = headers[0]?.toLowerCase().includes('risk');
+  const colWidths = isRisk ? [100, 130, 240] : headers.map(() => Math.floor(470 / headers.length));
+
+  return (
+    <View style={{ marginVertical: 6 }}>
+      <View style={{ flexDirection: 'row', backgroundColor: C.surface, paddingVertical: 4, paddingHorizontal: 4, borderRadius: 3 }}>
+        {headers.map((h, i) => (
+          <Text key={i} style={[s.th, { width: colWidths[i] }]}>{h.replace(/\*/g, '').toUpperCase()}</Text>
+        ))}
+      </View>
+      {rows.map((row, ri) => (
+        <View key={ri} style={{ flexDirection: 'row', paddingVertical: 4, paddingHorizontal: 4, borderBottomWidth: 1, borderBottomColor: C.border }}>
+          {row.map((cell, ci) => (
+            <InlineText key={ci} text={cell} style={[s.td, { width: colWidths[ci], lineHeight: 1.5 }]} />
+          ))}
+        </View>
+      ))}
+    </View>
+  );
+}
+
+// ── Section body renderer ─────────────────────────────────────────────────────
+function SectionBody({ body }: { body: string }) {
+  const lines = body.split('\n');
+  const elements: React.ReactElement[] = [];
+  let tableBuffer: string[] = [];
+
+  const flushTable = (key: string) => {
+    if (tableBuffer.length > 1) {
+      elements.push(<MarkdownTable key={key} lines={tableBuffer} />);
+    }
+    tableBuffer = [];
+  };
+
+  lines.forEach((line, i) => {
+    const trimmed = line.trim();
+
+    if (trimmed.startsWith('|')) {
+      tableBuffer.push(line);
+      return;
+    }
+
+    if (tableBuffer.length) flushTable(`tbl-${i}`);
+
+    if (!trimmed || trimmed === '---') {
+      elements.push(<View key={i} style={{ height: 3 }} />);
+      return;
+    }
+
+    if (trimmed.startsWith('- ') || trimmed.startsWith('* ')) {
+      elements.push(
+        <View key={i} style={s.bullet}>
+          <Text style={s.bulletDot}>·</Text>
+          <InlineText text={trimmed.slice(2)} style={s.bulletText} />
+        </View>
+      );
+      return;
+    }
+
+    elements.push(<InlineText key={i} text={trimmed} style={[s.analysisText, { marginBottom: 3 }]} />);
+  });
+
+  if (tableBuffer.length) flushTable('tbl-end');
+
+  return <>{elements}</>;
+}
+
+// ── Data helpers ──────────────────────────────────────────────────────────────
 function buildEquityPoints(kumValues: number[], width: number, height: number): string {
   if (kumValues.length < 2) return '';
   const min = Math.min(...kumValues, 0);
@@ -85,6 +187,7 @@ function parseSections(text: string): { title: string; body: string }[] {
   return sections.filter(sec => sec.title && sec.body.trim());
 }
 
+// ── Main component ────────────────────────────────────────────────────────────
 interface ReportProps {
   data: Big5BacktestResponse;
   analysis: string;
@@ -140,28 +243,24 @@ export function Big5Report({ data, analysis }: ReportProps) {
         </View>
         {data.results.map(r => {
           const isBest = r.kombination === best.kombination;
-          const retColor = r.metrics.total_return >= 0 ? C.green : C.red;
-          const sharpeColor = r.metrics.sharpe >= 0 ? C.green : C.red;
           return (
             <View key={r.kombination} style={isBest ? s.tableRowBest : s.tableRow}>
               <Text style={[s.td, { width: COL.combo, fontFamily: isBest ? 'Helvetica-Bold' : 'Helvetica', color: isBest ? C.green : C.text }]}>
                 {r.kombination}{isBest ? ' ★' : ''}
               </Text>
-              <Text style={[s.td, { width: COL.ret, color: retColor }]}>{r.metrics.total_return >= 0 ? '+' : ''}{r.metrics.total_return.toFixed(1)}%</Text>
-              <Text style={[s.td, { width: COL.sharpe, color: sharpeColor }]}>{r.metrics.sharpe.toFixed(2)}</Text>
+              <Text style={[s.td, { width: COL.ret, color: r.metrics.total_return >= 0 ? C.green : C.red }]}>{r.metrics.total_return >= 0 ? '+' : ''}{r.metrics.total_return.toFixed(1)}%</Text>
+              <Text style={[s.td, { width: COL.sharpe, color: r.metrics.sharpe >= 0 ? C.green : C.red }]}>{r.metrics.sharpe.toFixed(2)}</Text>
               <Text style={[s.td, { width: COL.wr }]}>{r.metrics.win_rate.toFixed(1)}%</Text>
               <Text style={[s.td, { width: COL.dd, color: C.red }]}>{r.metrics.max_drawdown.toFixed(1)}%</Text>
               <Text style={[s.td, { width: COL.trades }]}>{r.metrics.num_trades}</Text>
             </View>
           );
         })}
-
         <View style={{ marginTop: 8, padding: 8, backgroundColor: C.surface, borderRadius: 4 }}>
           <Text style={{ fontSize: 8, color: C.muted }}>
             ★ Beste Kombination nach Sharpe Ratio.  Total Return = arithmetische Summe (nicht compounded).  Max Drawdown = größter kumulierter Verlust auf der Equity-Kurve.
           </Text>
         </View>
-
         <Footer />
       </Page>
 
@@ -175,7 +274,7 @@ export function Big5Report({ data, analysis }: ReportProps) {
         </View>
 
         <Text style={s.sectionTitle}>Equity-Kurve (kumulierte Performance)</Text>
-        <View style={{ backgroundColor: C.surface, borderRadius: 4, padding: 6, marginBottom: 2 }}>
+        <View style={{ backgroundColor: C.surface, borderRadius: 4, padding: 6, marginBottom: 10 }}>
           <Svg width={chartW} height={chartH} viewBox={`0 0 ${chartW} ${chartH}`}>
             <Line x1="4" y1={zeroY} x2={(chartW - 4).toString()} y2={zeroY} stroke={C.border} strokeWidth="1" />
             {equityPoints ? <Polyline points={equityPoints} stroke={C.green} strokeWidth="1.5" fill="none" /> : null}
@@ -200,11 +299,10 @@ export function Big5Report({ data, analysis }: ReportProps) {
             <Text style={[s.td, { width: 54, color: rt.perf_pct >= 0 ? C.green : C.red }]}>{rt.perf_pct >= 0 ? '+' : ''}{rt.perf_pct.toFixed(1)}%</Text>
           </View>
         ))}
-
         <Footer />
       </Page>
 
-      {/* PAGE 3: Claude analysis */}
+      {/* PAGE 3+: Claude analysis */}
       <Page size="A4" style={s.page}>
         <View style={s.header}>
           <Text style={s.title}>Analyst Report</Text>
@@ -212,9 +310,9 @@ export function Big5Report({ data, analysis }: ReportProps) {
         </View>
 
         {analysisSections.map(sec => (
-          <View key={sec.title} style={s.analysisSection} wrap={false}>
+          <View key={sec.title} style={s.analysisSection}>
             <Text style={s.analysisHeader}>{sec.title}</Text>
-            <Text style={s.analysisText}>{sec.body.trim()}</Text>
+            <SectionBody body={sec.body} />
           </View>
         ))}
 
