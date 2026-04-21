@@ -67,39 +67,41 @@ async def analyze_big5(req: Big5AnalysisRequest):
         best = max(req.results, key=lambda r: r.metrics.sharpe)
         worst = min(req.results, key=lambda r: r.metrics.total_return)
 
-        prompt = f"""You are a senior hedge fund portfolio manager reviewing a quantitative backtest.
+        prompt = f"""Du bist ein erfahrener quantitativer Portfolio-Manager und schreibst einen Backtest-Report auf Deutsch für ein Investment-Komitee.
 
-Strategy: S&P 500 Top-5 by market cap rotation ({req.indicator}{req.period}), {req.from_date} to {req.to_date}.
-8 entry/exit/filter combinations were tested. Results:
+Strategie: S&P 500 Top-5 nach Marktkapitalisierung, Trendfilter {req.indicator}{req.period}, Zeitraum {req.from_date} bis {req.to_date}.
+8 Kombinationen aus Kauf-Signal, Verkauf-Signal und Top5-Filter wurden getestet. Ergebnisse:
 
 {metrics_summary}
 
-Combination key:
-A = Buy: first close above {req.indicator}{req.period} after Top5 entry
-B = Buy: on Top5 entry day (if close above {req.indicator}{req.period})
-C = Sell: only when close < {req.indicator}{req.period} (ignore Top5 exit)
-D = Sell: immediately on Top5 exit
-E = Signal: 1 day in Top5 = signal
-F = Signal: 5 consecutive days in Top5 = signal
+Kombinationslegende:
+A = Kauf: Erster Schlusskurs über {req.indicator}{req.period} nach Top5-Eintritt
+B = Kauf: Am Tag des Top5-Eintritts (wenn Schlusskurs bereits über {req.indicator}{req.period})
+C = Verkauf: Nur wenn Schlusskurs unter {req.indicator}{req.period} fällt (Top5-Austritt wird ignoriert)
+D = Verkauf: Sofort bei Top5-Austritt
+E = Filter: 1 Tag in Top5 = Signal ausreichend
+F = Filter: 5 aufeinanderfolgende Tage in Top5 nötig
 
-Write a compact, data-driven analyst report with these exact sections (use these as headers):
+Schreibe den Report auf einfachem, klaren Deutsch. Keine Anglizismen wo es geht. Verwende diese Begriffe: Kauf-Signal, Verkauf-Signal, Haltedauer, Drawdown, Trendfilter, Top5-Eintritt, Top5-Austritt, Kumulierte Performance, Handelsanzahl, Trefferquote (statt Win Rate), Rendite-Risiko-Verhältnis (statt Sharpe).
 
-## Executive Summary
-2-3 sentences. What does this strategy do and what is the headline finding?
+Schreibe diese Abschnitte mit exakt diesen Überschriften:
 
-## Best Combination: {best.kombination}
-Why this combination outperforms on a risk-adjusted basis. Reference Sharpe, Max DD, trade count.
+## Zusammenfassung
+2-3 Sätze. Was macht diese Strategie, und was ist das wichtigste Ergebnis?
 
-## Worst Combination: {worst.kombination}
-Why this combination underperforms. What structural flaw does it reveal?
+## Beste Kombination: {best.kombination}
+Warum schneidet diese Kombination nach Rendite-Risiko am besten ab? Konkrete Zahlen nennen: Sharpe, Drawdown, Handelsanzahl, Trefferquote.
 
-## Risk Assessment
-Key risks: concentration (only 5 stocks), data snooping, liquidity, execution slippage, survivorship bias.
+## Schwächste Kombination: {worst.kombination}
+Welcher strukturelle Fehler führt zur Underperformance? Was lernen wir daraus?
 
-## Strategic Recommendation
-Which combination to trade live and why. Position sizing suggestion (e.g. equal-weight or Kelly fraction). One concrete rule the portfolio manager would add.
+## Risiken
+Tabellarisch: Klumpenrisiko (nur 5 Titel), Überanpassung an historische Daten, Liquidität, Ausführungskosten, Überlebensfehler (Survivorship Bias). Jedes Risiko mit Bewertung und Gegenmaßnahme.
 
-Be precise and concise. No generic disclaimers. Write like you are presenting to an investment committee."""
+## Handlungsempfehlung
+Welche Kombination für den Live-Einsatz, warum? Positionsgröße konkret (z.B. Half-Kelly). Eine zusätzliche Regel die du als Portfolio-Manager sofort einführen würdest.
+
+Schreibe direkt und datengetrieben. Keine Floskeln. Maximal 400 Wörter gesamt."""
 
         client = anthropic.Anthropic(api_key=os.environ.get("ANTHROPIC_API_KEY"))
         message = client.messages.create(

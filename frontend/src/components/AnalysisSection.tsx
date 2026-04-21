@@ -95,7 +95,7 @@ export function AnalysisSection({ data }: Props) {
 
       {loading && (
         <div className="p-6 text-center text-xs" style={{ color: '#8B8FA8' }}>
-          Claude analysiert wie ein Hedge-Fund-Manager...
+          Strategie wird analysiert...
         </div>
       )}
 
