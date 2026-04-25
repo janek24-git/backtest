@@ -2,7 +2,7 @@
   "rewrites": [
     {
       "source": "/api/:path*",
-      "destination": "https://backtest-o5ah.onrender.com/:path*"
+      "destination": "https://stocks-backtest-api-production-0c6a.up.railway.app/:path*"
     },
     {
       "source": "/(.*)",
