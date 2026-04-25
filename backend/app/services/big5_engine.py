@@ -56,6 +56,8 @@ def _run_one_combination(
     filter_mode: str, # "E" or "F"
     indicator: str,
     period: int,
+    entry_threshold: float = 0.0,   # 0.005 = 0.5% buffer above EMA for entry
+    min_hold_days: int = 0,          # minimum trading days before exit allowed
 ) -> list[dict]:
     """Run backtest for one combination. Returns list of trade dicts."""
 
@@ -85,6 +87,7 @@ def _run_one_combination(
         "consecutive": 0,       # consecutive days in top5
         "eligible": False,       # eligible for entry
         "just_eligible": False,  # became eligible today (for B mode)
+        "needs_reset": False,    # A-mode: entered top5 already above EMA → must dip below first
         "pending_buy": False,
         "pending_sell": False,
         "in_position": False,
@@ -179,6 +182,7 @@ def _run_one_combination(
                     s["entry_price"] = None
                     s["entry_date"] = None
                     s["entry_idx"] = None
+                    s["needs_reset"] = False
                 s["pending_sell"] = False
 
             # ── 2. Update top5 membership and eligibility ──────────────────
@@ -198,24 +202,37 @@ def _run_one_combination(
                 s["just_eligible"] = True  # transition day
 
             # ── 3. Generate signals for TOMORROW ──────────────────────────
-            above_ind = close > ind_val
+            above_ind = close > ind_val                                        # for exit + reset detection
+            above_ind_entry = close > ind_val * (1 + entry_threshold)         # threshold buffer for entry
+
+            # A-mode reset logic: if stock entered top5 already above EMA,
+            # it needs to dip below EMA first before a fresh crossover triggers entry
+            if entry_mode == "A" and s["eligible"] and not s["in_position"]:
+                if s["just_eligible"] and above_ind:
+                    # Entered top5 while already above EMA → must reset first
+                    s["needs_reset"] = True
+                if s["needs_reset"] and not above_ind:
+                    # Price has dipped below EMA → reset complete
+                    s["needs_reset"] = False
 
             # EXIT signal
             if s["in_position"] and not s["pending_sell"]:
-                ema_exit = not above_ind  # close < EMA/SMA
+                hold_so_far = row_idx - s["entry_idx"] if s["entry_idx"] is not None else 0
+                min_hold_ok = hold_so_far >= min_hold_days
+                ema_exit = not above_ind  # close < EMA/SMA (no buffer on exit)
                 top5_exit = (exit_mode == "D") and not in_top5
-                if ema_exit or top5_exit:
+                if min_hold_ok and (ema_exit or top5_exit):
                     s["pending_sell"] = True
 
             # ENTRY signal
             if not s["in_position"] and not s["pending_buy"] and s["eligible"]:
                 if entry_mode == "A":
-                    # Any day while eligible and close > EMA
-                    if above_ind:
+                    # Fresh close > EMA + 0.5% buffer; if needs_reset, wait for dip first
+                    if above_ind_entry and not s["needs_reset"]:
                         s["pending_buy"] = True
                 elif entry_mode == "B":
-                    # Only on the day eligibility is gained
-                    if s["just_eligible"] and above_ind:
+                    # Only on the day eligibility is gained, with 0.5% buffer
+                    if s["just_eligible"] and above_ind_entry:
                         s["pending_buy"] = True
 
     # ── 4. Close open positions at end of period ──────────────────────────
@@ -288,6 +305,8 @@ def run_all_combinations(
     top5_history: dict,
     indicator: str = "EMA",
     period: int = 200,
+    entry_threshold: float = 0.0,
+    min_hold_days: int = 0,
 ) -> list[dict]:
     """Run all 8 combinations and return list of results."""
     results = []
@@ -301,6 +320,8 @@ def run_all_combinations(
                 price_data, top5_history,
                 entry_mode, exit_mode, filter_mode,
                 indicator, period,
+                entry_threshold=entry_threshold,
+                min_hold_days=min_hold_days,
             )
             metrics = _calc_metrics(trades)
             results.append({

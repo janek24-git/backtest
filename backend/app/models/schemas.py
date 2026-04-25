@@ -57,6 +57,7 @@ class Big5BacktestRequest(BaseModel):
     period: int = 200
     from_date: str = "2000-01-01"
     to_date: str = "2025-12-31"
+    optimized: bool = False
 
 
 class Big5Trade(BaseModel):
@@ -90,6 +91,7 @@ class Big5BacktestResponse(BaseModel):
     period: int
     from_date: str
     to_date: str
+    optimized: bool = False
 
 
 class Big5AnalysisRequest(BaseModel):
@@ -98,6 +100,7 @@ class Big5AnalysisRequest(BaseModel):
     period: int
     from_date: str
     to_date: str
+    optimized: bool = False
 
 
 class Big5AnalysisResponse(BaseModel):

@@ -5,7 +5,10 @@ import { Big5Table } from '../components/Big5Table';
 import { AnalysisSection } from '../components/AnalysisSection';
 import type { Big5BacktestResponse, Big5ComboResult } from '../types';
 
-function exportCSV(result: Big5ComboResult, indicator: string, period: number) {
+const OPTIMIZE_INFO = '0,5% Mindestabstand zur EMA beim Einstieg + 5 Handelstage Mindesthaltedauer. Reduziert Noise und Whipsaws. Hinweis: Die Mindesthaltedauer ist im Live-Betrieb nicht vollständig replizierbar (wird erst im Nachhinein bekannt).';
+
+function exportCSV(result: Big5ComboResult, indicator: string, period: number, optimized: boolean) {
+  const modeLabel = optimized ? 'Optimiert (0.5% Threshold + 5T Min-Hold)' : 'Raw';
   const headers = ['Nr', 'Typ', 'Ticker', 'Datum', 'Haltdauer (Tage)', 'Preis (9:30 ET)', 'Performance %', 'Kum. Performance %'];
   const rows = result.trades.map(t => [
     t.nr, t.typ, t.ticker, t.datum,
@@ -14,12 +17,13 @@ function exportCSV(result: Big5ComboResult, indicator: string, period: number) {
     t.perf_pct !== 0 ? t.perf_pct.toFixed(4) : '',
     t.kum_perf_pct.toFixed(4),
   ]);
-  const csv = [headers, ...rows].map(r => r.join(';')).join('\n');
+  const meta = [`# Modus: ${modeLabel}`, `# Kombination: ${result.kombination}`, `# Indikator: ${indicator}${period}`, ''];
+  const csv = [...meta, headers.join(';'), ...rows.map(r => r.join(';'))].join('\n');
   const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
   const url = URL.createObjectURL(blob);
   const a = document.createElement('a');
   a.href = url;
-  a.download = `Big5_${result.kombination}_${indicator}${period}_2000-2025.csv`;
+  a.download = `Big5_${result.kombination}_${indicator}${period}_${optimized ? 'optimiert' : 'raw'}_2000-2025.csv`;
   a.click();
   URL.revokeObjectURL(url);
 }
@@ -38,6 +42,8 @@ export function Big5Page() {
   const navigate = useNavigate();
   const [indicator, setIndicator] = useState<'EMA' | 'SMA'>('EMA');
   const [period, setPeriod] = useState(200);
+  const [optimized, setOptimized] = useState(false);
+  const [showOptInfo, setShowOptInfo] = useState(false);
   const [results, setResults] = useState<Big5BacktestResponse | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -48,7 +54,7 @@ export function Big5Page() {
     setError(null);
     setResults(null);
     try {
-      const data = await runBig5Backtest(indicator, period);
+      const data = await runBig5Backtest(indicator, period, '2000-01-01', '2025-12-31', optimized);
       setResults(data);
       setActiveCombo('ACE');
     } catch (e: any) {
@@ -115,6 +121,49 @@ export function Big5Page() {
               ))}
             </div>
           </div>
+          <div>
+            <p className="text-xs mb-1.5" style={{ color: '#8B8FA8' }}>Modus</p>
+            <div className="flex gap-1 items-center">
+              {(['Raw', 'Optimiert'] as const).map(mode => (
+                <button
+                  key={mode}
+                  onClick={() => setOptimized(mode === 'Optimiert')}
+                  className="px-3 py-2 rounded text-sm font-medium transition-colors"
+                  style={optimized === (mode === 'Optimiert')
+                    ? { background: '#F5A623', color: '#000' }
+                    : { background: '#1E2130', color: '#8B8FA8' }}
+                >
+                  {mode}
+                </button>
+              ))}
+              <div className="relative ml-1">
+                <button
+                  onClick={() => setShowOptInfo(v => !v)}
+                  className="w-5 h-5 rounded-full text-xs font-bold flex items-center justify-center"
+                  style={{ background: '#2A2D3E', color: '#8B8FA8', border: '1px solid #3A3D4E' }}
+                >
+                  i
+                </button>
+                {showOptInfo && (
+                  <div
+                    className="absolute left-0 top-7 z-10 rounded p-3 text-xs w-72"
+                    style={{ background: '#2A2D3E', color: '#C8CAD8', border: '1px solid #3A3D4E' }}
+                  >
+                    <p className="font-semibold mb-1" style={{ color: '#F5A623' }}>Optimiert-Modus</p>
+                    <p>{OPTIMIZE_INFO}</p>
+                    <button
+                      onClick={() => setShowOptInfo(false)}
+                      className="mt-2 text-xs"
+                      style={{ color: '#8B8FA8' }}
+                    >
+                      Schließen
+                    </button>
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+
           <div className="ml-auto">
             <button
               onClick={handleRun}
@@ -176,11 +225,18 @@ export function Big5Page() {
               {activeResult && (
                 <div>
                   <div className="flex items-center justify-between mb-3">
-                    <p className="text-sm font-medium" style={{ color: '#E8EAED' }}>
-                      Kombination {activeCombo}
-                    </p>
+                    <div className="flex items-center gap-2">
+                      <p className="text-sm font-medium" style={{ color: '#E8EAED' }}>
+                        Kombination {activeCombo}
+                      </p>
+                      {results.optimized && (
+                        <span className="px-2 py-0.5 rounded text-xs font-medium" style={{ background: '#F5A62320', color: '#F5A623' }}>
+                          Optimiert
+                        </span>
+                      )}
+                    </div>
                     <button
-                      onClick={() => exportCSV(activeResult, indicator, period)}
+                      onClick={() => exportCSV(activeResult, indicator, period, results.optimized ?? false)}
                       className="px-3 py-1.5 rounded text-xs font-medium"
                       style={{ background: '#1E2130', color: '#8B8FA8', border: '1px solid #2A2D3E' }}
                     >

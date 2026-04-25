@@ -84,6 +84,7 @@ export interface Big5BacktestResponse {
   period: number;
   from_date: string;
   to_date: string;
+  optimized?: boolean;
 }
 
 export interface Big5AnalysisResponse {

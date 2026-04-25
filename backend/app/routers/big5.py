@@ -30,6 +30,8 @@ async def run_big5_backtest(req: Big5BacktestRequest):
             price_data, top5_history,
             indicator=req.indicator,
             period=req.period,
+            entry_threshold=0.005 if req.optimized else 0.0,
+            min_hold_days=5 if req.optimized else 0,
         )
 
         results = []
@@ -44,6 +46,7 @@ async def run_big5_backtest(req: Big5BacktestRequest):
             period=req.period,
             from_date=req.from_date,
             to_date=req.to_date,
+            optimized=req.optimized,
         )
     except HTTPException:
         raise
@@ -67,10 +70,18 @@ async def analyze_big5(req: Big5AnalysisRequest):
         best = max(req.results, key=lambda r: r.metrics.sharpe)
         worst = min(req.results, key=lambda r: r.metrics.total_return)
 
+        opt_note = (
+            "\nHINWEIS: Diese Ergebnisse wurden mit aktivierter Rauschunterdrückung berechnet "
+            "(0,5% Mindestabstand zur EMA beim Einstieg + 5 Handelstage Mindesthaltedauer). "
+            "Diese Optimierung ist im Live-Betrieb nicht vollständig replizierbar, da die Mindesthaltedauer "
+            "erst im Nachhinein bekannt ist. Weise im Report explizit auf diesen Hinweis-Faktor hin."
+            if req.optimized else ""
+        )
+
         prompt = f"""WICHTIG: Antworte AUSSCHLIESSLICH auf Deutsch. Alle Überschriften, alle Texte, alle Begriffe müssen auf Deutsch sein.
 
 Du bist ein erfahrener quantitativer Portfolio-Manager und schreibst einen Backtest-Report auf Deutsch für ein Investment-Komitee.
-
+{opt_note}
 Strategie: S&P 500 Top-5 nach Marktkapitalisierung, Trendfilter {req.indicator}{req.period}, Zeitraum {req.from_date} bis {req.to_date}.
 8 Kombinationen aus Kauf-Signal, Verkauf-Signal und Top5-Filter wurden getestet. Ergebnisse:
 

@@ -35,6 +35,7 @@ export async function analyzeBig5(data: Big5BacktestResponse): Promise<Big5Analy
     period: data.period,
     from_date: data.from_date,
     to_date: data.to_date,
+    optimized: data.optimized ?? false,
   });
   return res;
 }
@@ -44,12 +45,14 @@ export async function runBig5Backtest(
   period: number = 200,
   fromDate: string = '2000-01-01',
   toDate: string = '2025-12-31',
+  optimized: boolean = false,
 ): Promise<Big5BacktestResponse> {
   const { data } = await api.post<Big5BacktestResponse>('/big5/run', {
     indicator,
     period,
     from_date: fromDate,
     to_date: toDate,
+    optimized,
   });
   return data;
 }

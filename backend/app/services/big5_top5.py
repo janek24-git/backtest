@@ -160,9 +160,17 @@ async def fetch_candidate_data(from_date: str = "2000-01-01", to_date: str = "20
 
     async def fetch_one(ticker: str) -> tuple[str, pd.DataFrame]:
         path = _cache_path(ticker)
+        needs_fetch = True
         if _is_fresh(path):
             df = pd.read_parquet(path)
-        else:
+            # Check if cached data covers the requested from_date
+            if not df.empty:
+                import datetime as _dt
+                cached_start = pd.to_datetime(df.index[0]).date()
+                requested_start = _dt.date.fromisoformat(from_date)
+                if cached_start <= requested_start:
+                    needs_fetch = False
+        if needs_fetch:
             df = await loop.run_in_executor(None, _fetch_price_sync, ticker, from_date, to_date)
             if len(df) > 0:
                 df.to_parquet(path)

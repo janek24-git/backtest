@@ -64,7 +64,14 @@ export function AnalysisSection({ data }: Props) {
   return (
     <div className="rounded-lg p-4 mt-4" style={{ background: '#1A1D27' }}>
       <div className="flex items-center justify-between mb-3">
-        <p className="text-sm font-medium" style={{ color: '#E8EAED' }}>Analyst Report</p>
+        <div className="flex items-center gap-2">
+          <p className="text-sm font-medium" style={{ color: '#E8EAED' }}>Analyst Report</p>
+          {data.optimized && (
+            <span className="px-2 py-0.5 rounded text-xs font-medium" style={{ background: '#F5A62320', color: '#F5A623' }}>
+              Optimiert · 0,5% Threshold + 5T Min-Hold
+            </span>
+          )}
+        </div>
         <div className="flex gap-2">
           {analysis && (
             <button
