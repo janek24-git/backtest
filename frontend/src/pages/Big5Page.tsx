@@ -38,6 +38,8 @@ const COMBO_LEGEND = {
   F: '5 aufeinanderfolgende Tage Top5 = Signal',
 };
 
+type CompareResults = { r100: Big5BacktestResponse; r200: Big5BacktestResponse };
+
 export function Big5Page() {
   const navigate = useNavigate();
   const [indicator, setIndicator] = useState<'EMA' | 'SMA'>('EMA');
@@ -48,11 +50,14 @@ export function Big5Page() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [activeCombo, setActiveCombo] = useState('ACE');
+  const [compareResults, setCompareResults] = useState<CompareResults | null>(null);
+  const [compareLoading, setCompareLoading] = useState(false);
 
   async function handleRun() {
     setLoading(true);
     setError(null);
     setResults(null);
+    setCompareResults(null);
     try {
       const data = await runBig5Backtest(indicator, period, '2000-01-01', '2025-12-31', optimized);
       setResults(data);
@@ -61,6 +66,24 @@ export function Big5Page() {
       setError(e?.message ?? 'Backtest fehlgeschlagen');
     } finally {
       setLoading(false);
+    }
+  }
+
+  async function handleCompare() {
+    setCompareLoading(true);
+    setError(null);
+    setResults(null);
+    setCompareResults(null);
+    try {
+      const [r100, r200] = await Promise.all([
+        runBig5Backtest(indicator, 100, '2000-01-01', '2025-12-31', optimized),
+        runBig5Backtest(indicator, 200, '2000-01-01', '2025-12-31', optimized),
+      ]);
+      setCompareResults({ r100, r200 });
+    } catch (e: any) {
+      setError(e?.message ?? 'Vergleich fehlgeschlagen');
+    } finally {
+      setCompareLoading(false);
     }
   }
 
@@ -164,14 +187,22 @@ export function Big5Page() {
             </div>
           </div>
 
-          <div className="ml-auto">
+          <div className="ml-auto flex gap-2">
+            <button
+              onClick={handleCompare}
+              disabled={compareLoading || loading}
+              className="px-4 py-2 rounded font-medium text-sm disabled:opacity-50"
+              style={{ background: '#3B4FC8', color: '#fff' }}
+            >
+              {compareLoading ? 'Lädt...' : 'EMA100 vs EMA200'}
+            </button>
             <button
               onClick={handleRun}
-              disabled={loading}
+              disabled={loading || compareLoading}
               className="px-6 py-2 rounded font-medium text-sm disabled:opacity-50"
               style={{ background: '#00C48C', color: '#000' }}
             >
-              {loading ? 'Lädt... (kann 30–60s dauern)' : 'Run Big5 Backtest'}
+              {loading ? 'Lädt...' : 'Run Big5 Backtest'}
             </button>
           </div>
         </div>
@@ -188,6 +219,61 @@ export function Big5Page() {
         {error && (
           <div className="p-3 rounded text-sm" style={{ background: '#FF475720', color: '#FF4757' }}>
             {error}
+          </div>
+        )}
+
+        {/* EMA100 vs EMA200 Comparison */}
+        {compareResults && (
+          <div className="rounded-lg p-4" style={{ background: '#1A1D27' }}>
+            <p className="text-sm font-medium mb-1" style={{ color: '#E8EAED' }}>
+              {indicator}100 vs {indicator}200 — Vergleich
+            </p>
+            <p className="text-xs mb-4" style={{ color: '#8B8FA8' }}>
+              2000–2025 · {compareResults.r100.optimized ? 'Optimiert' : 'Raw'} · Grün = besser
+            </p>
+            <div className="overflow-x-auto">
+              <table className="w-full text-xs">
+                <thead>
+                  <tr style={{ color: '#8B8FA8' }}>
+                    <th className="text-left pb-2 pr-4">Kombi</th>
+                    <th className="text-right pb-2 px-3">{indicator}100 Return</th>
+                    <th className="text-right pb-2 px-3">{indicator}200 Return</th>
+                    <th className="text-right pb-2 px-3">{indicator}100 Sharpe</th>
+                    <th className="text-right pb-2 px-3">{indicator}200 Sharpe</th>
+                    <th className="text-right pb-2 px-3">{indicator}100 WR%</th>
+                    <th className="text-right pb-2 px-3">{indicator}200 WR%</th>
+                    <th className="text-right pb-2 px-3">{indicator}100 MaxDD</th>
+                    <th className="text-right pb-2 px-3">{indicator}200 MaxDD</th>
+                    <th className="text-right pb-2 pl-3">{indicator}100 Trades</th>
+                    <th className="text-right pb-2 pl-3">{indicator}200 Trades</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {compareResults.r100.results.map((r100, i) => {
+                    const r200 = compareResults.r200.results[i];
+                    const m1 = r100.metrics;
+                    const m2 = r200.metrics;
+                    const better = (a: number, b: number, higherIsBetter = true) =>
+                      higherIsBetter ? (a >= b ? '#00C48C' : '#8B8FA8') : (a <= b ? '#00C48C' : '#8B8FA8');
+                    return (
+                      <tr key={r100.kombination} style={{ borderTop: '1px solid #2A2D3E' }}>
+                        <td className="py-2 pr-4 font-mono font-bold" style={{ color: '#E8EAED' }}>{r100.kombination}</td>
+                        <td className="py-2 px-3 text-right font-mono" style={{ color: better(m1.total_return, m2.total_return) }}>{m1.total_return >= 0 ? '+' : ''}{m1.total_return.toFixed(1)}%</td>
+                        <td className="py-2 px-3 text-right font-mono" style={{ color: better(m2.total_return, m1.total_return) }}>{m2.total_return >= 0 ? '+' : ''}{m2.total_return.toFixed(1)}%</td>
+                        <td className="py-2 px-3 text-right font-mono" style={{ color: better(m1.sharpe, m2.sharpe) }}>{m1.sharpe.toFixed(2)}</td>
+                        <td className="py-2 px-3 text-right font-mono" style={{ color: better(m2.sharpe, m1.sharpe) }}>{m2.sharpe.toFixed(2)}</td>
+                        <td className="py-2 px-3 text-right font-mono" style={{ color: better(m1.win_rate, m2.win_rate) }}>{m1.win_rate.toFixed(1)}%</td>
+                        <td className="py-2 px-3 text-right font-mono" style={{ color: better(m2.win_rate, m1.win_rate) }}>{m2.win_rate.toFixed(1)}%</td>
+                        <td className="py-2 px-3 text-right font-mono" style={{ color: better(m1.max_drawdown, m2.max_drawdown, false) }}>{m1.max_drawdown.toFixed(1)}%</td>
+                        <td className="py-2 px-3 text-right font-mono" style={{ color: better(m2.max_drawdown, m1.max_drawdown, false) }}>{m2.max_drawdown.toFixed(1)}%</td>
+                        <td className="py-2 pl-3 text-right font-mono" style={{ color: '#8B8FA8' }}>{m1.num_trades}</td>
+                        <td className="py-2 pl-3 text-right font-mono" style={{ color: '#8B8FA8' }}>{m2.num_trades}</td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+            </div>
           </div>
         )}
 
