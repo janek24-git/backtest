@@ -44,13 +44,22 @@ export function Dashboard() {
               S&P 500 · Daily Close · yfinance · 2000–2025
             </p>
           </div>
-          <button
-            onClick={() => navigate('/')}
-            className="px-4 py-2 rounded text-sm font-medium"
-            style={{ background: '#1E2130', color: '#00C48C', border: '1px solid #00C48C' }}
-          >
-            ← Big 5 Swing
-          </button>
+          <div className="flex gap-2">
+            <button
+              onClick={() => navigate('/journal')}
+              className="px-4 py-2 rounded text-sm font-medium"
+              style={{ background: '#1E2130', color: '#8B8FA8', border: '1px solid #2A2D3E' }}
+            >
+              📓 Journal
+            </button>
+            <button
+              onClick={() => navigate('/')}
+              className="px-4 py-2 rounded text-sm font-medium"
+              style={{ background: '#1E2130', color: '#00C48C', border: '1px solid #00C48C' }}
+            >
+              ← Big 5 Swing
+            </button>
+          </div>
         </div>
 
         {/* Controls */}
