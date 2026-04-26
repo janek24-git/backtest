@@ -9,11 +9,13 @@ schickt 2 Telegram-Nachrichten:
 """
 
 import os
+import re
 import logging
 import httpx
 import anthropic
 import xml.etree.ElementTree as ET
 from datetime import date
+from app.services.warrant_finder import build_warrant_message
 
 logger = logging.getLogger(__name__)
 
@@ -200,7 +202,19 @@ async def send_news_digest() -> dict:
     if parts["3"].strip():
         await _send_telegram(_format_msg3(parts["3"].strip(), today))
     if parts["4"].strip():
-        await _send_telegram(_format_msg4(parts["4"].strip(), today))
+        trade_text = parts["4"].strip()
+        await _send_telegram(_format_msg4(trade_text, today))
+
+        # Optionsschein-Finder aus Trade-Idee extrahieren
+        ticker_m    = re.search(r"TICKER:\s*([A-Z]{1,6})", trade_text)
+        direction_m = re.search(r"RICHTUNG:\s*(LONG|SHORT)", trade_text)
+        ziel_m      = re.search(r"ZIEL:\s*\+?(\d+)", trade_text)
+        if ticker_m and direction_m:
+            ticker    = ticker_m.group(1)
+            direction = direction_m.group(1)
+            target    = float(ziel_m.group(1)) if ziel_m else 10.0
+            warrant_msg = build_warrant_message(ticker, direction, target)
+            await _send_telegram(warrant_msg)
 
     return {
         "sent": True,

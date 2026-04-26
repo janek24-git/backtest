@@ -13,6 +13,7 @@ from app.services.telegram_alerts import send_telegram_alert, get_current_status
 from app.services.news_digest import send_news_digest
 from app.services.intraday_alerts import send_intraday_alert
 from app.services.wsb_scanner import send_wsb_alert, scan_wsb
+from app.services.warrant_finder import find_warrants, build_warrant_message
 
 logger = logging.getLogger(__name__)
 router = APIRouter()
@@ -200,6 +201,20 @@ async def trigger_wsb_alert():
         return await send_wsb_alert()
     except Exception as e:
         logger.exception("WSB alert failed")
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@router.get("/warrants")
+async def warrant_search(
+    ticker:    str   = Query(..., description="z.B. NVDA"),
+    direction: str   = Query("LONG", description="LONG oder SHORT"),
+    budget:    float = Query(1000.0, description="Budget in EUR"),
+):
+    """Optionsschein-Finder: beste Calls/Puts für eine Trade-Idee."""
+    try:
+        warrants = find_warrants(ticker.upper(), direction.upper(), budget)
+        return {"ticker": ticker.upper(), "direction": direction, "warrants": warrants}
+    except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
 
