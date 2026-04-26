@@ -161,18 +161,24 @@ def build_warrant_message(ticker: str, direction: str, target_pct: float,
     # Delta-Tabelle
     if dp:
         dr = dp["delta_range"]
+        risk_labels = {
+            "ATM (0%)":  ("🟢 Low Risk",    "sicherer, weniger Hebel"),
+            "5% OTM":    ("🟡 Mid Risk",    "Empfehlung — guter Kompromiss"),
+            "10% OTM":   ("🔴 High Risk",   "mehr Hebel, Aktie muss mehr laufen"),
+        }
         lines += [
-            f"<b>Delta-Guide</b>  (IV-Proxy: {dp['vol_30d']}% 30d-Vol)",
-            f"<code>Moneyness    3M    6M    9M</code>",
+            f"<b>Delta-Guide</b>  (IV: ~{dp['vol_30d']}% 30d-Vol)",
+            "",
         ]
         for m_label, row in dp["table"].items():
-            lines.append(
-                f"<code>{m_label:<12} {row['3M']:.2f}  {row['6M']:.2f}  {row['9M']:.2f}</code>"
-            )
+            risk, hint = risk_labels.get(m_label, ("·", ""))
+            lines += [
+                f"{risk}  <b>{m_label}</b>  —  {hint}",
+                f"  Delta:  3M {row['3M']:.2f}  ·  6M {row['6M']:.2f}  ·  9M {row['9M']:.2f}",
+                "",
+            ]
         lines += [
-            "",
-            f"🎯 Empfohlener Filter auf TR: <b>Delta {dr[0]:.2f} – {dr[1]:.2f}</b>",
-            f"   Hebel {TARGET_LEVERAGE}x · Laufzeit 6M",
+            f"🎯 TR-Filter: <b>Delta {dr[0]:.2f} – {dr[1]:.2f}</b>  (Mid Risk · 6M · Hebel {TARGET_LEVERAGE}x)",
             "",
         ]
     else:
