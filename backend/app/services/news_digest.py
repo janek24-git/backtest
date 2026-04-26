@@ -280,7 +280,8 @@ def _format_msg3(part3: str, today: str) -> str:
     return "\n".join(lines)
 
 
-def _format_msg4(part4: str, today: str) -> str:
+def _format_part4_lines(part4: str) -> list[str]:
+    """Formatiert die Trade-Idee-Felder als Zeilen (ohne Header)."""
     field_map = {
         "TICKER":     ("🎯", "Ticker"),
         "RICHTUNG":   ("📍", "Richtung"),
@@ -291,7 +292,7 @@ def _format_msg4(part4: str, today: str) -> str:
         "GRUND":      ("📝", "Grund"),
         "KATALYSATOR":("⚡", "Katalysator"),
     }
-    lines = [f"⚡️ <b>Trade-Idee des Tages — {today}</b>", "━━━━━━━━━━━━━━━━━━━━", ""]
+    lines = []
     for raw in _clean(part4).strip().splitlines():
         stripped = raw.strip()
         matched = False
@@ -303,7 +304,99 @@ def _format_msg4(part4: str, today: str) -> str:
                 break
         if not matched and stripped:
             lines.append(stripped)
-    return "\n".join(lines)
+    return lines
+
+
+def _format_combined(parts: dict, today: str, ema_block: str = "",
+                     conflict: str = "") -> str:
+    """Alle 4 Teile in einer Nachricht. Max ~4000 Zeichen."""
+    sections = []
+
+    # Teil 1
+    p1_lines = []
+    for raw in _clean(parts["1"]).strip().splitlines():
+        raw = raw.strip()
+        if not raw:
+            continue
+        m = re.match(r"^(\d)\.\s*(.*)", raw)
+        if m:
+            idx = int(m.group(1)) - 1
+            emoji = _NUM_EMOJI[idx] if 0 <= idx < len(_NUM_EMOJI) else f"{m.group(1)}."
+            p1_lines.append(f"{emoji} {m.group(2)}")
+        else:
+            p1_lines.append(raw)
+    sections.append("📰 <b>Top News</b>\n" + "\n".join(p1_lines))
+
+    # Teil 2
+    section_map = {
+        "DIREKTE BETROFFENHEIT": "📌 <b>Betroffenheit</b>",
+        "SEKTOR-TRENDS":         "📊 <b>Sektor-Trends</b>",
+        "SEKTOR TRENDS":         "📊 <b>Sektor-Trends</b>",
+        "SEKTOR-TRENDS HEUTE":   "📊 <b>Sektor-Trends</b>",
+        "KONKRETE AKTION":       "✅ <b>Konkrete Aktion</b>",
+    }
+    p2_lines = []
+    for raw in _clean(parts["2"]).strip().splitlines():
+        stripped = raw.strip()
+        if not stripped:
+            continue
+        replaced = False
+        upper = stripped.rstrip(":").upper()
+        for label, replacement in section_map.items():
+            if upper == label or stripped.upper().startswith(label + ":"):
+                p2_lines += ["", replacement]
+                rest = stripped[len(label):].lstrip(":").strip()
+                if rest:
+                    p2_lines.append(rest)
+                replaced = True
+                break
+        if not replaced:
+            p2_lines.append(stripped)
+    sections.append("🎯 <b>Handlungsempfehlung</b>\n" + "\n".join(p2_lines).strip())
+
+    # Teil 3 — kompakt (nur Bereich + Idee, kein Fließtext)
+    area_map = {
+        "MARKT":  "📈", "MAKRO":  "🏦", "TECH":   "💻",
+        "CRYPTO": "₿",  "DEALS":  "🤝",
+    }
+    p3_lines = []
+    current_area = ""
+    for raw in _clean(parts["3"]).strip().splitlines():
+        stripped = raw.strip()
+        if not stripped:
+            continue
+        matched = False
+        for key, icon in area_map.items():
+            if re.match(rf"^(\d+\.\s*)?{key}[\s:\-—]", stripped.upper()):
+                title = re.sub(rf"^(\d+\.\s*)?{key}[\s:\-—]*", "", stripped, flags=re.IGNORECASE).strip()
+                current_area = f"{icon} <b>{title}</b>"
+                p3_lines.append("\n" + current_area)
+                matched = True
+                break
+        if not matched:
+            if re.match(r"^IDEE:", stripped, re.IGNORECASE):
+                idee = stripped[5:].strip()
+                p3_lines.append(f"💡 {idee}")
+            elif stripped:
+                p3_lines.append(stripped)
+    sections.append("🔬 <b>Research</b>" + "\n".join(p3_lines).strip())
+
+    # Teil 4 — Trade-Idee + EMA
+    p4_lines = _format_part4_lines(parts["4"])
+    trade_section = "⚡️ <b>Trade-Idee des Tages</b>\n" + "\n".join(p4_lines)
+    if ema_block:
+        trade_section += ema_block
+    if conflict:
+        trade_section += conflict
+    sections.append(trade_section)
+
+    msg = f"📊 <b>Daily Briefing — {today}</b>\n━━━━━━━━━━━━━━━━━━━━\n\n"
+    msg += "\n\n━━━━━━━━━━━━━━━━━━━━\n\n".join(sections)
+
+    # Telegram-Limit: 4096 Zeichen
+    if len(msg) > 4000:
+        msg = msg[:3990] + "\n…"
+    return msg
 
 
 async def send_news_digest() -> dict:
@@ -337,48 +430,51 @@ async def send_news_digest() -> dict:
             continue
         parts[current] += line + "\n"
 
-    today = date.today().strftime("%d.%m.%Y")
-    await _send_telegram(_format_msg1(parts["1"].strip(), today))
-    if parts["2"].strip():
-        await _send_telegram(_format_msg2(parts["2"].strip(), today))
-    if parts["3"].strip():
-        await _send_telegram(_format_msg3(parts["3"].strip(), today))
-    if parts["4"].strip():
-        trade_text  = parts["4"].strip()
-        ticker_m    = re.search(r"TICKER:\s*([A-Z]{1,6})", trade_text)
-        direction_m = re.search(r"RICHTUNG:\s*(LONG|SHORT)", trade_text)
-        ziel_m      = re.search(r"ZIEL:\s*\+?(\d+)", trade_text)
+    today       = date.today().strftime("%d.%m.%Y")
+    trade_text  = parts["4"].strip()
+    ticker_m    = re.search(r"TICKER:\s*([A-Z]{1,6})", trade_text)
+    direction_m = re.search(r"RICHTUNG:\s*(LONG|SHORT)", trade_text)
+    ziel_m      = re.search(r"ZIEL:\s*\+?(\d+)", trade_text)
 
-        # EMA-Status für den vorgeschlagenen Ticker holen
-        ema_block = ""
-        conflict  = ""
-        if ticker_m:
-            ema = get_ema_status(ticker_m.group(1))
-            if ema:
-                trend_icon = "🟢" if ema["trend"] == "bullish" else "🔴" if ema["trend"] == "bearish" else "🟡"
-                ema_block = (
-                    f"\n\n<b>Technischer Check ({ticker_m.group(1)})</b>\n"
-                    f"Kurs: {ema['price']}  {trend_icon} Trend: {ema['trend'].upper()}\n"
-                    f"EMA20:  {ema['ema20']}  ({ema['vs20']})\n"
-                    f"EMA50:  {ema['ema50']}  ({ema['vs50']})\n"
-                    f"EMA200: {ema['ema200']}  ({ema['vs200']})"
-                )
-                if direction_m:
-                    d = direction_m.group(1)
-                    if (d == "LONG" and ema["trend"] == "bearish") or \
-                       (d == "SHORT" and ema["trend"] == "bullish"):
-                        conflict = "\n\n⚠️ <b>ACHTUNG:</b> News-Signal widerspricht EMA-Trend — erhöhtes Risiko!"
+    # EMA-Check für Trade-Ticker
+    ema_block = ""
+    conflict  = ""
+    ticker    = ticker_m.group(1) if ticker_m else None
+    direction = direction_m.group(1) if direction_m else "LONG"
+    if ticker:
+        ema = get_ema_status(ticker)
+        if ema:
+            trend_icon = "🟢" if ema["trend"] == "bullish" else "🔴" if ema["trend"] == "bearish" else "🟡"
+            ema_block = (
+                f"\n\n<b>📊 Technischer Check ({ticker})</b>\n"
+                f"Kurs: {ema['price']}  {trend_icon} {ema['trend'].upper()}\n"
+                f"EMA20: {ema['ema20']} ({ema['vs20']})  "
+                f"EMA50: {ema['ema50']} ({ema['vs50']})  "
+                f"EMA200: {ema['ema200']} ({ema['vs200']})"
+            )
+            if (direction == "LONG" and ema["trend"] == "bearish") or \
+               (direction == "SHORT" and ema["trend"] == "bullish"):
+                conflict = "\n⚠️ <b>Signal widerspricht EMA-Trend!</b>"
 
-        await _send_telegram(_format_msg4(trade_text + ema_block + conflict, today))
+    # Alles in eine Nachricht
+    combined_text = _format_combined(parts, today, ema_block, conflict)
 
-        # Optionsschein-Finder
-        if ticker_m and direction_m:
-            ticker    = ticker_m.group(1)
-            direction = direction_m.group(1)
-            target    = float(ziel_m.group(1)) if ziel_m else 10.0
-            warrant_msg     = build_warrant_message(ticker, direction, target)
-            warrant_buttons = build_warrant_buttons(ticker, direction)
-            await _send_telegram(warrant_msg, reply_markup=warrant_buttons)
+    # TradingView-Button für Trade-Ticker
+    tv_buttons = None
+    if ticker:
+        tv_buttons = {"inline_keyboard": [[
+            {"text": f"📈 {ticker} TradingView",
+             "url": f"https://www.tradingview.com/chart/?symbol={ticker}"},
+        ]]}
+
+    await _send_telegram(combined_text, reply_markup=tv_buttons)
+
+    # Optionsschein separat
+    if ticker:
+        target          = float(ziel_m.group(1)) if ziel_m else 10.0
+        warrant_msg     = build_warrant_message(ticker, direction, target)
+        warrant_buttons = build_warrant_buttons(ticker, direction)
+        await _send_telegram(warrant_msg, reply_markup=warrant_buttons)
 
     return {
         "sent": True,
