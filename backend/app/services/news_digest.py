@@ -13,11 +13,59 @@ import re
 import logging
 import httpx
 import anthropic
+import numpy as np
+import yfinance as yf
 import xml.etree.ElementTree as ET
 from datetime import date
 from app.services.warrant_finder import build_warrant_message
 
 logger = logging.getLogger(__name__)
+
+
+def _ema(prices: np.ndarray, period: int) -> float:
+    if len(prices) < period:
+        return float("nan")
+    k = 2.0 / (period + 1)
+    val = prices[:period].mean()
+    for p in prices[period:]:
+        val = p * k + val * (1 - k)
+    return round(val, 2)
+
+
+def get_ema_status(ticker: str) -> dict:
+    """EMA20/50/200 auf Tagesbasis für einen Ticker."""
+    try:
+        df = yf.download(ticker, period="2y", interval="1d", progress=False, auto_adjust=True)
+        if df.empty:
+            return {}
+        if hasattr(df.columns, "droplevel"):
+            df.columns = df.columns.droplevel(1) if isinstance(df.columns, __import__("pandas").MultiIndex) else df.columns
+        closes = df["Close"].dropna().values.astype(float)
+        price  = round(float(closes[-1]), 2)
+        e20    = _ema(closes, 20)
+        e50    = _ema(closes, 50)
+        e200   = _ema(closes, 200)
+
+        def vs(ema_val: float) -> str:
+            if np.isnan(ema_val):
+                return "–"
+            pct = (price - ema_val) / ema_val * 100
+            return f"{'▲' if pct > 0 else '▼'} {abs(pct):.1f}%"
+
+        return {
+            "price": price,
+            "ema20": e20,  "vs20":  vs(e20),
+            "ema50": e50,  "vs50":  vs(e50),
+            "ema200": e200, "vs200": vs(e200),
+            "trend": (
+                "bullish"  if price > e20 > e50 > e200 else
+                "bearish"  if price < e20 < e50 < e200 else
+                "mixed"
+            ),
+        }
+    except Exception as e:
+        logger.warning("EMA status failed for %s: %s", ticker, e)
+        return {}
 
 BIG5 = ["AAPL", "MSFT", "NVDA", "AMZN", "GOOGL"]
 
@@ -202,13 +250,34 @@ async def send_news_digest() -> dict:
     if parts["3"].strip():
         await _send_telegram(_format_msg3(parts["3"].strip(), today))
     if parts["4"].strip():
-        trade_text = parts["4"].strip()
-        await _send_telegram(_format_msg4(trade_text, today))
-
-        # Optionsschein-Finder aus Trade-Idee extrahieren
+        trade_text  = parts["4"].strip()
         ticker_m    = re.search(r"TICKER:\s*([A-Z]{1,6})", trade_text)
         direction_m = re.search(r"RICHTUNG:\s*(LONG|SHORT)", trade_text)
         ziel_m      = re.search(r"ZIEL:\s*\+?(\d+)", trade_text)
+
+        # EMA-Status für den vorgeschlagenen Ticker holen
+        ema_block = ""
+        conflict  = ""
+        if ticker_m:
+            ema = get_ema_status(ticker_m.group(1))
+            if ema:
+                trend_icon = "🟢" if ema["trend"] == "bullish" else "🔴" if ema["trend"] == "bearish" else "🟡"
+                ema_block = (
+                    f"\n\n<b>Technischer Check ({ticker_m.group(1)})</b>\n"
+                    f"Kurs: {ema['price']}  {trend_icon} Trend: {ema['trend'].upper()}\n"
+                    f"EMA20:  {ema['ema20']}  ({ema['vs20']})\n"
+                    f"EMA50:  {ema['ema50']}  ({ema['vs50']})\n"
+                    f"EMA200: {ema['ema200']}  ({ema['vs200']})"
+                )
+                if direction_m:
+                    d = direction_m.group(1)
+                    if (d == "LONG" and ema["trend"] == "bearish") or \
+                       (d == "SHORT" and ema["trend"] == "bullish"):
+                        conflict = "\n\n⚠️ <b>ACHTUNG:</b> News-Signal widerspricht EMA-Trend — erhöhtes Risiko!"
+
+        await _send_telegram(_format_msg4(trade_text + ema_block + conflict, today))
+
+        # Optionsschein-Finder
         if ticker_m and direction_m:
             ticker    = ticker_m.group(1)
             direction = direction_m.group(1)
