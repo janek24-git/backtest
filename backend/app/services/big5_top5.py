@@ -128,6 +128,8 @@ def _fetch_price_sync(ticker: str, from_date: str, to_date: str) -> pd.DataFrame
     raw = yf.download(ticker, start=from_date, end=to_date, progress=False, auto_adjust=True)
     if raw.empty:
         return pd.DataFrame(columns=["open", "high", "low", "close", "volume"])
+    if isinstance(raw.columns, pd.MultiIndex):
+        raw.columns = raw.columns.droplevel(1)
     df = raw[["Open", "High", "Low", "Close", "Volume"]].copy()
     df.columns = ["open", "high", "low", "close", "volume"]
     df.index = pd.to_datetime(df.index).date

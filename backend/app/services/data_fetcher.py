@@ -29,6 +29,9 @@ def _fetch_ticker_sync(ticker: str, from_date: str) -> pd.DataFrame:
     if raw.empty:
         return pd.DataFrame(columns=["open", "high", "low", "close", "volume"])
 
+    # Flatten MultiIndex columns (yfinance >= 0.2.58 returns MultiIndex for single tickers too)
+    if isinstance(raw.columns, pd.MultiIndex):
+        raw.columns = raw.columns.droplevel(1)
     # Use split-adjusted Close (not dividend-adjusted) to match TradingView default
     df = raw[["Open", "High", "Low", "Close", "Volume"]].copy()
     df.columns = ["open", "high", "low", "close", "volume"]
