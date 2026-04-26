@@ -71,26 +71,37 @@ Hier sind die aktuellen Finanznews aus mehreren Quellen:
 
 ---
 
-Dein Auftrag — antworte auf Deutsch, direkt und präzise:
+Dein Auftrag — antworte auf Deutsch, direkt und präzise. Keine Floskeln.
 
-## Teil 1 — Top 5 News (Telegram-Nachricht 1)
-Wähle die 5 wichtigsten Meldungen aus. Für jede:
+## Teil 1 — Top 5 News
+Wähle die 5 wichtigsten Meldungen. Für jede:
 - 1 Satz was passiert ist
-- 1 Satz Marktrelevanz (positiv / negativ / neutral für Aktien)
+- 1 Satz Marktrelevanz (positiv / negativ / neutral)
 
-Format exakt so:
+Format:
 1. [THEMA] Ereignis — Marktrelevanz
-2. ...
 
-## Teil 2 — Handlungsempfehlung (Telegram-Nachricht 2)
-Bezug auf Big 5: AAPL, MSFT, NVDA, AMZN, GOOGL
+## Teil 2 — Handlungsempfehlung Big 5
+Bezug auf: AAPL, MSFT, NVDA, AMZN, GOOGL
+- Welche News betreffen direkt die Big 5?
+- Sektor-Trends heute (KI, Chips, Cloud)?
+- 1 konkrete Aktion mit 2-Satz-Begründung
 
-Beantworte:
-- Welche Nachrichten betreffen direkt die Big 5?
-- Gibt es Sektor-Trends (KI, Chips, Cloud, Konsum) die heute relevant sind?
-- 1 konkrete Aktion: kaufen / halten / vorsichtig sein — mit Begründung in 2 Sätzen
+## Teil 3 — Finance Research (5 Bereiche)
+Analysiere die News aus exakt diesen 5 Perspektiven. Für jede genau 1 Finding:
 
-Max 300 Wörter gesamt. Keine Floskeln."""
+Bereich 1: MARKT — Welche Aktie/Asset bewegt sich heute signifikant?
+Bereich 2: MAKRO — Fed, EZB, Zinsen, Inflation, BIP-Daten heute?
+Bereich 3: TECH/EARNINGS — Earnings-Überraschung oder Tech-Wachstum heute?
+Bereich 4: CRYPTO — Bitcoin, Altcoins, Bewegung heute?
+Bereich 5: DEALS — M&A, PE, VC, IPO-Deal heute relevant?
+
+Format für jeden Bereich:
+[NUMMER]. [TITEL (Asset/Sektor)]
+[1-2 Sätze Finding]
+Idee: [konkrete Trade-Idee oder Risiko-Hinweis]
+
+Max 400 Wörter gesamt."""
 
 
 async def _send_telegram(text: str) -> None:
@@ -121,6 +132,15 @@ def _format_msg2(part2: str, today: str) -> str:
     )
 
 
+def _format_msg3(part3: str, today: str) -> str:
+    return (
+        f"🔬 <b>Finance Research — {today}</b>\n"
+        f"━━━━━━━━━━━━━━━━━━━━\n\n"
+        f"{part3}\n\n"
+        f"<i>Research by 5-Bereich System</i>"
+    )
+
+
 async def send_news_digest() -> dict:
     headlines = fetch_all_headlines()
     if not headlines:
@@ -133,27 +153,33 @@ async def send_news_digest() -> dict:
     client = anthropic.Anthropic(api_key=os.environ.get("ANTHROPIC_API_KEY"))
     msg = client.messages.create(
         model="claude-opus-4-6",
-        max_tokens=800,
+        max_tokens=1200,
         messages=[{"role": "user", "content": prompt}],
     )
     raw = msg.content[0].text
 
-    # Split in Teil 1 und Teil 2
-    if "## Teil 2" in raw:
-        part1, part2 = raw.split("## Teil 2", 1)
-        part1 = part1.replace("## Teil 1 — Top 5 News (Telegram-Nachricht 1)", "").strip()
-        part2 = part2.replace("— Handlungsempfehlung (Telegram-Nachricht 2)", "").strip()
-    else:
-        part1 = raw
-        part2 = ""
+    # Split in Teil 1, 2, 3
+    parts = {"1": "", "2": "", "3": ""}
+    current = "1"
+    for line in raw.splitlines():
+        if "## Teil 2" in line:
+            current = "2"
+            continue
+        if "## Teil 3" in line:
+            current = "3"
+            continue
+        if "## Teil 1" in line:
+            continue
+        parts[current] += line + "\n"
 
     today = date.today().strftime("%d.%m.%Y")
-    msg1 = _format_msg1(part1, today)
-    await _send_telegram(msg1)
+    await _send_telegram(_format_msg1(parts["1"].strip(), today))
 
-    if part2:
-        msg2 = _format_msg2(part2, today)
-        await _send_telegram(msg2)
+    if parts["2"].strip():
+        await _send_telegram(_format_msg2(parts["2"].strip(), today))
+
+    if parts["3"].strip():
+        await _send_telegram(_format_msg3(parts["3"].strip(), today))
 
     return {
         "sent": True,
