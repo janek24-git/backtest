@@ -1,0 +1,19 @@
+name: Morning News Digest
+
+on:
+  schedule:
+    # 08:00 UTC = 10:00 MESZ (Sommerzeit) | Mo–Fr
+    - cron: '0 8 * * 1-5'
+  workflow_dispatch:
+
+jobs:
+  send-digest:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger News Digest
+        run: |
+          curl -s -X POST \
+            "https://stocks-backtest-api-production-0c6a.up.railway.app/big5/news-digest" \
+            -H "Content-Type: application/json" \
+            --max-time 120 \
+            -w "\nHTTP Status: %{http_code}\n"

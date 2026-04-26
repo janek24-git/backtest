@@ -10,6 +10,7 @@ from app.models.schemas import (
 from app.services.big5_top5 import fetch_candidate_data, compute_top5_history
 from app.services.big5_engine import run_all_combinations
 from app.services.telegram_alerts import send_telegram_alert, get_current_status
+from app.services.news_digest import send_news_digest
 
 logger = logging.getLogger(__name__)
 router = APIRouter()
@@ -157,6 +158,17 @@ async def ema_status():
         return {"status": get_current_status()}
     except Exception as e:
         logger.exception("EMA status failed")
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@router.post("/news-digest")
+async def trigger_news_digest():
+    """Morning news digest — Top-News + Handlungsempfehlung via Telegram."""
+    try:
+        result = await send_news_digest()
+        return result
+    except Exception as e:
+        logger.exception("News digest failed")
         raise HTTPException(status_code=500, detail=str(e))
 
 
