@@ -14,6 +14,7 @@ import logging
 import httpx
 import anthropic
 import numpy as np
+import pandas as pd
 import yfinance as yf
 import xml.etree.ElementTree as ET
 from datetime import date
@@ -38,8 +39,8 @@ def get_ema_status(ticker: str) -> dict:
         df = yf.download(ticker, period="2y", interval="1d", progress=False, auto_adjust=True)
         if df.empty:
             return {}
-        if hasattr(df.columns, "droplevel"):
-            df.columns = df.columns.droplevel(1) if isinstance(df.columns, __import__("pandas").MultiIndex) else df.columns
+        if isinstance(df.columns, pd.MultiIndex):
+            df.columns = df.columns.droplevel(1)
         closes = df["Close"].dropna().values.astype(float)
         price  = round(float(closes[-1]), 2)
         e20    = _ema(closes, 20)

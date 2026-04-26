@@ -6,6 +6,7 @@ Direkte Buttons in Telegram statt fragile API-Calls.
 
 import logging
 import numpy as np
+import pandas as pd
 import yfinance as yf
 from math import log, sqrt, erf
 from datetime import datetime, timezone
@@ -44,7 +45,7 @@ def get_delta_profile(ticker: str, direction: str) -> dict:
                          progress=False, auto_adjust=True)
         if df.empty:
             raise ValueError("No data")
-        if isinstance(df.columns, __import__("pandas").MultiIndex):
+        if isinstance(df.columns, pd.MultiIndex):
             df.columns = df.columns.droplevel(1)
         closes = df["Close"].dropna().values.flatten().astype(float)
         if len(closes) < 5:
