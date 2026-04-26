@@ -116,56 +116,66 @@ def _build_prompt(headlines: dict[str, list[str]]) -> str:
 
     return f"""Du bist ein erfahrener Finanzanalyst. Heute ist der {today}.
 
-Hier sind die aktuellen Finanznews aus mehreren Quellen:
+Aktuelle Finanznews:
 
 {news_block}
 
 ---
 
-Dein Auftrag — antworte auf Deutsch, direkt und präzise. Keine Floskeln.
+Antworte auf Deutsch. Halte dich EXAKT an die Formate — kein Abweichen.
 
 ## Teil 1 — Top 5 News
-Wähle die 5 wichtigsten Meldungen. Für jede:
-- 1 Satz was passiert ist
-- 1 Satz Marktrelevanz (positiv / negativ / neutral)
-
-Format:
-1. [THEMA] Ereignis — Marktrelevanz
+Wähle die 5 wichtigsten Meldungen. Format exakt so (Nummerierung + Thema in Klammern):
+1. [THEMA] Was passiert ist. Marktrelevanz: positiv/negativ/neutral für Aktien.
+2. [THEMA] ...
+(bis 5)
 
 ## Teil 2 — Handlungsempfehlung Big 5
-Bezug auf: AAPL, MSFT, NVDA, AMZN, GOOGL
-- Welche News betreffen direkt die Big 5?
-- Sektor-Trends heute (KI, Chips, Cloud)?
-- 1 konkrete Aktion mit 2-Satz-Begründung
+Exakt diese 3 Abschnitte mit exakt diesen Labels:
 
-## Teil 3 — Finance Research (5 Bereiche)
-Analysiere die News aus exakt diesen 5 Perspektiven. Für jede genau 1 Finding:
+DIREKTE BETROFFENHEIT:
+[Welche Big5 (AAPL/MSFT/NVDA/AMZN/GOOGL) sind heute direkt betroffen und warum — 2 Sätze]
 
-Bereich 1: MARKT — Welche Aktie/Asset bewegt sich heute signifikant?
-Bereich 2: MAKRO — Fed, EZB, Zinsen, Inflation, BIP-Daten heute?
-Bereich 3: TECH/EARNINGS — Earnings-Überraschung oder Tech-Wachstum heute?
-Bereich 4: CRYPTO — Bitcoin, Altcoins, Bewegung heute?
-Bereich 5: DEALS — M&A, PE, VC, IPO-Deal heute relevant?
+SEKTOR-TRENDS:
+[KI / Chips / Cloud / Konsum — was ist heute relevant — 2 Sätze]
 
-Format für jeden Bereich:
-[NUMMER]. [TITEL (Asset/Sektor)]
-[1-2 Sätze Finding]
-Idee: [konkrete Trade-Idee oder Risiko-Hinweis]
+KONKRETE AKTION:
+[KAUFEN / HALTEN / VORSICHT — Ticker — 2-Satz-Begründung]
 
-Max 400 Wörter gesamt.
+## Teil 3 — Finance Research
+Exakt 5 Findings, exakt dieses Format:
+
+MARKT: [Titel]
+[1-2 Sätze was passiert]
+Idee: [konkrete Trade-Idee]
+
+MAKRO: [Titel]
+[1-2 Sätze]
+Idee: [Idee]
+
+TECH: [Titel]
+[1-2 Sätze]
+Idee: [Idee]
+
+CRYPTO: [Titel]
+[1-2 Sätze]
+Idee: [Idee]
+
+DEALS: [Titel]
+[1-2 Sätze]
+Idee: [Idee]
 
 ## Teil 4 — Trade-Idee des Tages
-Synthetisiere ALLES aus Teil 1-3 zu EINER einzigen konkreten Trade-Idee.
+Exakt dieses Format, jede Zeile beginnt mit dem Label:
 
-Format exakt:
 TICKER: [Symbol]
-RICHTUNG: LONG / SHORT
-EINSTIEG: [Kurs oder "bei Marktöffnung"]
+RICHTUNG: LONG oder SHORT
+EINSTIEG: [Kurs oder "Marktöffnung"]
 ZIEL: [+X%]
 STOP: [-X%]
-POSITION (1000€): [Anzahl Aktien bei aktuellem Kurs]
-GRUND: [2 Sätze — warum genau diese Aktie, warum heute]
-KATALYSATOR: [Was triggert die Bewegung]"""
+POSITION: [Anzahl Aktien für 1000 Euro]
+GRUND: [2 Sätze warum diese Aktie heute]
+KATALYSATOR: [Was löst die Bewegung aus]"""
 
 
 async def _send_telegram(text: str, reply_markup: dict | None = None) -> None:
@@ -183,37 +193,98 @@ async def _send_telegram(text: str, reply_markup: dict | None = None) -> None:
         resp.raise_for_status()
 
 
+_NUM_EMOJI = ["1️⃣", "2️⃣", "3️⃣", "4️⃣", "5️⃣"]
+
+
 def _format_msg1(part1: str, today: str) -> str:
-    return (
-        f"📰 <b>Morning Briefing — {today}</b>\n"
-        f"━━━━━━━━━━━━━━━━━━━━\n\n"
-        f"{part1}"
-    )
+    lines = [f"📰 <b>Morning Briefing — {today}</b>", "━━━━━━━━━━━━━━━━━━━━", ""]
+    for raw in part1.strip().splitlines():
+        raw = raw.strip()
+        if not raw:
+            continue
+        # "1. [TECH] Text" → "1️⃣ [TECH] Text"
+        m = re.match(r"^(\d)\.\s*(.*)", raw)
+        if m:
+            idx = int(m.group(1)) - 1
+            emoji = _NUM_EMOJI[idx] if 0 <= idx < len(_NUM_EMOJI) else f"{m.group(1)}."
+            lines.append(f"{emoji} {m.group(2)}")
+        else:
+            lines.append(raw)
+    return "\n".join(lines)
 
 
 def _format_msg2(part2: str, today: str) -> str:
-    return (
-        f"🎯 <b>Handlungsempfehlung — {today}</b>\n"
-        f"━━━━━━━━━━━━━━━━━━━━\n\n"
-        f"{part2}"
-    )
+    section_map = {
+        "DIREKTE BETROFFENHEIT:": "📌 <b>Direkte Betroffenheit</b>",
+        "SEKTOR-TRENDS:":         "📊 <b>Sektor-Trends</b>",
+        "KONKRETE AKTION:":       "✅ <b>Konkrete Aktion</b>",
+    }
+    lines = [f"🎯 <b>Handlungsempfehlung Big 5 — {today}</b>", "━━━━━━━━━━━━━━━━━━━━", ""]
+    for raw in part2.strip().splitlines():
+        stripped = raw.strip()
+        replaced = False
+        for label, replacement in section_map.items():
+            if stripped.upper().startswith(label):
+                lines += ["", replacement]
+                rest = stripped[len(label):].strip()
+                if rest:
+                    lines.append(rest)
+                replaced = True
+                break
+        if not replaced and stripped:
+            lines.append(stripped)
+    return "\n".join(lines)
 
 
 def _format_msg3(part3: str, today: str) -> str:
-    return (
-        f"🔬 <b>Finance Research — {today}</b>\n"
-        f"━━━━━━━━━━━━━━━━━━━━\n\n"
-        f"{part3}\n\n"
-        f"<i>Research by 5-Bereich System</i>"
-    )
+    area_map = {
+        "MARKT:":  "📈 <b>Markt</b>",
+        "MAKRO:":  "🏦 <b>Makro</b>",
+        "TECH:":   "💻 <b>Tech / Earnings</b>",
+        "CRYPTO:": "₿ <b>Crypto</b>",
+        "DEALS:":  "🤝 <b>Deals / M&A</b>",
+        "IDEE:":   "💡 <i>Idee:</i>",
+    }
+    lines = [f"🔬 <b>Finance Research — {today}</b>", "━━━━━━━━━━━━━━━━━━━━", ""]
+    for raw in part3.strip().splitlines():
+        stripped = raw.strip()
+        replaced = False
+        for label, replacement in area_map.items():
+            if stripped.upper().startswith(label):
+                title = stripped[len(label):].strip()
+                lines += ["", f"{replacement}  {title}" if title else replacement]
+                replaced = True
+                break
+        if not replaced and stripped:
+            lines.append(stripped)
+    lines += ["", "<i>Research by 5-Bereich System</i>"]
+    return "\n".join(lines)
 
 
 def _format_msg4(part4: str, today: str) -> str:
-    return (
-        f"⚡️ <b>Trade-Idee des Tages — {today}</b>\n"
-        f"━━━━━━━━━━━━━━━━━━━━\n\n"
-        f"<code>{part4.strip()}</code>"
-    )
+    field_map = {
+        "TICKER":     ("🎯", "Ticker"),
+        "RICHTUNG":   ("📍", "Richtung"),
+        "EINSTIEG":   ("💰", "Einstieg"),
+        "ZIEL":       ("🏁", "Ziel"),
+        "STOP":       ("🛑", "Stop"),
+        "POSITION":   ("📦", "Position (1000€)"),
+        "GRUND":      ("📝", "Grund"),
+        "KATALYSATOR":("⚡", "Katalysator"),
+    }
+    lines = [f"⚡️ <b>Trade-Idee des Tages — {today}</b>", "━━━━━━━━━━━━━━━━━━━━", ""]
+    for raw in part4.strip().splitlines():
+        stripped = raw.strip()
+        matched = False
+        for key, (emoji, label) in field_map.items():
+            if stripped.upper().startswith(f"{key}:"):
+                value = stripped[len(key)+1:].strip()
+                lines.append(f"{emoji} <b>{label}:</b>  {value}")
+                matched = True
+                break
+        if not matched and stripped:
+            lines.append(stripped)
+    return "\n".join(lines)
 
 
 async def send_news_digest() -> dict:
