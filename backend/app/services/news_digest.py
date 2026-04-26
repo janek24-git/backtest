@@ -122,7 +122,7 @@ Aktuelle Finanznews:
 
 ---
 
-Antworte auf Deutsch. Halte dich EXAKT an die Formate — kein Abweichen.
+WICHTIG: Antworte auf Deutsch. KEINE Markdown-Formatierung — keine Sternchen (**), keine Rauten (###), keine Unterstriche. Nur Plain Text mit exakt den vorgegebenen Labels. Halte dich EXAKT an die Formate.
 
 ## Teil 1 — Top 5 News
 Wähle die 5 wichtigsten Meldungen. Format exakt so (Nummerierung + Thema in Klammern):
@@ -196,13 +196,22 @@ async def _send_telegram(text: str, reply_markup: dict | None = None) -> None:
 _NUM_EMOJI = ["1️⃣", "2️⃣", "3️⃣", "4️⃣", "5️⃣"]
 
 
+def _clean(text: str) -> str:
+    """Entfernt Markdown, konvertiert zu sauberem Plain-Text."""
+    import re as _re
+    text = _re.sub(r"\*\*(.+?)\*\*", r"\1", text)   # **bold** → plain
+    text = _re.sub(r"\*(.+?)\*",     r"\1", text)   # *italic* → plain
+    text = _re.sub(r"#{1,4}\s*",     "",    text)   # ### → entfernt
+    text = _re.sub(r"^---+$",        "",    text, flags=_re.MULTILINE)
+    return text
+
+
 def _format_msg1(part1: str, today: str) -> str:
     lines = [f"📰 <b>Morning Briefing — {today}</b>", "━━━━━━━━━━━━━━━━━━━━", ""]
-    for raw in part1.strip().splitlines():
+    for raw in _clean(part1).strip().splitlines():
         raw = raw.strip()
         if not raw:
             continue
-        # "1. [TECH] Text" → "1️⃣ [TECH] Text"
         m = re.match(r"^(\d)\.\s*(.*)", raw)
         if m:
             idx = int(m.group(1)) - 1
@@ -214,48 +223,58 @@ def _format_msg1(part1: str, today: str) -> str:
 
 
 def _format_msg2(part2: str, today: str) -> str:
+    # Verschiedene Varianten die Claude ausgibt
     section_map = {
-        "DIREKTE BETROFFENHEIT:": "📌 <b>Direkte Betroffenheit</b>",
-        "SEKTOR-TRENDS:":         "📊 <b>Sektor-Trends</b>",
-        "KONKRETE AKTION:":       "✅ <b>Konkrete Aktion</b>",
+        "DIREKTE BETROFFENHEIT": "📌 <b>Direkte Betroffenheit</b>",
+        "SEKTOR-TRENDS":         "📊 <b>Sektor-Trends</b>",
+        "SEKTOR TRENDS":         "📊 <b>Sektor-Trends</b>",
+        "SEKTOR-TRENDS HEUTE":   "📊 <b>Sektor-Trends</b>",
+        "KONKRETE AKTION":       "✅ <b>Konkrete Aktion</b>",
     }
     lines = [f"🎯 <b>Handlungsempfehlung Big 5 — {today}</b>", "━━━━━━━━━━━━━━━━━━━━", ""]
-    for raw in part2.strip().splitlines():
+    for raw in _clean(part2).strip().splitlines():
         stripped = raw.strip()
+        if not stripped:
+            continue
         replaced = False
+        upper = stripped.rstrip(":").upper()
         for label, replacement in section_map.items():
-            if stripped.upper().startswith(label):
+            if upper == label or stripped.upper().startswith(label + ":"):
                 lines += ["", replacement]
-                rest = stripped[len(label):].strip()
+                rest = stripped[len(label):].lstrip(":").strip()
                 if rest:
                     lines.append(rest)
                 replaced = True
                 break
-        if not replaced and stripped:
+        if not replaced:
             lines.append(stripped)
     return "\n".join(lines)
 
 
 def _format_msg3(part3: str, today: str) -> str:
     area_map = {
-        "MARKT:":  "📈 <b>Markt</b>",
-        "MAKRO:":  "🏦 <b>Makro</b>",
-        "TECH:":   "💻 <b>Tech / Earnings</b>",
-        "CRYPTO:": "₿ <b>Crypto</b>",
-        "DEALS:":  "🤝 <b>Deals / M&A</b>",
-        "IDEE:":   "💡 <i>Idee:</i>",
+        "MARKT":  "📈 <b>Markt</b>",
+        "MAKRO":  "🏦 <b>Makro</b>",
+        "TECH":   "💻 <b>Tech / Earnings</b>",
+        "CRYPTO": "₿  <b>Crypto</b>",
+        "DEALS":  "🤝 <b>Deals / M&A</b>",
+        "IDEE":   "💡 <i>Idee:</i>",
     }
     lines = [f"🔬 <b>Finance Research — {today}</b>", "━━━━━━━━━━━━━━━━━━━━", ""]
-    for raw in part3.strip().splitlines():
+    for raw in _clean(part3).strip().splitlines():
         stripped = raw.strip()
+        if not stripped:
+            continue
         replaced = False
-        for label, replacement in area_map.items():
-            if stripped.upper().startswith(label):
-                title = stripped[len(label):].strip()
+        for key, replacement in area_map.items():
+            # matcht "MARKT:", "1. MARKT —", "MARKT — Titel" etc.
+            if re.match(rf"^(\d+\.\s*)?{key}[\s:\-—]", stripped.upper()):
+                # Titel nach dem Label extrahieren
+                title = re.sub(rf"^(\d+\.\s*)?{key}[\s:\-—]*", "", stripped, flags=re.IGNORECASE).strip()
                 lines += ["", f"{replacement}  {title}" if title else replacement]
                 replaced = True
                 break
-        if not replaced and stripped:
+        if not replaced:
             lines.append(stripped)
     lines += ["", "<i>Research by 5-Bereich System</i>"]
     return "\n".join(lines)
@@ -273,7 +292,7 @@ def _format_msg4(part4: str, today: str) -> str:
         "KATALYSATOR":("⚡", "Katalysator"),
     }
     lines = [f"⚡️ <b>Trade-Idee des Tages — {today}</b>", "━━━━━━━━━━━━━━━━━━━━", ""]
-    for raw in part4.strip().splitlines():
+    for raw in _clean(part4).strip().splitlines():
         stripped = raw.strip()
         matched = False
         for key, (emoji, label) in field_map.items():
