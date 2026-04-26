@@ -13,7 +13,7 @@ from app.services.telegram_alerts import send_telegram_alert, get_current_status
 from app.services.news_digest import send_news_digest
 from app.services.intraday_alerts import send_intraday_alert
 from app.services.wsb_scanner import send_wsb_alert, scan_wsb
-from app.services.warrant_finder import find_warrants, build_warrant_message
+from app.services.warrant_finder import build_warrant_links, build_warrant_message
 
 logger = logging.getLogger(__name__)
 router = APIRouter()
@@ -212,8 +212,8 @@ async def warrant_search(
 ):
     """Optionsschein-Finder: beste Calls/Puts für eine Trade-Idee."""
     try:
-        warrants = find_warrants(ticker.upper(), direction.upper(), budget)
-        return {"ticker": ticker.upper(), "direction": direction, "warrants": warrants}
+        data = build_warrant_links(ticker.upper(), direction.upper())
+        return {"ticker": ticker.upper(), "direction": direction, **data}
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
