@@ -277,7 +277,6 @@ export function Big5Page() {
               </table>
             </div>
           </div>
-          <AnalysisSection data={compareResults.r100} />
           <AnalysisSection data={compareResults.r200} />
           </>
         )}
