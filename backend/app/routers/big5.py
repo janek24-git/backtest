@@ -11,6 +11,8 @@ from app.services.big5_top5 import fetch_candidate_data, compute_top5_history
 from app.services.big5_engine import run_all_combinations
 from app.services.telegram_alerts import send_telegram_alert, get_current_status
 from app.services.news_digest import send_news_digest
+from app.services.intraday_alerts import send_intraday_alert
+from app.services.wsb_scanner import send_wsb_alert, scan_wsb
 
 logger = logging.getLogger(__name__)
 router = APIRouter()
@@ -169,6 +171,35 @@ async def trigger_news_digest():
         return result
     except Exception as e:
         logger.exception("News digest failed")
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@router.post("/intraday-alert")
+async def trigger_intraday_alert():
+    """DE40 + US100 EMA200 Crossover auf 30m/1h/12h → Telegram."""
+    try:
+        return await send_intraday_alert()
+    except Exception as e:
+        logger.exception("Intraday alert failed")
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@router.get("/wsb-scan")
+async def wsb_scan():
+    """WSB + Reddit Scanner — Top Mentions inkl. PLTR."""
+    try:
+        return scan_wsb()
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@router.post("/wsb-alert")
+async def trigger_wsb_alert():
+    """WSB Scanner → Telegram wenn PLTR oder Watchlist trending."""
+    try:
+        return await send_wsb_alert()
+    except Exception as e:
+        logger.exception("WSB alert failed")
         raise HTTPException(status_code=500, detail=str(e))
 
 

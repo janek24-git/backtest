@@ -1,0 +1,18 @@
+name: Intraday EMA Alert (15min)
+
+on:
+  schedule:
+    # Alle 15min Mo-Fr 07:00-21:00 UTC (DE40 ab 07:00, US100 bis 21:00)
+    - cron: '*/15 7-21 * * 1-5'
+  workflow_dispatch:
+
+jobs:
+  intraday:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger Intraday EMA Alert
+        run: |
+          curl -s -X POST \
+            "https://stocks-backtest-api-production-0c6a.up.railway.app/big5/intraday-alert" \
+            --max-time 30 \
+            -w "\nHTTP %{http_code}\n"
