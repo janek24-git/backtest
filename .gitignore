@@ -21,3 +21,5 @@ frontend/dist/
 .env
 .env.local
 .env.production
+backend/journal.db
+backend/.env.save

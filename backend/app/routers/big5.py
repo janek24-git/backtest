@@ -1,7 +1,7 @@
 import logging
 import os
 import anthropic
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, HTTPException, Query
 from app.models.schemas import (
     Big5BacktestRequest, Big5BacktestResponse,
     Big5ComboResult, Big5ComboMetrics, Big5Trade,
@@ -9,6 +9,7 @@ from app.models.schemas import (
 )
 from app.services.big5_top5 import fetch_candidate_data, compute_top5_history
 from app.services.big5_engine import run_all_combinations
+from app.services.telegram_alerts import send_telegram_alert, get_current_status
 
 logger = logging.getLogger(__name__)
 router = APIRouter()
@@ -146,4 +147,25 @@ Maximal 500 Wörter gesamt."""
 
     except Exception as e:
         logger.exception("Big5 analyze failed")
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@router.get("/ema-status")
+async def ema_status():
+    """Current EMA200 position of all Big 5 tickers."""
+    try:
+        return {"status": get_current_status()}
+    except Exception as e:
+        logger.exception("EMA status failed")
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@router.post("/ema-alert")
+async def trigger_ema_alert():
+    """Check trending + Big5 EMA200 bullish crossovers and send Telegram alert."""
+    try:
+        result = await send_telegram_alert()
+        return result
+    except Exception as e:
+        logger.exception("EMA alert failed")
         raise HTTPException(status_code=500, detail=str(e))

@@ -92,3 +92,35 @@ export interface Big5AnalysisResponse {
 }
 export type UniverseSize = 5 | 10 | 20;
 export type PeriodKey = '1M' | '3M' | '6M' | '1Y' | '3Y' | '5Y' | 'ALL';
+
+// ── Journal ────────────────────────────────────────────────────────────────
+
+export interface JournalTrade {
+  id: string;
+  datum: string;
+  ticker: string;
+  richtung: 'LONG' | 'SHORT';
+  einstieg: number;
+  ausstieg: number | null;
+  stueck: number;
+  signal: string | null;
+  notiz: string | null;
+}
+
+export interface JournalEquityPoint {
+  date: string;
+  ticker: string;
+  equity: number;
+}
+
+export interface JournalStats {
+  total_trades: number;
+  closed_trades: number;
+  open_trades: number;
+  total_pnl: number;
+  win_rate: number;
+  avg_return_pct: number;
+  best_trade_pct: number;
+  worst_trade_pct: number;
+  equity_curve: JournalEquityPoint[];
+}

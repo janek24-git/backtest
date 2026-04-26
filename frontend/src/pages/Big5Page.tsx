@@ -99,6 +99,9 @@ export function Big5Page() {
           <button onClick={() => navigate('/screener')} className="text-sm" style={{ color: '#8B8FA8' }}>
             EMA Screener →
           </button>
+          <button onClick={() => navigate('/journal')} className="text-sm" style={{ color: '#8B8FA8' }}>
+            📓 Journal →
+          </button>
           <div>
             <h1 className="text-xl font-semibold tracking-tight" style={{ color: '#E8EAED' }}>
               Big 5 Swing Backtest

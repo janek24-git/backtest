@@ -1,0 +1,19 @@
+name: EMA200 Daily Alert
+
+on:
+  schedule:
+    # 22:00 Uhr UTC = 23:00 MEZ / 00:00 MESZ — nach US-Marktschluss (16:00 ET)
+    - cron: '0 22 * * 1-5'
+  workflow_dispatch:  # manuell triggerbar
+
+jobs:
+  send-alert:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger EMA Alert
+        run: |
+          curl -s -X POST \
+            "https://stocks-backtest-api-production-0c6a.up.railway.app/big5/ema-alert" \
+            -H "Content-Type: application/json" \
+            --max-time 120 \
+            -w "\nHTTP Status: %{http_code}\n"

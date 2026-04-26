@@ -114,6 +114,7 @@ def run_backtest(df: pd.DataFrame, ema_period: int = 200, from_date=None) -> dic
     metrics = calculate_metrics(trades)
 
     signals_out = df_signals[["open", "close", "ema200", "signal"]].copy()
+    signals_out = signals_out.dropna(subset=["ema200"])
     signals_out.index = [d.isoformat() if isinstance(d, date) else d.strftime("%Y-%m-%d") for d in signals_out.index]
 
     return {
