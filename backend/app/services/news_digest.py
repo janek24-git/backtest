@@ -17,7 +17,7 @@ import numpy as np
 import yfinance as yf
 import xml.etree.ElementTree as ET
 from datetime import date
-from app.services.warrant_finder import build_warrant_message
+from app.services.warrant_finder import build_warrant_message, build_warrant_buttons
 
 logger = logging.getLogger(__name__)
 
@@ -167,13 +167,16 @@ GRUND: [2 Sätze — warum genau diese Aktie, warum heute]
 KATALYSATOR: [Was triggert die Bewegung]"""
 
 
-async def _send_telegram(text: str) -> None:
+async def _send_telegram(text: str, reply_markup: dict | None = None) -> None:
     token = os.environ.get("TELEGRAM_BOT_TOKEN")
     chat_id = os.environ.get("TELEGRAM_CHAT_ID")
+    payload: dict = {"chat_id": chat_id, "text": text, "parse_mode": "HTML"}
+    if reply_markup and reply_markup.get("inline_keyboard"):
+        payload["reply_markup"] = reply_markup
     async with httpx.AsyncClient() as client:
         resp = await client.post(
             f"https://api.telegram.org/bot{token}/sendMessage",
-            json={"chat_id": chat_id, "text": text, "parse_mode": "HTML"},
+            json=payload,
             timeout=10,
         )
         resp.raise_for_status()
@@ -282,8 +285,9 @@ async def send_news_digest() -> dict:
             ticker    = ticker_m.group(1)
             direction = direction_m.group(1)
             target    = float(ziel_m.group(1)) if ziel_m else 10.0
-            warrant_msg = build_warrant_message(ticker, direction, target)
-            await _send_telegram(warrant_msg)
+            warrant_msg     = build_warrant_message(ticker, direction, target)
+            warrant_buttons = build_warrant_buttons(ticker, direction)
+            await _send_telegram(warrant_msg, reply_markup=warrant_buttons)
 
     return {
         "sent": True,
