@@ -197,12 +197,14 @@ _NUM_EMOJI = ["1️⃣", "2️⃣", "3️⃣", "4️⃣", "5️⃣"]
 
 
 def _clean(text: str) -> str:
-    """Entfernt Markdown, konvertiert zu sauberem Plain-Text."""
-    import re as _re
-    text = _re.sub(r"\*\*(.+?)\*\*", r"\1", text)   # **bold** → plain
-    text = _re.sub(r"\*(.+?)\*",     r"\1", text)   # *italic* → plain
-    text = _re.sub(r"#{1,4}\s*",     "",    text)   # ### → entfernt
-    text = _re.sub(r"^---+$",        "",    text, flags=_re.MULTILINE)
+    """Entfernt Markdown und escaped HTML-Sonderzeichen für Telegram."""
+    # HTML-Entities zuerst escapen (vor allem & < >)
+    text = text.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
+    # Markdown entfernen
+    text = re.sub(r"\*\*(.+?)\*\*", r"\1", text)
+    text = re.sub(r"\*(.+?)\*",     r"\1", text)
+    text = re.sub(r"#{1,4}\s*",     "",    text)
+    text = re.sub(r"^---+$",        "",    text, flags=re.MULTILINE)
     return text
 
 
