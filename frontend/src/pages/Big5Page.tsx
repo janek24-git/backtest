@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { runBig5Backtest } from '../api/client';
 import { Big5Table } from '../components/Big5Table';
+import { EquityCurve } from '../components/EquityCurve';
 import { AnalysisSection } from '../components/AnalysisSection';
 import type { Big5BacktestResponse, Big5ComboResult } from '../types';
 
@@ -224,6 +225,7 @@ export function Big5Page() {
 
         {/* EMA100 vs EMA200 Comparison */}
         {compareResults && (
+          <>
           <div className="rounded-lg p-4" style={{ background: '#1A1D27' }}>
             <p className="text-sm font-medium mb-1" style={{ color: '#E8EAED' }}>
               {indicator}100 vs {indicator}200 — Vergleich
@@ -275,6 +277,9 @@ export function Big5Page() {
               </table>
             </div>
           </div>
+          <AnalysisSection data={compareResults.r100} />
+          <AnalysisSection data={compareResults.r200} />
+          </>
         )}
 
         {/* Results */}
@@ -333,6 +338,9 @@ export function Big5Page() {
                 </div>
               )}
             </div>
+            {activeResult && activeResult.trades.some(t => t.typ === 'VERKAUF') && (
+              <EquityCurve trades={activeResult.trades} />
+            )}
           <AnalysisSection data={results} />
         </>
       )}
