@@ -71,50 +71,69 @@ async def analyze_big5(req: Big5AnalysisRequest):
         worst = min(req.results, key=lambda r: r.metrics.total_return)
 
         opt_note = (
-            "\nHINWEIS: Diese Ergebnisse wurden mit aktivierter Rauschunterdrückung berechnet "
-            "(0,5% Mindestabstand zur EMA beim Einstieg + 5 Handelstage Mindesthaltedauer). "
-            "Diese Optimierung ist im Live-Betrieb nicht vollständig replizierbar, da die Mindesthaltedauer "
-            "erst im Nachhinein bekannt ist. Weise im Report explizit auf diesen Hinweis-Faktor hin."
-            if req.optimized else ""
+            "\nMODUS: Optimiert (Rauschunterdrückung aktiv)\n"
+            "- Einstieg nur wenn Schlusskurs mind. 0,5% über {ind}{per} liegt (verhindert marginale Crossovers)\n"
+            "- Mindesthaltedauer 5 Handelstage nach Kauf (verhindert 1-Tages-Whipsaws)\n"
+            "- WICHTIG: Die Mindesthaltedauer ist im Live-Betrieb nicht replizierbar — sie ist erst im Nachhinein bekannt.\n"
+            "  Weise explizit darauf hin, dass Optimiert-Ergebnisse besser als live erzielbar sind.\n"
+            .format(ind=req.indicator, per=req.period)
+            if req.optimized else "\nMODUS: Raw (keine Filterung, alle Signale werden ausgeführt)\n"
         )
 
-        prompt = f"""WICHTIG: Antworte AUSSCHLIESSLICH auf Deutsch. Alle Überschriften, alle Texte, alle Begriffe müssen auf Deutsch sein.
+        prompt = f"""WICHTIG: Antworte AUSSCHLIESSLICH auf Deutsch.
 
-Du bist ein erfahrener quantitativer Portfolio-Manager und schreibst einen Backtest-Report auf Deutsch für ein Investment-Komitee.
+Du bist ein erfahrener quantitativer Portfolio-Manager und schreibst einen präzisen Backtest-Report für ein Investment-Komitee.
+
+## STRATEGIE-KONTEXT (lies das genau — das ist die Grundlage deiner Analyse)
+
+**Universum:** Die 5 größten S&P-500-Unternehmen nach täglicher Marktkapitalisierung (dynamisch berechnet).
+**Trendfilter:** {req.indicator}{req.period} — Kauf nur wenn Trend aufwärts zeigt.
+**Zeitraum:** {req.from_date} bis {req.to_date}
 {opt_note}
-Strategie: S&P 500 Top-5 nach Marktkapitalisierung, Trendfilter {req.indicator}{req.period}, Zeitraum {req.from_date} bis {req.to_date}.
-8 Kombinationen aus Kauf-Signal, Verkauf-Signal und Top5-Filter wurden getestet. Ergebnisse:
+**Kauf-Logik im Detail:**
+- A-Case (frisches Signal): Unternehmen tritt in Top5 ein. War der Kurs beim Eintrittstag bereits ÜBER dem {req.indicator}{req.period}, muss er erst wieder DARUNTER fallen und dann erneut darüber schließen ("Reset") — erst dann Kauf. War er beim Eintritt UNTER dem {req.indicator}{req.period}, wird gewartet bis der erste Schlusskurs darüber liegt — dann Kauf am nächsten Open. Ziel: nur echte, frische Trendbestätigungen.
+- B-Case (sofort): Kauf genau am Tag des Top5-Eintritts, aber nur wenn der Kurs an diesem Tag bereits über dem {req.indicator}{req.period} schließt. Kein Reset nötig, kein Warten — entweder sofort oder gar nicht.
+
+**Verkauf-Logik:**
+- C: Verkauf nur wenn Schlusskurs unter {req.indicator}{req.period} fällt. Top5-Austritt wird ignoriert — Trend entscheidet.
+- D: Sofortiger Verkauf sobald das Unternehmen aus den Top5 fällt (rangbasiert, nicht preisbasiert).
+
+**Top5-Filter:**
+- E: 1 Tag in Top5 reicht für Einstiegs-Berechtigung
+- F: 5 aufeinanderfolgende Tage in Top5 nötig (filtert kurzfristige Rangverschiebungen heraus)
+
+**Warum A besser als B sein sollte:** A verlangt einen frischen Crossover — der Kurs muss Schwäche zeigen und dann wieder Stärke beweisen. B kauft in bestehende Stärke hinein, ohne Bestätigung dass der Trend intakt bleibt.
+**Warum F besser als E sein sollte:** F eliminiert Rauschen durch kurzfristige Marktcap-Schwankungen. Nur Unternehmen die 5 Tage stabil in den Top5 sind, bekommen ein Signal.
+**Warum C besser als D sein sollte:** Rangverlust ≠ Trendwende. Ein Unternehmen kann Rang 6 werden obwohl sein Kurs weiter steigt — D würde hier fälschlicherweise verkaufen.
+
+## ERGEBNISSE
 
 {metrics_summary}
 
-Kombinationslegende:
-A = Kauf: Erster Schlusskurs über {req.indicator}{req.period} nach Top5-Eintritt
-B = Kauf: Am Tag des Top5-Eintritts (wenn Schlusskurs bereits über {req.indicator}{req.period})
-C = Verkauf: Nur wenn Schlusskurs unter {req.indicator}{req.period} fällt (Top5-Austritt wird ignoriert)
-D = Verkauf: Sofort bei Top5-Austritt
-E = Filter: 1 Tag in Top5 = Signal ausreichend
-F = Filter: 5 aufeinanderfolgende Tage in Top5 nötig
+## DEIN AUFTRAG
 
-Schreibe den Report auf einfachem, klaren Deutsch. Keine Anglizismen wo es geht. Verwende diese Begriffe: Kauf-Signal, Verkauf-Signal, Haltedauer, Drawdown, Trendfilter, Top5-Eintritt, Top5-Austritt, Kumulierte Performance, Handelsanzahl, Trefferquote (statt Win Rate), Rendite-Risiko-Verhältnis (statt Sharpe).
-
-Schreibe diese Abschnitte mit exakt diesen Überschriften:
+Schreibe diese Abschnitte mit exakt diesen Überschriften. Keine Floskeln. Direkt und datengetrieben.
+Verwende: Kauf-Signal, Verkauf-Signal, Haltedauer, Drawdown, Trendfilter, Top5-Eintritt, Top5-Austritt, Kumulierte Performance, Handelsanzahl, Trefferquote, Rendite-Risiko-Verhältnis.
 
 ## Zusammenfassung
-2-3 Sätze. Was macht diese Strategie, und was ist das wichtigste Ergebnis?
+3 Sätze: Was macht die Strategie, was ist das wichtigste Ergebnis, welche Kombination dominiert?
 
 ## Beste Kombination: {best.kombination}
-Warum schneidet diese Kombination nach Rendite-Risiko am besten ab? Konkrete Zahlen nennen: Sharpe, Drawdown, Handelsanzahl, Trefferquote.
+Erkläre WARUM diese Kombination strukturell überlegen ist — nicht nur die Zahlen, sondern die Logik dahinter. Bestätigt das Ergebnis die Erwartung (A>B, F>E, C>D)? Wenn nicht, warum?
 
 ## Schwächste Kombination: {worst.kombination}
-Welcher strukturelle Fehler führt zur Underperformance? Was lernen wir daraus?
+Welcher strukturelle Fehler steckt dahinter? Was sagt das über die Strategie-Logik aus?
+
+## Überraschende Erkenntnisse
+Gibt es Kombinationen die gegen die Erwartung performen? Z.B. B besser als A, oder E besser als F? Falls ja: warum könnte das sein?
 
 ## Risiken
-Tabellarisch: Klumpenrisiko (nur 5 Titel), Überanpassung an historische Daten, Liquidität, Ausführungskosten, Überlebensfehler (Survivorship Bias). Jedes Risiko mit Bewertung und Gegenmaßnahme.
+Tabelle: Klumpenrisiko, Überanpassung, Survivorship Bias, Ausführungskosten, Replizierbarkeit (bei Optimiert-Modus). Mit Bewertung und Gegenmaßnahme.
 
 ## Handlungsempfehlung
-Welche Kombination für den Live-Einsatz, warum? Positionsgröße konkret (z.B. Half-Kelly). Eine zusätzliche Regel die du als Portfolio-Manager sofort einführen würdest.
+Konkret: Welche Kombination live, Positionsgröße (Half-Kelly), eine sofort umsetzbare Zusatzregel.
 
-Schreibe direkt und datengetrieben. Keine Floskeln. Maximal 400 Wörter gesamt."""
+Maximal 500 Wörter gesamt."""
 
         client = anthropic.Anthropic(api_key=os.environ.get("ANTHROPIC_API_KEY"))
         message = client.messages.create(
