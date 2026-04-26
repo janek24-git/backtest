@@ -17,6 +17,7 @@ import httpx
 import yfinance as yf
 from collections import Counter
 from datetime import datetime, timezone
+from app.services.warrant_finder import build_warrant_message, build_warrant_buttons
 
 logger = logging.getLogger(__name__)
 
@@ -296,9 +297,33 @@ async def send_wsb_alert() -> dict:
             )
             resp.raise_for_status()
 
+    # Optionsschein für Top-Kandidaten — Explosions zuerst, sonst #1 Squeeze
+    warrant_ticker = (
+        explosions[0]["ticker"] if explosions
+        else candidates[0]["ticker"] if candidates
+        else None
+    )
+    if warrant_ticker:
+        warrant_text    = build_warrant_message(warrant_ticker, "LONG", target_pct=20.0)
+        warrant_buttons = build_warrant_buttons(warrant_ticker, "LONG")
+        async with httpx.AsyncClient() as client:
+            payload: dict = {
+                "chat_id":    chat_id,
+                "text":       warrant_text,
+                "parse_mode": "HTML",
+            }
+            if warrant_buttons.get("inline_keyboard"):
+                payload["reply_markup"] = warrant_buttons
+            await client.post(
+                f"https://api.telegram.org/bot{token}/sendMessage",
+                json=payload,
+                timeout=30,
+            )
+
     return {
-        "sent":       True,
-        "explosions": [c["ticker"] for c in explosions],
-        "top_score":  top_score,
-        "candidates": [(c["ticker"], c["score"]) for c in data["squeeze_candidates"][:5]],
+        "sent":           True,
+        "explosions":     [c["ticker"] for c in explosions],
+        "top_score":      top_score,
+        "warrant_ticker": warrant_ticker,
+        "candidates":     [(c["ticker"], c["score"]) for c in candidates[:5]],
     }
