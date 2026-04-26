@@ -101,7 +101,20 @@ Format für jeden Bereich:
 [1-2 Sätze Finding]
 Idee: [konkrete Trade-Idee oder Risiko-Hinweis]
 
-Max 400 Wörter gesamt."""
+Max 400 Wörter gesamt.
+
+## Teil 4 — Trade-Idee des Tages
+Synthetisiere ALLES aus Teil 1-3 zu EINER einzigen konkreten Trade-Idee.
+
+Format exakt:
+TICKER: [Symbol]
+RICHTUNG: LONG / SHORT
+EINSTIEG: [Kurs oder "bei Marktöffnung"]
+ZIEL: [+X%]
+STOP: [-X%]
+POSITION (1000€): [Anzahl Aktien bei aktuellem Kurs]
+GRUND: [2 Sätze — warum genau diese Aktie, warum heute]
+KATALYSATOR: [Was triggert die Bewegung]"""
 
 
 async def _send_telegram(text: str) -> None:
@@ -141,6 +154,14 @@ def _format_msg3(part3: str, today: str) -> str:
     )
 
 
+def _format_msg4(part4: str, today: str) -> str:
+    return (
+        f"⚡️ <b>Trade-Idee des Tages — {today}</b>\n"
+        f"━━━━━━━━━━━━━━━━━━━━\n\n"
+        f"<code>{part4.strip()}</code>"
+    )
+
+
 async def send_news_digest() -> dict:
     headlines = fetch_all_headlines()
     if not headlines:
@@ -153,33 +174,33 @@ async def send_news_digest() -> dict:
     client = anthropic.Anthropic(api_key=os.environ.get("ANTHROPIC_API_KEY"))
     msg = client.messages.create(
         model="claude-opus-4-6",
-        max_tokens=1200,
+        max_tokens=1500,
         messages=[{"role": "user", "content": prompt}],
     )
     raw = msg.content[0].text
 
-    # Split in Teil 1, 2, 3
-    parts = {"1": "", "2": "", "3": ""}
+    # Split in Teil 1–4
+    parts = {"1": "", "2": "", "3": "", "4": ""}
     current = "1"
     for line in raw.splitlines():
         if "## Teil 2" in line:
-            current = "2"
-            continue
+            current = "2"; continue
         if "## Teil 3" in line:
-            current = "3"
-            continue
+            current = "3"; continue
+        if "## Teil 4" in line:
+            current = "4"; continue
         if "## Teil 1" in line:
             continue
         parts[current] += line + "\n"
 
     today = date.today().strftime("%d.%m.%Y")
     await _send_telegram(_format_msg1(parts["1"].strip(), today))
-
     if parts["2"].strip():
         await _send_telegram(_format_msg2(parts["2"].strip(), today))
-
     if parts["3"].strip():
         await _send_telegram(_format_msg3(parts["3"].strip(), today))
+    if parts["4"].strip():
+        await _send_telegram(_format_msg4(parts["4"].strip(), today))
 
     return {
         "sent": True,
