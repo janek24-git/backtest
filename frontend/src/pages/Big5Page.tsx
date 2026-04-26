@@ -269,8 +269,8 @@ export function Big5Page() {
                         <td className="py-2 px-3 text-right font-mono" style={{ color: better(m2.sharpe, m1.sharpe) }}>{m2.sharpe.toFixed(2)}</td>
                         <td className="py-2 px-3 text-right font-mono" style={{ color: better(m1.win_rate, m2.win_rate) }}>{m1.win_rate.toFixed(1)}%</td>
                         <td className="py-2 px-3 text-right font-mono" style={{ color: better(m2.win_rate, m1.win_rate) }}>{m2.win_rate.toFixed(1)}%</td>
-                        <td className="py-2 px-3 text-right font-mono" style={{ color: better(m1.max_drawdown, m2.max_drawdown, false) }}>{m1.max_drawdown.toFixed(1)}%</td>
-                        <td className="py-2 px-3 text-right font-mono" style={{ color: better(m2.max_drawdown, m1.max_drawdown, false) }}>{m2.max_drawdown.toFixed(1)}%</td>
+                        <td className="py-2 px-3 text-right font-mono" style={{ color: better(m1.max_drawdown, m2.max_drawdown, true) }}>{m1.max_drawdown.toFixed(1)}%</td>
+                        <td className="py-2 px-3 text-right font-mono" style={{ color: better(m2.max_drawdown, m1.max_drawdown, true) }}>{m2.max_drawdown.toFixed(1)}%</td>
                         <td className="py-2 pl-3 text-right font-mono" style={{ color: '#8B8FA8' }}>{m1.num_trades}</td>
                         <td className="py-2 pl-3 text-right font-mono" style={{ color: '#8B8FA8' }}>{m2.num_trades}</td>
                       </tr>

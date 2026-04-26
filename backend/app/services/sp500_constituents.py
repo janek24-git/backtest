@@ -41,7 +41,7 @@ def load_constituents() -> pd.DataFrame | None:
         return pd.read_parquet(CACHE_FILE)
 
     try:
-        r = requests.get(CSV_URL, verify=False, timeout=20)
+        r = requests.get(CSV_URL, timeout=20)
         r.raise_for_status()
         from io import StringIO
         df = pd.read_csv(StringIO(r.text), index_col=0)

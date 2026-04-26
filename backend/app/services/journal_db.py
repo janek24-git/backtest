@@ -3,12 +3,14 @@ SQLite-basiertes Journal für Live-Trades.
 DB-Datei: backend/journal.db
 """
 
+import os
 import sqlite3
 import uuid
 from pathlib import Path
 from datetime import date
 
-DB_PATH = Path(__file__).parent.parent.parent / "journal.db"
+_env_path = os.environ.get("JOURNAL_DB_PATH")
+DB_PATH = Path(_env_path) if _env_path else Path(__file__).parent.parent.parent / "journal.db"
 
 
 def _conn() -> sqlite3.Connection:
