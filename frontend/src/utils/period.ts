@@ -27,11 +27,25 @@ export function filterByPeriod(result: TickerResult, period: PeriodKey): TickerR
   const returns = filteredTrades.map(t => t.return_pct);
   const winning = returns.filter(r => r > 0);
 
+  // Max Drawdown auf Equity-Kurve
+  let equity = 100, peak = 100, maxDD = 0;
+  for (const r of returns) {
+    equity *= (1 + r / 100);
+    if (equity > peak) peak = equity;
+    const dd = (peak - equity) / peak * 100;
+    if (dd > maxDD) maxDD = dd;
+  }
+
+  // Sharpe annualisiert (rf=2%)
+  const mean = returns.reduce((a, b) => a + b, 0) / returns.length / 100;
+  const variance = returns.map(r => Math.pow(r / 100 - mean, 2)).reduce((a, b) => a + b, 0) / returns.length;
+  const sharpe = variance > 0 ? Math.round(Math.sqrt(252) * (mean - 0.02 / 252) / Math.sqrt(variance) * 100) / 100 : 0;
+
   const metrics: TickerMetrics = {
     win_rate: Math.round((winning.length / filteredTrades.length) * 10000) / 100,
     total_return: Math.round(returns.reduce((a, b) => a + b, 0) * 10000) / 10000,
-    max_drawdown: 0,
-    sharpe_ratio: 0,
+    max_drawdown: Math.round(-maxDD * 100) / 100,
+    sharpe_ratio: sharpe,
     num_trades: filteredTrades.length,
     avg_hold_days: Math.round(filteredTrades.reduce((a, t) => a + t.hold_days, 0) / filteredTrades.length * 10) / 10,
     best_trade: Math.max(...returns),

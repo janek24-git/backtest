@@ -27,13 +27,14 @@ export function ResultsTable({ results, period }: Props) {
   const rowData = useMemo(() =>
     results.map((r) => {
       const filtered = filterByPeriod(r, period);
+      const firstTrade = filtered.trades[0];
       const lastTrade = filtered.trades[filtered.trades.length - 1];
       return {
         ticker: r.ticker,
         last_signal: r.last_signal === 1 ? 'LONG' : 'FLAT',
-        buy_date: lastTrade?.entry_date ?? '-',
+        buy_date: firstTrade?.entry_date ?? '-',
         sell_date: lastTrade?.exit_date ?? '-',
-        hold_days: lastTrade?.hold_days ?? '-',
+        hold_days: filtered.trades.reduce((a, t) => a + t.hold_days, 0),
         return_pct: filtered.metrics?.total_return ?? null,
         win_rate: filtered.metrics?.win_rate ?? null,
         sharpe: filtered.metrics?.sharpe_ratio ?? null,
@@ -51,9 +52,9 @@ export function ResultsTable({ results, period }: Props) {
       field: 'last_signal', headerName: 'Signal', width: 90,
       cellStyle: (p: any) => signalColor(p.value),
     },
-    { field: 'buy_date', headerName: 'Buy Date', width: 120 },
-    { field: 'sell_date', headerName: 'Sell Date', width: 120 },
-    { field: 'hold_days', headerName: 'Hold (d)', width: 90 },
+    { field: 'buy_date', headerName: 'First Entry', width: 120 },
+    { field: 'sell_date', headerName: 'Last Exit', width: 120 },
+    { field: 'hold_days', headerName: 'Total Hold (d)', width: 110 },
     {
       field: 'return_pct', headerName: 'Return %', width: 110,
       valueFormatter: (p: any) => p.value != null ? `${p.value >= 0 ? '+' : ''}${p.value.toFixed(2)}%` : '-',
