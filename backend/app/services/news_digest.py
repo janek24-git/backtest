@@ -167,6 +167,8 @@ DEALS: [Titel]
 Idee: [Idee]
 
 ## Teil 4 — Trade-Idee des Tages
+WICHTIGE REGEL: Wähle NUR Aktien mit sauberem technischen Setup. KEIN Chasing von Aktien die heute bereits +10% oder mehr gemacht haben. Der Kurs muss noch nahe am Einstiegspunkt sein — kein überkaufter Ausbruch, kein paraboles Muster. Bevorzuge Aktien die sich noch aufbauen oder an einem wichtigen technischen Level konsolidieren (z.B. nahe EMA200, Unterstützung, Base-Breakout in Entstehung). Die Trade-Idee muss heute noch umsetzbar sein.
+
 Exakt dieses Format, jede Zeile beginnt mit dem Label:
 
 TICKER: [Symbol]
@@ -175,7 +177,7 @@ EINSTIEG: [Kurs oder "Marktöffnung"]
 ZIEL: [+X%]
 STOP: [-X%]
 POSITION: [Anzahl Aktien für 1000 Euro]
-GRUND: [2 Sätze warum diese Aktie heute]
+GRUND: [2 Sätze warum diese Aktie — technisches Setup + Katalysator]
 KATALYSATOR: [Was löst die Bewegung aus]"""
 
 
