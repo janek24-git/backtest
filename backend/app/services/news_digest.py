@@ -259,7 +259,7 @@ def _format_msg3(part3: str, today: str) -> str:
         "MAKRO":  "🏦 <b>Makro</b>",
         "TECH":   "💻 <b>Tech / Earnings</b>",
         "CRYPTO": "₿  <b>Crypto</b>",
-        "DEALS":  "🤝 <b>Deals / M&A</b>",
+        "DEALS":  "🤝 <b>Deals / M&amp;A</b>",
         "IDEE":   "💡 <i>Idee:</i>",
     }
     lines = [f"🔬 <b>Finance Research — {today}</b>", "━━━━━━━━━━━━━━━━━━━━", ""]
