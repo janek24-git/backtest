@@ -458,8 +458,18 @@ async def send_news_digest() -> dict:
                (direction == "SHORT" and ema["trend"] == "bullish"):
                 conflict = "\n⚠️ <b>Signal widerspricht EMA-Trend!</b>"
 
-    # Alles in eine Nachricht
-    combined_text = _format_combined(parts, today, ema_block, conflict)
+    # Separate Nachrichten statt einer kombinierten (verhindert Abschneiden bei >4000 Zeichen)
+    await _send_telegram(_format_msg1(parts["1"], today))
+    await _send_telegram(_format_msg2(parts["2"], today))
+    await _send_telegram(_format_msg3(parts["3"], today))
+
+    # Trade-Idee (Teil 4) + EMA-Check
+    p4_lines = _format_part4_lines(parts["4"])
+    trade_text_msg = "⚡️ <b>Trade-Idee des Tages</b>\n━━━━━━━━━━━━━━━━━━━━\n" + "\n".join(p4_lines)
+    if ema_block:
+        trade_text_msg += ema_block
+    if conflict:
+        trade_text_msg += conflict
 
     # TradingView-Button für Trade-Ticker
     tv_buttons = None
@@ -469,7 +479,7 @@ async def send_news_digest() -> dict:
              "url": f"https://www.tradingview.com/chart/?symbol={ticker}"},
         ]]}
 
-    await _send_telegram(combined_text, reply_markup=tv_buttons)
+    await _send_telegram(trade_text_msg, reply_markup=tv_buttons)
 
     # Optionsschein separat
     if ticker:
