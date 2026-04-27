@@ -417,7 +417,7 @@ async def send_news_digest() -> dict:
     client = anthropic.Anthropic(api_key=os.environ.get("ANTHROPIC_API_KEY"))
     msg = client.messages.create(
         model="claude-opus-4-6",
-        max_tokens=1500,
+        max_tokens=2500,
         messages=[{"role": "user", "content": prompt}],
     )
     raw = msg.content[0].text
