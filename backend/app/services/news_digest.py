@@ -191,7 +191,8 @@ async def _send_telegram(text: str, reply_markup: dict | None = None) -> None:
             json=payload,
             timeout=10,
         )
-        resp.raise_for_status()
+        if not resp.is_success:
+            raise ValueError(f"Telegram {resp.status_code}: {resp.text}")
 
 
 _NUM_EMOJI = ["1️⃣", "2️⃣", "3️⃣", "4️⃣", "5️⃣"]
