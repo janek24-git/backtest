@@ -422,17 +422,19 @@ async def send_news_digest() -> dict:
     )
     raw = msg.content[0].text
 
-    # Split in Teil 1–4
+    # Split in Teil 1–4 — flexibel (Claude variiert Header-Format)
+    import re as _re
     parts = {"1": "", "2": "", "3": "", "4": ""}
     current = "1"
     for line in raw.splitlines():
-        if "## Teil 2" in line:
+        stripped = line.strip().lower()
+        if _re.search(r"teil\s*2", stripped):
             current = "2"; continue
-        if "## Teil 3" in line:
+        if _re.search(r"teil\s*3", stripped):
             current = "3"; continue
-        if "## Teil 4" in line:
+        if _re.search(r"teil\s*4", stripped):
             current = "4"; continue
-        if "## Teil 1" in line:
+        if _re.search(r"teil\s*1", stripped):
             continue
         parts[current] += line + "\n"
 
@@ -462,10 +464,13 @@ async def send_news_digest() -> dict:
                (direction == "SHORT" and ema["trend"] == "bullish"):
                 conflict = "\n⚠️ <b>Signal widerspricht EMA-Trend!</b>"
 
-    # Separate Nachrichten statt einer kombinierten (verhindert Abschneiden bei >4000 Zeichen)
-    await _send_telegram(_format_msg1(parts["1"], today))
-    await _send_telegram(_format_msg2(parts["2"], today))
-    await _send_telegram(_format_msg3(parts["3"], today))
+    # Separate Nachrichten — je max 4000 Zeichen
+    def _tg_safe(text: str) -> str:
+        return text[:3990] + "\n…" if len(text) > 3990 else text
+
+    await _send_telegram(_tg_safe(_format_msg1(parts["1"], today)))
+    await _send_telegram(_tg_safe(_format_msg2(parts["2"], today)))
+    await _send_telegram(_tg_safe(_format_msg3(parts["3"], today)))
 
     # Trade-Idee (Teil 4) + EMA-Check
     p4_lines = _format_part4_lines(parts["4"])
@@ -483,7 +488,7 @@ async def send_news_digest() -> dict:
              "url": f"https://www.tradingview.com/chart/?symbol={ticker}"},
         ]]}
 
-    await _send_telegram(trade_text_msg, reply_markup=tv_buttons)
+    await _send_telegram(_tg_safe(trade_text_msg), reply_markup=tv_buttons)
 
     # Optionsschein separat
     if ticker:
