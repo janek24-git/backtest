@@ -10,6 +10,7 @@ schickt 2 Telegram-Nachrichten:
 
 import os
 import re
+import html as html_module
 import logging
 import httpx
 import anthropic
@@ -198,7 +199,9 @@ _NUM_EMOJI = ["1️⃣", "2️⃣", "3️⃣", "4️⃣", "5️⃣"]
 
 def _clean(text: str) -> str:
     """Entfernt Markdown und escaped HTML-Sonderzeichen für Telegram."""
-    # HTML-Entities zuerst escapen (vor allem & < >)
+    # Erst unescape (RSS-Feeds liefern oft bereits HTML-escaped Texte wie &amp; &lt;)
+    text = html_module.unescape(text)
+    # Dann sauber escapen
     text = text.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
     # Markdown entfernen
     text = re.sub(r"\*\*(.+?)\*\*", r"\1", text)
