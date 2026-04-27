@@ -492,6 +492,19 @@ async def send_news_digest() -> dict:
 
     await _send_telegram(_tg_safe(trade_text_msg), reply_markup=tv_buttons)
 
+    # Big5 EMA Status
+    today_str = date.today().strftime("%d.%m.%Y")
+    big5_lines = [f"📊 <b>Big 5 EMA200 Status — {today_str}</b>", "━━━━━━━━━━━━━━━━━━━━", ""]
+    for sym in BIG5:
+        ema = get_ema_status(sym)
+        if ema:
+            icon = "🟢" if ema["trend"] == "bullish" else "🔴" if ema["trend"] == "bearish" else "🟡"
+            big5_lines.append(f"{icon} <b>{sym}</b>  ${ema['price']}  ·  EMA200: ${ema['ema200']}  ·  {ema['vs200']}")
+        else:
+            big5_lines.append(f"⚪ <b>{sym}</b>  –")
+    big5_lines.append("━━━━━━━━━━━━━━━━━━━━")
+    await _send_telegram("\n".join(big5_lines))
+
     # Optionsschein separat
     if ticker:
         target          = float(ziel_m.group(1)) if ziel_m else 10.0
