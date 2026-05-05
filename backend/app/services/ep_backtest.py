@@ -72,24 +72,14 @@ def _fetch_ohlcv(ticker: str, from_date: str, to_date: str) -> pd.DataFrame:
         return pd.DataFrame()
 
 
-def _get_finnhub_earnings_dates(ticker: str, from_date: str, to_date: str) -> set:
-    """Holt alle Earnings-Dates für einen Ticker auf einmal (1 API-Call statt N)."""
-    token = os.environ.get("FINNHUB_API_KEY", "")
+def _get_earnings_dates(ticker: str) -> set:
+    """Holt Earnings-Dates via yfinance (kostenlos, kein Rate-Limit, ~4 Jahre zurück)."""
     try:
-        r = httpx.get(
-            "https://finnhub.io/api/v1/calendar/earnings",
-            params={"symbol": ticker, "from": from_date, "to": to_date, "token": token},
-            timeout=10,
-        )
-        r.raise_for_status()
-        dates = set()
-        for item in r.json().get("earningsCalendar", []):
-            if item.get("date"):
-                try:
-                    dates.add(date.fromisoformat(item["date"]))
-                except ValueError:
-                    pass
-        return dates
+        t = yf.Ticker(ticker)
+        df = t.get_earnings_dates(limit=40)  # ~10 Jahre Quartale
+        if df is None or df.empty:
+            return set()
+        return {d.date() for d in df.index}
     except Exception:
         return set()
 
@@ -280,10 +270,10 @@ def run_ep_backtest(
         gap_threshold = min_gap_pct if min_gap_pct < 1 else min_gap_pct / 100
         events = _find_gap_events(df, gap_threshold)
 
-        # Pre-fetch earnings dates once per ticker (instead of once per event)
+        # Pre-fetch earnings dates once per ticker (kein API-Call pro Event)
         earnings_dates: set = set()
         if require_earnings:
-            earnings_dates = _get_finnhub_earnings_dates(ticker, from_date, to_date)
+            earnings_dates = _get_earnings_dates(ticker)
 
         for ev in events:
             idx = ev["idx"]
