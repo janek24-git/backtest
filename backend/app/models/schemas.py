@@ -152,6 +152,7 @@ class EPBacktestRequest(BaseModel):
     min_gap_pct: float = 0.10
     min_rel_vol: float = 2.0
     require_earnings: bool = False
+    universe: str = "both"   # "sp500" | "nasdaq100" | "both"
 
 
 class EPBacktestTrade(BaseModel):

@@ -68,6 +68,7 @@ export async function runEPBacktest(
   minGapPct: number = 0.10,
   minRelVol: number = 2.0,
   requireEarnings: boolean = false,
+  universe: 'sp500' | 'nasdaq100' | 'both' = 'both',
 ): Promise<EPBacktestResponse> {
   const { data } = await api.post<EPBacktestResponse>('/ep/backtest', {
     from_date: fromDate,
@@ -75,6 +76,7 @@ export async function runEPBacktest(
     min_gap_pct: minGapPct,
     min_rel_vol: minRelVol,
     require_earnings: requireEarnings,
+    universe,
   });
   return data;
 }

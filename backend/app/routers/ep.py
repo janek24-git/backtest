@@ -39,6 +39,7 @@ def ep_backtest(req: EPBacktestRequest):
             min_gap_pct=req.min_gap_pct,
             min_rel_vol=req.min_rel_vol,
             require_earnings=req.require_earnings,
+            universe=req.universe,
         )
         return EPBacktestResponse(
             trades=data["trades"],

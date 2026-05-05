@@ -38,6 +38,22 @@ def _get_sp500_tickers() -> list[str]:
                 "JPM", "V", "UNH", "XOM", "MA", "AVGO", "PG", "HD"]
 
 
+def _get_nasdaq100_tickers() -> list[str]:
+    """Holt aktuelle Nasdaq-100-Ticker von Wikipedia."""
+    try:
+        tables = pd.read_html(
+            "https://en.wikipedia.org/wiki/Nasdaq-100"
+        )
+        for t in tables:
+            if "Ticker" in t.columns:
+                return t["Ticker"].str.replace(".", "-", regex=False).tolist()
+        raise ValueError("Ticker column not found")
+    except Exception as e:
+        logger.warning("Nasdaq100 fetch failed: %s", e)
+        return ["AAPL", "MSFT", "NVDA", "AMZN", "META", "TSLA", "GOOGL",
+                "AVGO", "COST", "NFLX", "AMD", "ADBE", "QCOM", "INTC", "TXN"]
+
+
 def _fetch_ohlcv(ticker: str, from_date: str, to_date: str) -> pd.DataFrame:
     try:
         df = yf.download(ticker, start=from_date, end=to_date,
@@ -230,8 +246,15 @@ def run_ep_backtest(
     min_rel_vol: float = 2.0,
     require_earnings: bool = False,
     max_tickers: int = 100,
+    universe: str = "both",   # "sp500" | "nasdaq100" | "both"
 ) -> dict:
-    tickers = _get_sp500_tickers()[:max_tickers]
+    if universe == "nasdaq100":
+        raw = _get_nasdaq100_tickers()
+    elif universe == "sp500":
+        raw = _get_sp500_tickers()
+    else:  # "both"
+        raw = list(dict.fromkeys(_get_sp500_tickers() + _get_nasdaq100_tickers()))
+    tickers = raw[:max_tickers]
     all_trades: list[dict] = []
 
     for ticker in tickers:

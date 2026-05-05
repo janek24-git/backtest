@@ -103,6 +103,7 @@ export function EPPage() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [requireEarnings, setRequireEarnings] = useState(false);
+  const [universe, setUniverse] = useState<'sp500' | 'nasdaq100' | 'both'>('both');
 
   async function handleScan() {
     setLoading(true); setError(null);
@@ -113,7 +114,7 @@ export function EPPage() {
 
   async function handleBacktest() {
     setLoading(true); setError(null);
-    try { setBtData(await runEPBacktest('2016-01-01', '2026-01-01', 0.10, 2.0, requireEarnings)); }
+    try { setBtData(await runEPBacktest('2016-01-01', '2026-01-01', 0.10, 2.0, requireEarnings, universe)); }
     catch (e: unknown) { setError(e instanceof Error ? e.message : String(e)); }
     finally { setLoading(false); }
   }
@@ -167,7 +168,16 @@ export function EPPage() {
 
       {tab === 'backtest' && (
         <div>
-          <div style={{ display: 'flex', gap: 16, alignItems: 'center', marginBottom: 20 }}>
+          <div style={{ display: 'flex', gap: 16, alignItems: 'center', marginBottom: 20, flexWrap: 'wrap' }}>
+            <select
+              value={universe}
+              onChange={e => setUniverse(e.target.value as 'sp500' | 'nasdaq100' | 'both')}
+              style={{ padding: '8px 12px', borderRadius: 6, background: '#1e293b', color: '#e2e8f0', border: '1px solid #333' }}
+            >
+              <option value="both">S&P500 + Nasdaq-100</option>
+              <option value="sp500">S&P500</option>
+              <option value="nasdaq100">Nasdaq-100</option>
+            </select>
             <label style={{ display: 'flex', gap: 8, alignItems: 'center', cursor: 'pointer' }}>
               <input type="checkbox" checked={requireEarnings}
                      onChange={e => setRequireEarnings(e.target.checked)} />
