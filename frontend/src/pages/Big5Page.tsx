@@ -100,7 +100,10 @@ export function Big5Page() {
             EMA Screener →
           </button>
           <button onClick={() => navigate('/journal')} className="text-sm" style={{ color: '#8B8FA8' }}>
-            📓 Journal →
+            Journal →
+          </button>
+          <button onClick={() => navigate('/ep')} className="text-sm" style={{ color: '#8B8FA8' }}>
+            EP Scanner →
           </button>
           <div>
             <h1 className="text-xl font-semibold tracking-tight" style={{ color: '#E8EAED' }}>

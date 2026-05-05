@@ -3,6 +3,7 @@ import { Dashboard } from './pages/Dashboard';
 import { StockDetail } from './pages/StockDetail';
 import { Big5Page } from './pages/Big5Page';
 import { JournalPage } from './pages/JournalPage';
+import { EPPage } from './pages/EPPage';
 import './index.css';
 
 export default function App() {
@@ -14,6 +15,7 @@ export default function App() {
         <Route path="/stock/:ticker" element={<StockDetail />} />
         <Route path="/big5" element={<Big5Page />} />
         <Route path="/journal" element={<JournalPage />} />
+        <Route path="/ep" element={<EPPage />} />
       </Routes>
     </BrowserRouter>
   );
