@@ -13,6 +13,7 @@ Exit:  Nach 20 Handelstagen ODER Stop getroffen
 
 import logging
 import os
+import time
 import httpx
 import numpy as np
 import pandas as pd
@@ -72,16 +73,20 @@ def _fetch_ohlcv(ticker: str, from_date: str, to_date: str) -> pd.DataFrame:
         return pd.DataFrame()
 
 
-def _get_earnings_dates(ticker: str) -> set:
-    """Holt Earnings-Dates via yfinance (kostenlos, kein Rate-Limit, ~4 Jahre zurück)."""
+def _get_earnings_dates(ticker: str) -> set | None:
+    """
+    Holt Earnings-Dates via yfinance.
+    Returns set of dates if data available, None if API call failed.
+    Caller treats None as 'no data' (include trade) vs empty set (no earnings found → exclude).
+    """
     try:
         t = yf.Ticker(ticker)
-        df = t.get_earnings_dates(limit=40)  # ~10 Jahre Quartale
+        df = t.get_earnings_dates(limit=40)
         if df is None or df.empty:
-            return set()
+            return None  # No data available
         return {d.date() for d in df.index}
     except Exception:
-        return set()
+        return None  # API failure — don't filter
 
 
 def _find_gap_events(df: pd.DataFrame, min_gap: float) -> list[dict]:
@@ -271,9 +276,10 @@ def run_ep_backtest(
         events = _find_gap_events(df, gap_threshold)
 
         # Pre-fetch earnings dates once per ticker (kein API-Call pro Event)
-        earnings_dates: set = set()
+        earnings_dates = None
         if require_earnings:
             earnings_dates = _get_earnings_dates(ticker)
+            time.sleep(0.1)  # Rate-limit Schutz
 
         for ev in events:
             idx = ev["idx"]
@@ -283,12 +289,15 @@ def run_ep_backtest(
 
             catalyst = "Unknown"
             if require_earnings:
-                has_earnings = any(
-                    abs((ev["date"] - d).days) <= 2
-                    for d in earnings_dates
-                )
-                if not has_earnings:
-                    continue
+                if earnings_dates is not None:
+                    # Data available — filter strictly
+                    has_earnings = any(
+                        abs((ev["date"] - d).days) <= 2
+                        for d in earnings_dates
+                    )
+                    if not has_earnings:
+                        continue
+                # earnings_dates is None = API failure → include trade
                 catalyst = "Earnings"
 
             trade = _simulate_trade(df, idx)
