@@ -124,3 +124,79 @@ export interface JournalStats {
   worst_trade_pct: number;
   equity_curve: JournalEquityPoint[];
 }
+
+// ── Episodic Pivot ────────────────────────────────────────────────────────────
+
+export interface EPInvestProposal {
+  kapital: number;
+  safe_play_shares: number;
+  safe_play_cost: number;
+  safe_play_max_loss: number;
+  safe_play_target_gain: number;
+  yolo_play_budget: number;
+  yolo_play_delta_low: number;
+  yolo_play_delta_high: number;
+  yolo_play_target_gain: number;
+}
+
+export interface EPCandidate {
+  ticker: string;
+  name: string;
+  sector: string;
+  mcap: string;
+  gap_pct: number;
+  rel_vol: number;
+  catalyst: string;
+  catalyst_detail: string;
+  base_days: number;
+  score: number;
+  score_comment: string;
+  entry_zone_low: number;
+  entry_zone_high: number;
+  lotd_stop: number;
+  price: number;
+  date: string;
+}
+
+export interface EPScanResponse {
+  candidates: EPCandidate[];
+  proposals: Record<string, EPInvestProposal>;
+  timestamp: string;
+}
+
+export interface EPBacktestTrade {
+  ticker: string;
+  entry_date: string;
+  exit_date: string;
+  entry_price: number;
+  exit_price: number;
+  stop_price: number;
+  gap_pct: number;
+  rel_vol: number;
+  catalyst: string;
+  hold_days: number;
+  perf_pct: number;
+  hit_stop: boolean;
+}
+
+export interface EPBacktestMetrics {
+  num_trades: number;
+  win_rate: number;
+  avg_win: number;
+  avg_loss: number;
+  expectancy: number;
+  sharpe: number;
+  max_drawdown: number;
+  total_return: number;
+  pead_5d: number;
+  pead_10d: number;
+  pead_20d: number;
+  pead_60d: number;
+}
+
+export interface EPBacktestResponse {
+  trades: EPBacktestTrade[];
+  metrics: EPBacktestMetrics;
+  from_date: string;
+  to_date: string;
+}
