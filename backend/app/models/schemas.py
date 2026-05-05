@@ -179,7 +179,9 @@ class EPBacktestMetrics(BaseModel):
     max_drawdown: float
     total_return: float
     pead_5d: float    # avg return after 5 trading days
+    pead_10d: float   # avg return after 10 trading days
     pead_20d: float   # avg return after 20 trading days
+    pead_60d: float   # avg return after 60 trading days
 
 
 class EPBacktestResponse(BaseModel):
