@@ -1,0 +1,18 @@
+name: EP Scanner (täglich 22 Uhr MESZ)
+
+on:
+  schedule:
+    # 20:00 UTC = 22:00 MESZ Mo-Fr
+    - cron: '0 20 * * 1-5'
+  workflow_dispatch:
+
+jobs:
+  ep-scan:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger EP Alert
+        run: |
+          curl -s -X POST \
+            "https://stocks-backtest-api-production-0c6a.up.railway.app/ep/alert" \
+            --max-time 120 \
+            -w "\nHTTP %{http_code}\n"
