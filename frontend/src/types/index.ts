@@ -156,6 +156,7 @@ export interface EPCandidate {
   lotd_stop: number;
   price: number;
   date: string;
+  vol_trend_7d: number;
 }
 
 export interface EPScanResponse {

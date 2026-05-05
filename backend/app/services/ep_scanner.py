@@ -157,6 +157,12 @@ def _yf_analysis(ticker: str) -> dict | None:
         vol_avg20 = float(df["volume"].iloc[-21:-1].mean())
         rel_vol   = round(vol_today / vol_avg20, 2) if vol_avg20 > 0 else 0.0
 
+        # Vol-Trend: Ø letzte 7T vs Ø Tage 8–30 (Akkumulations-Signal vor dem Gap)
+        vol_7d  = float(df["volume"].iloc[-8:-1].mean()) if len(df) >= 8 else 0.0
+        vol_30d = (float(df["volume"].iloc[-31:-8].mean()) if len(df) >= 31
+                   else float(df["volume"].iloc[:-8].mean()) if len(df) > 8 else 0.0)
+        vol_trend_7d = round(vol_7d / vol_30d, 2) if vol_30d > 0 else 1.0
+
         # ATR-Kontraktion: ATR(5) der letzten 5T vs. ATR(20) der letzten 20T
         high = df["high"].values
         low  = df["low"].values
@@ -186,7 +192,8 @@ def _yf_analysis(ticker: str) -> dict | None:
                     else f"${mcap/1e6:.0f}M")
 
         return {
-            "rel_vol":   rel_vol,
+            "rel_vol":      rel_vol,
+            "vol_trend_7d": vol_trend_7d,
             "atr5":      round(atr5, 4),
             "atr20":     round(atr20, 4),
             "base_days": base_days,
@@ -204,7 +211,7 @@ def _yf_analysis(ticker: str) -> dict | None:
 # ── Score ─────────────────────────────────────────────────────────────────────
 
 def _calc_score(gap_pct: float, rel_vol: float, base_days: int,
-                catalyst: str) -> tuple[float, str]:
+                catalyst: str, vol_trend_7d: float = 1.0) -> tuple[float, str]:
     score = 0.0
     if catalyst == "Earnings":
         score += 3
@@ -219,6 +226,11 @@ def _calc_score(gap_pct: float, rel_vol: float, base_days: int,
     if base_days >= 20:
         score += 2
     elif base_days >= 10:
+        score += 1
+
+    if vol_trend_7d >= 2.0:
+        score += 2
+    elif vol_trend_7d >= 1.5:
         score += 1
 
     gap_abs = gap_pct
@@ -311,6 +323,7 @@ def _build_ep_message(c: dict, proposal: dict) -> str:
         f"── RISIKO-AMPEL ────────────\n"
         f"{'🟢' if earn_ok == '✓' else '🔴'} Katalysator: {c['catalyst']} {earn_ok}\n"
         f"{'🟢' if vol_ok == '✓' else '🟡'} Volumen: {c['rel_vol']}× {vol_ok}\n"
+        f"{'🟢' if c.get('vol_trend_7d', 1.0) >= 1.5 else '🟡'} Vol-Trend 7T: {c.get('vol_trend_7d', 1.0)}×\n"
         f"🟡 Base: {base_lbl}\n"
         f"🟢 Gap-Größe: {gap_str}\n\n"
         f"{score_icon} Score: <b>{c['score']}/10</b>  —  {score_label}\n"
@@ -351,7 +364,8 @@ def scan_ep(today: date | None = None) -> dict:
                 catalyst_detail = "Kein Katalysator verifiziert"
 
         score, comment = _calc_score(
-            g["gap_pct"], yf_data["rel_vol"], yf_data["base_days"], catalyst
+            g["gap_pct"], yf_data["rel_vol"], yf_data["base_days"], catalyst,
+            yf_data.get("vol_trend_7d", 1.0)
         )
         if score < MIN_SCORE:
             continue
@@ -367,6 +381,7 @@ def scan_ep(today: date | None = None) -> dict:
             "mcap":             yf_data["mcap"],
             "gap_pct":          round(g["gap_pct"] * 100, 2),
             "rel_vol":          yf_data["rel_vol"],
+            "vol_trend_7d":     yf_data.get("vol_trend_7d", 1.0),
             "catalyst":         catalyst,
             "catalyst_detail":  catalyst_detail,
             "base_days":        yf_data["base_days"],

@@ -72,21 +72,26 @@ def _fetch_ohlcv(ticker: str, from_date: str, to_date: str) -> pd.DataFrame:
         return pd.DataFrame()
 
 
-def _check_finnhub_earnings_history(ticker: str, event_date: date) -> bool:
-    """Prüft ob Earnings ±2 Tage um event_date."""
+def _get_finnhub_earnings_dates(ticker: str, from_date: str, to_date: str) -> set:
+    """Holt alle Earnings-Dates für einen Ticker auf einmal (1 API-Call statt N)."""
     token = os.environ.get("FINNHUB_API_KEY", "")
-    from_d = (event_date - timedelta(days=2)).isoformat()
-    to_d   = (event_date + timedelta(days=2)).isoformat()
     try:
         r = httpx.get(
             "https://finnhub.io/api/v1/calendar/earnings",
-            params={"symbol": ticker, "from": from_d, "to": to_d, "token": token},
-            timeout=8,
+            params={"symbol": ticker, "from": from_date, "to": to_date, "token": token},
+            timeout=10,
         )
         r.raise_for_status()
-        return len(r.json().get("earningsCalendar", [])) > 0
+        dates = set()
+        for item in r.json().get("earningsCalendar", []):
+            if item.get("date"):
+                try:
+                    dates.add(date.fromisoformat(item["date"]))
+                except ValueError:
+                    pass
+        return dates
     except Exception:
-        return False
+        return set()
 
 
 def _find_gap_events(df: pd.DataFrame, min_gap: float) -> list[dict]:
@@ -109,6 +114,15 @@ def _find_gap_events(df: pd.DataFrame, min_gap: float) -> list[dict]:
                 "prev_close": closes[i-1],
             })
     return events
+
+
+def _calc_vol_trend_7d(df: pd.DataFrame, idx: int) -> float:
+    """Ø Vol letzte 7T vs Ø Vol Tage 8–30 vor dem Gap-Event."""
+    if idx < 31:
+        return 1.0
+    vol_7d  = float(np.mean(df["volume"].values[idx-8:idx-1]))
+    vol_30d = float(np.mean(df["volume"].values[idx-31:idx-8]))
+    return round(vol_7d / vol_30d, 2) if vol_30d > 0 else 1.0
 
 
 def _calc_rel_vol(df: pd.DataFrame, idx: int) -> float:
@@ -243,9 +257,9 @@ def run_ep_backtest(
     from_date: str = "2016-01-01",
     to_date: str   = "2026-01-01",
     min_gap_pct: float = 0.10,
-    min_rel_vol: float = 2.0,
+    min_rel_vol: float = 1.5,
     require_earnings: bool = False,
-    max_tickers: int = 100,
+    max_tickers: int = 200,
     universe: str = "both",   # "sp500" | "nasdaq100" | "both"
 ) -> dict:
     if universe == "nasdaq100":
@@ -266,6 +280,11 @@ def run_ep_backtest(
         gap_threshold = min_gap_pct if min_gap_pct < 1 else min_gap_pct / 100
         events = _find_gap_events(df, gap_threshold)
 
+        # Pre-fetch earnings dates once per ticker (instead of once per event)
+        earnings_dates: set = set()
+        if require_earnings:
+            earnings_dates = _get_finnhub_earnings_dates(ticker, from_date, to_date)
+
         for ev in events:
             idx = ev["idx"]
             rel_vol = _calc_rel_vol(df, idx)
@@ -274,7 +293,10 @@ def run_ep_backtest(
 
             catalyst = "Unknown"
             if require_earnings:
-                has_earnings = _check_finnhub_earnings_history(ticker, ev["date"])
+                has_earnings = any(
+                    abs((ev["date"] - d).days) <= 2
+                    for d in earnings_dates
+                )
                 if not has_earnings:
                     continue
                 catalyst = "Earnings"
@@ -289,7 +311,8 @@ def run_ep_backtest(
                 "pead_5d":    _pead_avg(df, idx, 5),
                 "pead_10d":   _pead_avg(df, idx, 10),
                 "pead_20d":   _pead_avg(df, idx, 20),
-                "pead_60d":   _pead_avg(df, idx, 60),
+                "pead_60d":    _pead_avg(df, idx, 60),
+                "vol_trend_7d": _calc_vol_trend_7d(df, idx),
             })
             all_trades.append(trade)
 

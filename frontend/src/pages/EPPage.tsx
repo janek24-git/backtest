@@ -55,6 +55,12 @@ function CandidateCard({ c, proposal }: {
             <div style={{ color: '#94a3b8', fontSize: 13, marginBottom: 4 }}>ENTRY</div>
             <div>Zone: <b>${c.entry_zone_low.toFixed(2)} – ${c.entry_zone_high.toFixed(2)}</b></div>
             <div>Stop: <b style={{ color: '#ef4444' }}>${c.lotd_stop.toFixed(2)}</b> (LOTD)</div>
+            <div style={{ marginTop: 6 }}>
+              Vol-Trend 7T: <b style={{ color: c.vol_trend_7d >= 1.5 ? '#22c55e' : '#f59e0b' }}>{c.vol_trend_7d}×</b>
+              <span style={{ color: '#64748b', fontSize: 11, marginLeft: 6 }}>
+                {c.vol_trend_7d >= 2.0 ? 'Starke Akkumulation' : c.vol_trend_7d >= 1.5 ? 'Akkumulation erkennbar' : 'Neutral'}
+              </span>
+            </div>
             <div style={{ marginTop: 8, color: '#94a3b8', fontSize: 12 }}>{c.catalyst_detail}</div>
             <div style={{ marginTop: 8, fontStyle: 'italic', color: '#64748b' }}>{c.score_comment}</div>
           </div>

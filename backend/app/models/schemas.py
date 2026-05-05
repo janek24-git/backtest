@@ -126,6 +126,7 @@ class EPCandidate(BaseModel):
     lotd_stop: float         # Tages-Low (vorheriger Tag als Proxy)
     price: float
     date: str
+    vol_trend_7d: float = 1.0   # Ø Vol letzte 7T / Ø Vol Tage 8–30
 
 
 class EPInvestProposal(BaseModel):
