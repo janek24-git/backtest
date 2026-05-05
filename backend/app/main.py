@@ -5,7 +5,7 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-from app.routers import backtest, universe, big5, journal
+from app.routers import backtest, universe, big5, journal, ep
 
 app = FastAPI(title="Backtesting Platform")
 
@@ -20,6 +20,7 @@ app.include_router(universe.router, prefix="/universe", tags=["universe"])
 app.include_router(backtest.router, prefix="/backtest", tags=["backtest"])
 app.include_router(big5.router, prefix="/big5", tags=["big5"])
 app.include_router(journal.router, prefix="/journal", tags=["journal"])
+app.include_router(ep.router, prefix="/ep", tags=["ep"])
 
 
 @app.get("/health")
