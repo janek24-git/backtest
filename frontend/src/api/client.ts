@@ -1,5 +1,5 @@
 import axios from 'axios';
-import type { BacktestResponse, AIAnalysis, Big5BacktestResponse, Big5AnalysisResponse } from '../types';
+import type { BacktestResponse, AIAnalysis, Big5BacktestResponse, Big5AnalysisResponse, EPScanResponse, EPBacktestResponse } from '../types';
 
 const api = axios.create({ baseURL: '/api' });
 
@@ -53,6 +53,28 @@ export async function runBig5Backtest(
     from_date: fromDate,
     to_date: toDate,
     optimized,
+  });
+  return data;
+}
+
+export async function scanEP(): Promise<EPScanResponse> {
+  const { data } = await api.get<EPScanResponse>('/ep/scan');
+  return data;
+}
+
+export async function runEPBacktest(
+  fromDate: string = '2016-01-01',
+  toDate: string = '2026-01-01',
+  minGapPct: number = 0.10,
+  minRelVol: number = 2.0,
+  requireEarnings: boolean = false,
+): Promise<EPBacktestResponse> {
+  const { data } = await api.post<EPBacktestResponse>('/ep/backtest', {
+    from_date: fromDate,
+    to_date: toDate,
+    min_gap_pct: minGapPct,
+    min_rel_vol: minRelVol,
+    require_earnings: requireEarnings,
   });
   return data;
 }
