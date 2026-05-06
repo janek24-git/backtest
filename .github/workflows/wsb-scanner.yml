@@ -14,5 +14,5 @@ jobs:
         run: |
           curl -s -X POST \
             "https://stocks-backtest-api-production-0c6a.up.railway.app/big5/wsb-alert" \
-            --max-time 30 \
+            --max-time 90 \
             -w "\nHTTP %{http_code}\n"
