@@ -26,4 +26,8 @@ app.include_router(forward.router, prefix="/forward", tags=["forward"])
 
 @app.get("/health")
 def health():
-    return {"status": "ok"}
+    return {"status": "ok", "version": "2.0-forward"}
+
+@app.get("/version")
+def version():
+    return {"version": "2.0-forward", "routes": len(app.routes)}
