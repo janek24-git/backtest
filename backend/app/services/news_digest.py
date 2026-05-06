@@ -465,6 +465,23 @@ async def send_news_digest() -> dict:
             if (direction == "LONG" and ema["trend"] == "bearish") or \
                (direction == "SHORT" and ema["trend"] == "bullish"):
                 conflict = "\n⚠️ <b>Signal widerspricht EMA-Trend!</b>"
+            # Auto-save as forward trade
+            try:
+                from app.services.forward_db import add_trade as _add_forward
+                _tp = float(ziel_m.group(1)) if ziel_m else 10.0
+                _add_forward(
+                    ticker=ticker,
+                    signal_date=date.today().isoformat(),
+                    entry_price=ema["price"],
+                    ema200=ema["ema200"],
+                    tp_pct=_tp,
+                    sl_pct=round(_tp / 2, 1),
+                    source="NEWS_DIGEST",
+                    rel_vol=None,
+                    pct_above_ema=round((ema["price"] - ema["ema200"]) / ema["ema200"] * 100, 2) if ema.get("ema200") else None,
+                )
+            except Exception:
+                pass
 
     # Separate Nachrichten — je max 4000 Zeichen
     def _tg_safe(text: str) -> str:

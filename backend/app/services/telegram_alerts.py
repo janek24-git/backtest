@@ -267,6 +267,23 @@ async def send_telegram_alert() -> dict:
         if sig:
             market_signals.append(sig)
 
+    # Auto-save signals as forward trades
+    from app.services.forward_db import add_trade as _add_forward
+    for sig in big5_signals:
+        try:
+            _add_forward(ticker=sig["ticker"], signal_date=sig["date"], entry_price=sig["close"],
+                         ema200=sig["ema200"], tp_pct=10.0, sl_pct=5.0, source="BIG5",
+                         rel_vol=sig.get("rel_vol"), pct_above_ema=sig.get("pct_above"))
+        except Exception:
+            pass
+    for sig in market_signals:
+        try:
+            _add_forward(ticker=sig["ticker"], signal_date=sig["date"], entry_price=sig["close"],
+                         ema200=sig["ema200"], tp_pct=10.0, sl_pct=5.0, source="MARKET",
+                         rel_vol=sig.get("rel_vol"), pct_above_ema=sig.get("pct_above"))
+        except Exception:
+            pass
+
     total = len(big5_signals) + len(market_signals)
     if total == 0:
         return {"sent": False, "signals": 0, "message": "No bullish crossovers today"}

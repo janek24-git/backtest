@@ -201,3 +201,30 @@ export interface EPBacktestResponse {
   from_date: string;
   to_date: string;
 }
+
+// ── Forward Testing ──────────────────────────────────────────────────────────
+
+export interface ForwardTrade {
+  id: string;
+  ticker: string;
+  signal_date: string;
+  entry_price: number;
+  ema200: number;
+  tp_price: number;
+  sl_price: number;
+  tp_pct: number;
+  sl_pct: number;
+  status: 'OPEN' | 'TP_HIT' | 'SL_HIT' | 'MANUALLY_CLOSED';
+  exit_price: number | null;
+  exit_date: string | null;
+  result_pct: number | null;
+  source: 'BIG5' | 'MARKET';
+  signal_type: string;
+  rel_vol: number | null;
+  pct_above_ema: number | null;
+  created_at: string;
+}
+
+export interface ForwardTradesResponse {
+  trades: ForwardTrade[];
+}

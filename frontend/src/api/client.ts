@@ -1,5 +1,5 @@
 import axios from 'axios';
-import type { BacktestResponse, AIAnalysis, Big5BacktestResponse, Big5AnalysisResponse, EPScanResponse, EPBacktestResponse } from '../types';
+import type { BacktestResponse, AIAnalysis, Big5BacktestResponse, Big5AnalysisResponse, EPScanResponse, EPBacktestResponse, ForwardTrade } from '../types';
 
 const api = axios.create({ baseURL: '/api' });
 
@@ -60,6 +60,21 @@ export async function runBig5Backtest(
 export async function scanEP(): Promise<EPScanResponse> {
   const { data } = await api.get<EPScanResponse>('/ep/scan');
   return data;
+}
+
+export async function fetchForwardTrades(status?: string): Promise<ForwardTrade[]> {
+  const url = status ? `/forward/trades?status=${status}` : '/forward/trades';
+  const { data } = await api.get<{ trades: ForwardTrade[] }>(url);
+  return data.trades;
+}
+
+export async function checkForwardExits(): Promise<{ closed: ForwardTrade[]; count: number }> {
+  const { data } = await api.post('/forward/check-exits');
+  return data;
+}
+
+export async function deleteForwardTrade(id: string): Promise<void> {
+  await api.delete(`/forward/trades/${id}`);
 }
 
 export async function runEPBacktest(
