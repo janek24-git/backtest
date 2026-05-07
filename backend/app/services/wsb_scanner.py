@@ -320,6 +320,29 @@ async def send_wsb_alert() -> dict:
                 timeout=30,
             )
 
+    # Auto-save warrant_ticker to forward testing
+    if warrant_ticker:
+        from app.services.forward_db import add_trade as _add_forward
+        warrant_candidate = (
+            next((c for c in explosions if c["ticker"] == warrant_ticker), None)
+            or next((c for c in candidates if c["ticker"] == warrant_ticker), None)
+        )
+        if warrant_candidate and warrant_candidate.get("price", 0) > 0:
+            try:
+                _add_forward(
+                    ticker=warrant_ticker,
+                    signal_date=date.today().isoformat(),
+                    entry_price=warrant_candidate["price"],
+                    ema200=warrant_candidate["price"],
+                    tp_pct=20.0,
+                    sl_pct=10.0,
+                    source="WSB",
+                    rel_vol=warrant_candidate.get("mentions"),
+                    pct_above_ema=warrant_candidate.get("short_float", 0) * 100,
+                )
+            except Exception:
+                pass
+
     return {
         "sent":           True,
         "explosions":     [c["ticker"] for c in explosions],

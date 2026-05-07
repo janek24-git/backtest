@@ -417,6 +417,7 @@ async def send_ep_alert() -> dict:
     if not token or not chat_id:
         raise ValueError("Telegram credentials missing")
 
+    from app.services.forward_db import add_trade as _add_forward
     sent = 0
     async with _httpx.AsyncClient() as client:
         for c in data["candidates"][:3]:   # max 3 Alerts pro Tag
@@ -429,6 +430,20 @@ async def send_ep_alert() -> dict:
             )
             resp.raise_for_status()
             sent += 1
+            try:
+                _add_forward(
+                    ticker=c["ticker"],
+                    signal_date=c["date"],
+                    entry_price=c["entry_zone_low"],
+                    ema200=c["entry_zone_low"],
+                    tp_pct=15.0,
+                    sl_pct=5.0,
+                    source="EP",
+                    rel_vol=c.get("rel_vol"),
+                    pct_above_ema=c.get("gap_pct"),
+                )
+            except Exception:
+                pass
 
     return {
         "sent":       True,
