@@ -194,6 +194,32 @@ async def wsb_scan():
         raise HTTPException(status_code=500, detail=str(e))
 
 
+@router.get("/wsb-debug")
+async def wsb_debug():
+    """Debug: Reddit raw response check."""
+    import httpx
+    results = []
+    for sub in ["wallstreetbets", "stocks"]:
+        for sort in ["hot", "new"]:
+            try:
+                r = httpx.get(
+                    f"https://www.reddit.com/r/{sub}/{sort}.json?limit=5",
+                    headers={"User-Agent": "Mozilla/5.0 SqueezeBot/2.0"},
+                    timeout=10,
+                )
+                body = r.text[:200]
+                try:
+                    posts = r.json()["data"]["children"]
+                    count = len(posts)
+                except Exception:
+                    posts = []
+                    count = 0
+                results.append({"sub": sub, "sort": sort, "status": r.status_code, "posts": count, "preview": body[:100]})
+            except Exception as e:
+                results.append({"sub": sub, "sort": sort, "error": str(e)})
+    return results
+
+
 @router.post("/wsb-alert")
 async def trigger_wsb_alert():
     """WSB Scanner → Telegram wenn PLTR oder Watchlist trending."""
