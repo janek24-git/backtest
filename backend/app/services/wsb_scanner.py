@@ -1,13 +1,11 @@
 """
-Short Squeeze Scanner — WSB Momentum Detektor
+Momentum Squeeze Scanner
 
-GME-Formel:
-  1. Mention-Velocity: Tickers die auf hot + new + rising gleichzeitig auftauchen
-  2. Short Interest: shortPercentOfFloat + shortRatio via yfinance
-  3. Score = Mentions × Short-Float% × Short-Ratio
-  4. Alert wenn Score hoch ODER einzelne Metrik extrem
-
-Quellen: r/wallstreetbets, r/stocks, r/options, r/shortsqueeze
+Signal-Quellen (kein Reddit-Auth nötig):
+  1. Yahoo Finance: Trending, Most Actives, Gainers, Losers
+  2. Finnhub News: Katalysator-Erkennung via Headline-Tickers
+  Velocity = Ticker auf mehreren Listen gleichzeitig
+  Score = Quellen-Score × Short-Float% × Short-Ratio
 """
 
 import os
@@ -15,57 +13,80 @@ import re
 import logging
 import httpx
 import yfinance as yf
-from collections import Counter
 from datetime import datetime, timezone
 from app.services.warrant_finder import build_warrant_message, build_warrant_buttons
 
 logger = logging.getLogger(__name__)
 
-SUBREDDITS   = ["wallstreetbets", "stocks", "options", "shortsqueeze", "investing"]
-SORTS        = ["hot", "new", "rising"]
-WATCHLIST    = ["NVDA", "TSLA", "AAPL", "MSFT", "AMZN", "META", "AMD", "GOOGL", "GME", "AMC"]
+# Quellen + Gewichtung
+SOURCES = {
+    "trending": 3,  # Yahoo Trending — stärkstes Hype-Signal
+    "actives":  2,  # Most Actives — höchstes Volumen
+    "gainers":  2,  # Top Gewinner — Momentum
+    "losers":   1,  # Top Verlierer — potenzielle Squeeze-Setups
+}
+NUM_SOURCES = len(SOURCES)
 
-TICKER_RE    = re.compile(r'\b([A-Z]{2,6})\b')
-BLACKLIST    = {
+TICKER_RE = re.compile(r'\b([A-Z]{2,5})\b')
+BLACKLIST = {
     "THE","FOR","AND","NOT","ARE","BUT","YOU","THIS","THAT","WITH","HAVE",
     "FROM","WILL","THEY","BEEN","MORE","WHEN","YOUR","WHAT","ALL","HOW",
-    "GET","ITS","NOW","CAN","USD","WSB","ATH","ATM","OTM","ITM","ETF",
-    "IPO","SEC","CEO","EMA","RSI","SPY","QQQ","PUT","CALL","BUY","SELL",
-    "HOLD","YOLO","FOMO","DD","TA","GL","OP","US","EU","UK","GDP","CPI",
-    "FED","IMO","EDIT","TLDR","EOD","YTD","LOL","WTF","FYI","EPS","AI",
-    "ML","GO","UP","IV","PE","DC","GEX","DEX","SPX","CPU","ARPU","RDDT",
-    "API","NFT","ETH","BTC","DRS","MOASS","APES","SHORT","LONG","CALLS",
-    "PUTS","YOLO","MOON","BULL","BEAR","GREEN","RED","LOSS","GAIN","OPEN",
-    "HIGH","LOW","CLOSE","NYSE","NASDAQ","CNBC","NEWS","STOCK","TRADE",
-    "LOSS","GAIN","CASH","BANK","FUND","TAX","IRA","ROTH",
+    "GET","ITS","NOW","CAN","USD","ATH","ATM","OTM","ITM","ETF","IPO",
+    "SEC","CEO","EMA","RSI","SPY","QQQ","PUT","CALL","BUY","SELL","HOLD",
+    "US","EU","UK","GDP","CPI","FED","EPS","AI","ML","GO","UP","IV","PE",
+    "DC","SPX","CPU","API","NFT","ETH","BTC","NYSE","NASDAQ","CNBC","NEWS",
+    "STOCK","TRADE","CASH","BANK","FUND","TAX","IRA","AI","ET","IT","AT",
 }
 
-# Mindest-Short-Float für Squeeze-Kandidaten
-MIN_SHORT_FLOAT = 0.10   # 10%
-MIN_SHORT_RATIO = 3.0    # 3 Tage zum Covern
+MIN_SHORT_FLOAT = 0.10
+YAHOO_HEADERS = {"User-Agent": "Mozilla/5.0"}
 
 
-def _fetch_reddit(subreddit: str, sort: str, limit: int = 30) -> list[dict]:
+def _fetch_yahoo_tickers(source: str) -> list[str]:
     try:
+        if source == "trending":
+            r = httpx.get(
+                "https://query1.finance.yahoo.com/v1/finance/trending/US?count=25",
+                headers=YAHOO_HEADERS, timeout=10,
+            )
+            r.raise_for_status()
+            return [q["symbol"] for q in r.json()["finance"]["result"][0]["quotes"]]
+        scr_map = {"actives": "most_actives", "gainers": "day_gainers", "losers": "day_losers"}
         r = httpx.get(
-            f"https://www.reddit.com/r/{subreddit}/{sort}.json?limit={limit}",
-            headers={"User-Agent": "Mozilla/5.0 SqueezeBot/2.0"},
-            timeout=10,
+            f"https://query1.finance.yahoo.com/v1/finance/screener/predefined/saved?scrIds={scr_map[source]}&count=25",
+            headers=YAHOO_HEADERS, timeout=10,
         )
         r.raise_for_status()
-        return [p["data"] for p in r.json()["data"]["children"]]
+        return [q["symbol"] for q in r.json()["finance"]["result"][0].get("quotes", [])]
     except Exception as e:
-        logger.warning("Reddit %s/%s: %s", subreddit, sort, e)
+        logger.warning("Yahoo %s: %s", source, e)
         return []
 
 
-def _extract_tickers(text: str) -> list[str]:
-    found = TICKER_RE.findall(text or "")
-    return [t for t in found if t not in BLACKLIST and len(t) >= 2]
+def _fetch_news_tickers() -> dict[str, str]:
+    """Holt Finnhub-News und extrahiert Ticker → Headline."""
+    token = os.environ.get("FINNHUB_API_KEY", "")
+    if not token:
+        return {}
+    try:
+        r = httpx.get(
+            f"https://finnhub.io/api/v1/news?category=general&token={token}",
+            timeout=10,
+        )
+        r.raise_for_status()
+        result: dict[str, str] = {}
+        for item in r.json()[:50]:
+            headline = item.get("headline", "")
+            for t in TICKER_RE.findall(headline):
+                if t not in BLACKLIST and len(t) >= 2 and t not in result:
+                    result[t] = headline[:80]
+        return result
+    except Exception as e:
+        logger.warning("Finnhub news: %s", e)
+        return {}
 
 
 def _get_short_data(ticker: str) -> dict:
-    """Holt Short-Float% und Short-Ratio via yfinance."""
     try:
         info = yf.Ticker(ticker).info
         short_float = info.get("shortPercentOfFloat") or 0.0
@@ -83,84 +104,62 @@ def _get_short_data(ticker: str) -> dict:
 
 
 def scan_wsb() -> dict:
-    """
-    Scannt alle Subreddits auf hot/new/rising.
-    Berechnet Mention-Velocity und Short-Squeeze-Score.
-    """
-    # Mentions pro Sort sammeln
-    by_sort: dict[str, Counter] = {s: Counter() for s in SORTS}
-    post_details: dict[str, list] = {}  # ticker → posts
+    # Quellen abrufen
+    by_source: dict[str, list[str]] = {s: _fetch_yahoo_tickers(s) for s in SOURCES}
+    news_tickers = _fetch_news_tickers()
 
-    for sub in SUBREDDITS:
-        for sort in SORTS:
-            posts = _fetch_reddit(sub, sort, 30)
-            for post in posts:
-                title  = post.get("title", "")
-                body   = post.get("selftext", "")
-                score  = post.get("score", 0)
-                tickers = _extract_tickers(f"{title} {body}")
+    # Score pro Ticker berechnen
+    ticker_score: dict[str, int] = {}
+    ticker_sources: dict[str, list[str]] = {}
+    for source, weight in SOURCES.items():
+        for ticker in by_source[source]:
+            if any(c.isdigit() for c in ticker):
+                continue
+            ticker_score[ticker] = ticker_score.get(ticker, 0) + weight
+            ticker_sources.setdefault(ticker, []).append(source)
 
-                by_sort[sort].update(tickers)
-
-                for t in set(tickers):
-                    if t not in post_details:
-                        post_details[t] = []
-                    post_details[t].append({
-                        "title":     title[:100],
-                        "score":     score,
-                        "subreddit": sub,
-                        "sort":      sort,
-                        "url":       f"https://reddit.com{post.get('permalink','')}",
-                    })
-
-    # Velocity-Score: Ticker auf allen 3 Sorts präsent = starkes Signal
-    all_tickers = by_sort["hot"] + by_sort["new"] + by_sort["rising"]
-    velocity: list[tuple[str, int, int]] = []
-    for ticker in set(all_tickers.keys()):
-        total   = all_tickers[ticker]
-        on_sorts = sum(1 for s in SORTS if by_sort[s][ticker] > 0)
-        if total >= 2:
-            velocity.append((ticker, total, on_sorts))
-
-    # Sortiert: erst nach Sorts-Coverage, dann nach Mentions
+    # Mindest-Score 2, sortiert nach Score
+    velocity = [
+        (t, score, len(srcs))
+        for t, score in ticker_score.items()
+        if score >= 2
+        for srcs in [ticker_sources[t]]
+    ]
     velocity.sort(key=lambda x: (x[2], x[1]), reverse=True)
-    top_velocity = velocity[:20]
 
-    # Short-Interest für Top-Kandidaten holen
+    # Short-Daten für Top-Kandidaten
     squeeze_candidates = []
-    for ticker, mentions, sorts_count in top_velocity[:12]:
+    for ticker, mentions, sources_count in velocity[:15]:
         sd = _get_short_data(ticker)
         score = round(mentions * (sd["short_float"] * 100) * max(sd["short_ratio"], 0.1), 1)
+        signals = ticker_sources[ticker]
+        catalyst = news_tickers.get(ticker)
+        posts = [{"title": f"📰 {catalyst}", "score": 1}] if catalyst else \
+                [{"title": f"Quellen: {', '.join(signals)}", "score": 0}]
         squeeze_candidates.append({
-            "ticker":       ticker,
-            "name":         sd["name"],
-            "mentions":     mentions,
-            "sorts":        sorts_count,
-            "short_float":  sd["short_float"],
+            "ticker":          ticker,
+            "name":            sd["name"],
+            "mentions":        mentions,
+            "sorts":           sources_count,
+            "short_float":     sd["short_float"],
             "short_float_pct": round(sd["short_float"] * 100, 1),
-            "short_ratio":  sd["short_ratio"],
-            "price":        sd["price"],
-            "score":        score,
-            "posts":        sorted(post_details.get(ticker, []), key=lambda x: x["score"], reverse=True)[:2],
+            "short_ratio":     sd["short_ratio"],
+            "price":           sd["price"],
+            "score":           score,
+            "posts":           posts,
+            "signals":         signals,
+            "catalyst":        catalyst,
         })
 
-    # Sortiert nach Squeeze-Score
     squeeze_candidates.sort(key=lambda x: x["score"], reverse=True)
-
-    # Extreme Shorts (auch ohne viele Mentions)
-    high_short = [c for c in squeeze_candidates if c["short_float"] >= MIN_SHORT_FLOAT]
-
-    # Explosions-Kandidaten: auf allen 3 Sorts + Short-Float >= 15%
-    explosions = [
-        c for c in squeeze_candidates
-        if c["sorts"] == 3 and c["short_float"] >= 0.15
-    ]
+    high_short  = [c for c in squeeze_candidates if c["short_float"] >= MIN_SHORT_FLOAT]
+    explosions  = [c for c in squeeze_candidates if c["sorts"] >= 3 and c["short_float"] >= 0.15]
 
     return {
         "squeeze_candidates": squeeze_candidates[:10],
         "high_short":         high_short[:5],
         "explosions":         explosions[:3],
-        "timestamp": datetime.now(timezone.utc).strftime("%d.%m.%Y %H:%M UTC"),
+        "timestamp":          datetime.now(timezone.utc).strftime("%d.%m.%Y %H:%M UTC"),
     }
 
 
@@ -172,19 +171,17 @@ def _tv(ticker: str) -> str:
 
 
 def _build_squeeze_buttons(candidates: list[dict]) -> dict:
-    """Inline keyboard: TradingView + WSB Reddit search per top candidate."""
     keyboard = []
     for c in candidates[:5]:
         t = c["ticker"]
         keyboard.append([
             {"text": f"📈 {t}", "url": f"https://www.tradingview.com/chart/?symbol={t}"},
-            {"text": "🔍 WSB", "url": f"https://www.reddit.com/r/wallstreetbets/search/?q={t}&sort=new&restrict_sr=1"},
+            {"text": "📰 News", "url": f"https://finance.yahoo.com/quote/{t}/news/"},
         ])
     return {"inline_keyboard": keyboard}
 
 
 def _build_mentions_buttons(candidates: list[dict]) -> dict:
-    """Inline keyboard for mention-sorted list — Yahoo Finance + Finviz."""
     keyboard = []
     by_mentions = sorted(candidates, key=lambda x: x["mentions"], reverse=True)
     for c in by_mentions[:5]:
@@ -197,15 +194,14 @@ def _build_mentions_buttons(candidates: list[dict]) -> dict:
 
 
 def _build_mentions_message(data: dict) -> str:
-    """Ranked mention list — sauber, klickbare Ticker."""
-    lines = [f"📋 <b>Top Mentions Reddit</b>  —  {data['timestamp']}", ""]
+    lines = [f"📋 <b>Market Signals</b>  —  {data['timestamp']}", ""]
     by_mentions = sorted(data["squeeze_candidates"], key=lambda x: x["mentions"], reverse=True)
     for i, c in enumerate(by_mentions, 1):
-        icon = "🔥" if c["sorts"] == 3 else "📈" if c["sorts"] == 2 else "·"
+        icon = "🔥" if c["sorts"] >= 3 else "📈" if c["sorts"] == 2 else "·"
         lines.append(
             f"{i:>2}. {icon} <b>{_tv(c['ticker'])}</b>"
-            f"  {c['mentions']}×"
-            f"  {c['sorts']}/3 sorts"
+            f"  Score:{c['mentions']}"
+            f"  {c['sorts']}/{NUM_SOURCES} Quellen"
             f"  Short: {c['short_float_pct']:.1f}%"
         )
     lines.append("")
@@ -215,42 +211,40 @@ def _build_mentions_message(data: dict) -> str:
 
 
 def _build_wsb_message(data: dict) -> str:
-    lines = [f"🎯 <b>WSB Squeeze Scanner</b>  —  {data['timestamp']}", ""]
+    lines = [f"🎯 <b>Momentum Scanner</b>  —  {data['timestamp']}", ""]
 
-    # Explosions-Alert (hot+new+rising + Short ≥15%) — GME-Setup
     explosions = data.get("explosions", [])
     if explosions:
-        lines.append("🚨 <b>EXPLOSIONS-ALARM</b>  ·  hot+new+rising + Short≥15%")
+        lines.append("🚨 <b>EXPLOSIONS-ALARM</b>  ·  3+ Quellen + Short≥15%")
         for c in explosions:
             lines.append(
                 f"   💥 <b>{_tv(c['ticker'])}</b>"
                 f"  Short: {c['short_float_pct']:.1f}%"
                 f"  Ratio: {c['short_ratio']:.1f}d"
-                f"  {c['mentions']}×  Score: {c['score']:.0f}"
+                f"  Score:{c['mentions']}  Squeeze:{c['score']:.0f}"
             )
             if c["posts"]:
                 lines.append(f"      └ {c['posts'][0]['title'][:65]}")
         lines.append("")
 
-    # Top Squeeze Kandidaten
     candidates = data["squeeze_candidates"]
     if candidates:
         lines.append("<b>🏆 Top Squeeze-Kandidaten</b>")
         lines.append("")
         for c in candidates[:7]:
-            icon = "🔥" if c["sorts"] == 3 else "📈" if c["sorts"] == 2 else "·"
+            icon = "🔥" if c["sorts"] >= 3 else "📈" if c["sorts"] == 2 else "·"
             lines.append(
                 f"{icon} <b>{_tv(c['ticker'])}</b>"
-                f"  {c['mentions']}×"
                 f"  Short: {c['short_float_pct']:.1f}%"
                 f"  {c['short_ratio']:.1f}d"
+                f"  Quellen:{c['sorts']}/{NUM_SOURCES}"
                 f"  Score {c['score']:.0f}"
             )
             if c["posts"]:
                 lines.append(f"   └ {c['posts'][0]['title'][:65]}")
 
     lines.append("")
-    lines.append("🔥 hot+new+rising  ·  Score = Mentions × Short%")
+    lines.append("Quellen: Trending · Aktiv · Gewinner · Verlierer · News")
     lines.append("Ticker anklicken → TradingView Chart")
     lines.append("━━━━━━━━━━━━━━━━━━━━")
     return "\n".join(lines)
