@@ -409,13 +409,19 @@ def scan_ep(today: date | None = None) -> dict:
 async def send_ep_alert() -> dict:
     import httpx as _httpx
     data = scan_ep()
-    if not data["candidates"]:
-        return {"sent": False, "reason": "No EP candidates today"}
-
     token   = os.environ.get("TELEGRAM_BOT_TOKEN")
     chat_id = os.environ.get("TELEGRAM_CHAT_ID")
     if not token or not chat_id:
         raise ValueError("Telegram credentials missing")
+
+    if not data["candidates"]:
+        today = data["timestamp"]
+        await _httpx.AsyncClient().post(
+            f"https://api.telegram.org/bot{token}/sendMessage",
+            json={"chat_id": chat_id, "text": f"⚡ <b>EP Scanner — {today}</b>\n\nHeute keine Episodic Pivot Kandidaten.", "parse_mode": "HTML"},
+            timeout=10,
+        )
+        return {"sent": True, "count": 0, "candidates": []}
 
     from app.services.forward_db import add_trade as _add_forward
     sent = 0

@@ -263,16 +263,6 @@ async def send_wsb_alert() -> dict:
     high_short = data["high_short"]
     explosions = data.get("explosions", [])
 
-    # Senden wenn: Explosions-Kandidat ODER hoher Score ODER extreme Short-Interest
-    should_send = (
-        len(explosions) >= 1
-        or top_score >= 50
-        or len(high_short) >= 2
-    )
-
-    if not should_send:
-        return {"sent": False, "reason": "No squeeze signal", "top_score": top_score}
-
     token   = os.environ.get("TELEGRAM_BOT_TOKEN")
     chat_id = os.environ.get("TELEGRAM_CHAT_ID")
     candidates = data["squeeze_candidates"]

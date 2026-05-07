@@ -286,7 +286,14 @@ async def send_telegram_alert() -> dict:
 
     total = len(big5_signals) + len(market_signals)
     if total == 0:
-        return {"sent": False, "signals": 0, "message": "No bullish crossovers today"}
+        status = get_current_status()
+        today = date.today().strftime("%d.%m.%Y")
+        lines = [f"🔔 <b>EMA200 Status Big 5 — {today}</b>", "", "Heute kein bullisher Crossover.", ""]
+        for s in status:
+            icon = "🟢" if s["above"] else "🔴"
+            lines.append(f"{icon} <b>{s['ticker']}</b>  ${s['close']}  ·  EMA200 ${s['ema200']}  ·  {s['pct_from_ema']:+.1f}%")
+        await _send_telegram("\n".join(lines))
+        return {"sent": True, "signals": 0, "message": "No crossovers, sent Big5 status"}
 
     text = _build_message(big5_signals, market_signals)
     await _send_telegram(text)
