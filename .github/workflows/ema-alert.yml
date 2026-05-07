@@ -2,18 +2,40 @@ name: EMA200 Daily Alert
 
 on:
   schedule:
-    # 22:00 Uhr UTC = 23:00 MEZ / 00:00 MESZ — nach US-Marktschluss (16:00 ET)
     - cron: '0 22 * * 1-5'
-  workflow_dispatch:  # manuell triggerbar
+  workflow_dispatch:
+
+permissions:
+  contents: write
 
 jobs:
   send-alert:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - run: pip install yfinance httpx
+
       - name: Trigger EMA Alert
         run: |
           curl -s -X POST \
             "https://stocks-backtest-api-production-0c6a.up.railway.app/big5/ema-alert" \
             -H "Content-Type: application/json" \
             --max-time 120 \
+            -o /tmp/result.json \
             -w "\nHTTP Status: %{http_code}\n"
+
+      - name: Save signals
+        run: python3 scripts/save_signals.py --source EMA200 --file /tmp/result.json
+
+      - name: Commit signals
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add signals/signals.json
+          git diff --staged --quiet || git commit -m "chore: EMA200 signals $(date +%Y-%m-%d)"
+          git push

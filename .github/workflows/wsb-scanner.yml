@@ -6,13 +6,36 @@ on:
     - cron: '0 9,15 * * 1-5'
   workflow_dispatch:
 
+permissions:
+  contents: write
+
 jobs:
   wsb-scan:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - run: pip install yfinance httpx
+
       - name: Trigger WSB Scanner Alert
         run: |
           curl -s -X POST \
             "https://stocks-backtest-api-production-0c6a.up.railway.app/big5/wsb-alert" \
             --max-time 90 \
+            -o /tmp/result.json \
             -w "\nHTTP %{http_code}\n"
+
+      - name: Save signals
+        run: python3 scripts/save_signals.py --source WSB --file /tmp/result.json
+
+      - name: Commit signals
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add signals/signals.json
+          git diff --staged --quiet || git commit -m "chore: WSB signals $(date +%Y-%m-%d)"
+          git push
