@@ -7,5 +7,14 @@
     "tp_pct": 20.0,
     "sl_pct": 10.0,
     "check_date": "2026-05-22"
+  },
+  {
+    "ticker": "EOSE",
+    "signal_date": "2026-05-08",
+    "entry_price": 7.805,
+    "source": "WSB",
+    "tp_pct": 20.0,
+    "sl_pct": 10.0,
+    "check_date": "2026-05-22"
   }
 ]
