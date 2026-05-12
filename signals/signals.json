@@ -43,5 +43,14 @@
     "tp_pct": 20.0,
     "sl_pct": 10.0,
     "check_date": "2026-05-26"
+  },
+  {
+    "ticker": "QUBT",
+    "signal_date": "2026-05-12",
+    "entry_price": 11.5035,
+    "source": "WSB",
+    "tp_pct": 20.0,
+    "sl_pct": 10.0,
+    "check_date": "2026-05-26"
   }
 ]
