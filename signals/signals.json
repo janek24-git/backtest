@@ -70,5 +70,16 @@
     "tp_pct": 20.0,
     "sl_pct": 10.0,
     "check_date": "2026-05-27"
+  },
+  {
+    "ticker": "F",
+    "signal_date": "2026-05-13",
+    "entry_price": 13.57,
+    "source": "EMA200",
+    "tp_pct": 10.0,
+    "sl_pct": 5.0,
+    "check_date": "2026-05-27",
+    "rel_vol": 5.09,
+    "pct_above_ema": 12.7
   }
 ]
