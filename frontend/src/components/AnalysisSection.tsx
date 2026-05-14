@@ -45,6 +45,57 @@ export function AnalysisSection({ data }: Props) {
     }
   }
 
+  function handleDownloadCsv() {
+    const rows: string[] = [
+      'Kombination,Nr,Typ,Ticker,Datum,Haltedauer,Preis,Perf_%,Kum_%'
+    ];
+    for (const result of data.results) {
+      const trips: any[] = [];
+      const open: Map<string, any> = new Map();
+      for (const t of result.trades) {
+        if (t.typ === 'KAUF') { open.set(t.ticker, t); }
+        else {
+          const e = open.get(t.ticker);
+          if (e) {
+            trips.push({ entry: e, exit: t });
+            open.delete(t.ticker);
+          }
+        }
+      }
+      trips.forEach((trip, i) => {
+        rows.push([
+          result.kombination,
+          i + 1,
+          'KAUF',
+          trip.entry.ticker,
+          trip.entry.datum,
+          0,
+          trip.entry.open_preis,
+          '',
+          '',
+        ].join(','));
+        rows.push([
+          result.kombination,
+          i + 1,
+          'VERKAUF',
+          trip.exit.ticker,
+          trip.exit.datum,
+          trip.exit.haltdauer,
+          trip.exit.open_preis,
+          trip.exit.perf_pct,
+          trip.exit.kum_perf_pct,
+        ].join(','));
+      });
+    }
+    const blob = new Blob([rows.join('\n')], { type: 'text/csv;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `Big5_AllKombinationen_${data.indicator}${data.period}_${new Date().toISOString().slice(0, 10)}.csv`;
+    a.click();
+    URL.revokeObjectURL(url);
+  }
+
   async function handleDownloadPdf() {
     if (!analysis) return;
     setPdfLoading(true);
@@ -73,6 +124,13 @@ export function AnalysisSection({ data }: Props) {
           )}
         </div>
         <div className="flex gap-2">
+          <button
+            onClick={handleDownloadCsv}
+            className="px-3 py-1.5 rounded text-xs font-medium"
+            style={{ background: '#1E2130', color: '#8B8FA8', border: '1px solid #2A2D3E' }}
+          >
+            ↓ CSV (alle Kombos)
+          </button>
           {analysis && (
             <button
               onClick={handleDownloadPdf}
