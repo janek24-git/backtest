@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
 
 const links = [
@@ -9,6 +10,13 @@ const links = [
 ];
 
 export function Sidebar() {
+  const [light, setLight] = useState(() => localStorage.getItem('theme') === 'light');
+
+  useEffect(() => {
+    document.body.classList.toggle('light-mode', light);
+    localStorage.setItem('theme', light ? 'light' : 'dark');
+  }, [light]);
+
   return (
     <div
       style={{
@@ -44,6 +52,17 @@ export function Sidebar() {
           </NavLink>
         ))}
       </nav>
+      <div style={{ padding: '12px 16px', borderTop: '1px solid #2A2D3E' }}>
+        <button
+          onClick={() => setLight(v => !v)}
+          style={{
+            width: '100%', padding: '8px 0', borderRadius: 6, border: '1px solid #2A2D3E',
+            background: 'transparent', color: '#8B8FA8', fontSize: 12, cursor: 'pointer',
+          }}
+        >
+          {light ? '🌙 Dark' : '☀️ Light'}
+        </button>
+      </div>
     </div>
   );
 }

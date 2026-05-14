@@ -10,3 +10,15 @@ body {
 * {
   box-sizing: border-box;
 }
+
+/* Light mode via filter inversion */
+body.light-mode {
+  filter: invert(1) hue-rotate(180deg);
+  background-color: #fff;
+}
+
+body.light-mode img,
+body.light-mode canvas,
+body.light-mode video {
+  filter: invert(1) hue-rotate(180deg);
+}
