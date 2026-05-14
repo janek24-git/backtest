@@ -238,8 +238,8 @@ def _run_one_combination(
                     if above_ind_entry and not s["needs_reset"]:
                         s["pending_buy"] = True
                 elif entry_mode == "B":
-                    # Only on the day eligibility is gained, with 0.5% buffer
-                    if s["just_eligible"] and above_ind_entry:
+                    # Any close > EMA while in Top5 — no reset, immediate re-entry after exits
+                    if above_ind_entry:
                         s["pending_buy"] = True
 
     # ── 4. Close open positions at end of period ──────────────────────────

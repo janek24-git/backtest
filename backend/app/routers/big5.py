@@ -96,8 +96,8 @@ Du bist ein erfahrener quantitativer Portfolio-Manager und schreibst einen präz
 **Zeitraum:** {req.from_date} bis {req.to_date}
 {opt_note}
 **Kauf-Logik im Detail:**
-- A-Case (frisches Signal): Unternehmen tritt in Top5 ein. War der Kurs beim Eintrittstag bereits ÜBER dem {req.indicator}{req.period}, muss er erst wieder DARUNTER fallen und dann erneut darüber schließen ("Reset") — erst dann Kauf. War er beim Eintritt UNTER dem {req.indicator}{req.period}, wird gewartet bis der erste Schlusskurs darüber liegt — dann Kauf am nächsten Open. Ziel: nur echte, frische Trendbestätigungen.
-- B-Case (sofort): Kauf genau am Tag des Top5-Eintritts, aber nur wenn der Kurs an diesem Tag bereits über dem {req.indicator}{req.period} schließt. Kein Reset nötig, kein Warten — entweder sofort oder gar nicht.
+- A-Case (mit Reset): Jedes Mal wenn Close über {req.indicator}{req.period} kreuzt während Aktie in Top5 ist — ABER: beim ersten Top5-Eintritt, falls Kurs bereits über EMA, muss er erst darunter fallen ("Reset") bevor ein Kauf möglich ist. Nach jedem Exit: direkter Wiedereinstieg beim nächsten Crossover. Ziel: echte Trendbestätigungen, kein Einstieg in bereits laufende Bewegungen.
+- B-Case (kein Reset): Jedes Mal wenn Close über {req.indicator}{req.period} kreuzt während Aktie in Top5 ist — ohne Reset-Mechanismus. Beim Top5-Eintritt bereits über EMA → sofortiger Kauf. Nach jedem Exit: direkter Wiedereinstieg. Höhere Handelsfrequenz, aggressiver.
 
 **Verkauf-Logik:**
 - C: Verkauf nur wenn Schlusskurs unter {req.indicator}{req.period} fällt. Top5-Austritt wird ignoriert — Trend entscheidet.
@@ -107,7 +107,7 @@ Du bist ein erfahrener quantitativer Portfolio-Manager und schreibst einen präz
 - E: 1 Tag in Top5 reicht für Einstiegs-Berechtigung
 - F: 5 aufeinanderfolgende Tage in Top5 nötig (filtert kurzfristige Rangverschiebungen heraus)
 
-**Warum A besser als B sein sollte:** A verlangt einen frischen Crossover — der Kurs muss Schwäche zeigen und dann wieder Stärke beweisen. B kauft in bestehende Stärke hinein, ohne Bestätigung dass der Trend intakt bleibt.
+**Erwartung A vs B:** A sollte durch den Reset-Mechanismus weniger Fehlsignale produzieren (kein Einstieg in überhitzte Bewegungen). B ist aggressiver und handelt mehr, was zu mehr Whipsaws aber auch mehr Gewinnen führen kann.
 **Warum F besser als E sein sollte:** F eliminiert Rauschen durch kurzfristige Marktcap-Schwankungen. Nur Unternehmen die 5 Tage stabil in den Top5 sind, bekommen ein Signal.
 **Warum C besser als D sein sollte:** Rangverlust ≠ Trendwende. Ein Unternehmen kann Rang 6 werden obwohl sein Kurs weiter steigt — D würde hier fälschlicherweise verkaufen.
 

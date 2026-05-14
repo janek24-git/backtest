@@ -32,12 +32,12 @@ function exportCSV(result: Big5ComboResult, indicator: string, period: number, o
 
 
 const COMBO_LEGEND = {
-  A: 'Kauf: Erster Close > EMA nach Top5-Eintritt',
-  B: 'Kauf: Am Tag des Top5-Eintritts (falls Close > EMA)',
+  A: 'Kauf: EMA-Crossover in Top5 — mit Reset (wenn Eintritt bereits über EMA, erst warten bis darunter)',
+  B: 'Kauf: EMA-Crossover in Top5 — kein Reset (sofortiger Wiedereinstieg, auch beim Eintritt über EMA)',
   C: 'Verkauf: Nur bei Close < EMA (Top5-Austritt ignoriert)',
   D: 'Verkauf: Sofort bei Top5-Austritt',
-  E: '1 Tag Top5 = Signal',
-  F: '5 aufeinanderfolgende Tage Top5 = Signal',
+  E: '1 Tag Top5 = Einstiegs-Berechtigung',
+  F: '5 aufeinanderfolgende Tage Top5 = Einstiegs-Berechtigung',
 };
 
 type CompareResults = { r100: Big5BacktestResponse; r200: Big5BacktestResponse };
