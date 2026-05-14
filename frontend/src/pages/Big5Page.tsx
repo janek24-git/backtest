@@ -309,9 +309,14 @@ export function Big5Page() {
                     }}
                   >
                     <p className="font-mono font-bold text-sm" style={{ color: '#E8EAED' }}>{r.kombination}</p>
-                    <p className="text-xs mt-1" style={{ color: r.metrics.portfolio_end_eur >= 1000 ? '#00C48C' : '#FF4757' }}>
-                      {r.metrics.portfolio_end_eur > 0 ? `€${r.metrics.portfolio_end_eur.toLocaleString('de-DE', { maximumFractionDigits: 0 })}` : `${r.metrics.total_return >= 0 ? '+' : ''}${r.metrics.total_return.toFixed(1)}%`}
+                    <p className="text-xs mt-1" style={{ color: r.metrics.total_return >= 0 ? '#00C48C' : '#FF4757' }}>
+                      {r.metrics.total_return >= 0 ? '+' : ''}{r.metrics.total_return.toFixed(1)}%
                     </p>
+                    {r.metrics.portfolio_end_eur > 0 && (
+                      <p className="text-xs" style={{ color: r.metrics.portfolio_end_eur >= 1000 ? '#00C48C' : '#FF4757' }}>
+                        €{r.metrics.portfolio_end_eur.toLocaleString('de-DE', { maximumFractionDigits: 0 })}
+                      </p>
+                    )}
                     <p className="text-xs" style={{ color: '#8B8FA8' }}>
                       {r.metrics.num_trades} Trades · WR {r.metrics.win_rate.toFixed(0)}%
                     </p>
