@@ -10,15 +10,6 @@ const OPTIMIZE_INFO = '0,5% Mindestabstand zur EMA beim Einstieg. Reduziert Nois
 
 
 
-const COMBO_LEGEND = {
-  A: 'Kauf: EMA-Crossover nach Top5-Eintritt — mit Reset (wenn beim Eintritt schon über EMA, erst warten bis darunter)',
-  B: 'Kauf: Direkt am Tag des Top5-Eintritts (auch wenn schon über EMA — bewusst hinterherlaufen)',
-  K: 'Kauf: Kontinuierlicher EMA-Crossover in Top5 — kein Reset, sofort re-entry nach jedem Exit',
-  C: 'Verkauf: Nur bei Close < EMA (Top5-Austritt ignoriert)',
-  D: 'Verkauf: Sofort bei Top5-Austritt',
-  E: '1 Tag Top5 = Einstiegs-Berechtigung',
-  F: '5 aufeinanderfolgende Tage Top5 = Einstiegs-Berechtigung',
-};
 
 type CompareResults = { r100: Big5BacktestResponse; r200: Big5BacktestResponse };
 
@@ -27,7 +18,28 @@ export function Big5Page() {
   const [indicator, setIndicator] = useState<'EMA' | 'SMA'>('EMA');
   const [period, setPeriod] = useState(200);
   const [optimized, setOptimized] = useState(false);
-  const [universe, setUniverse] = useState<'SP500' | 'NAS100'>('SP500');
+  const [universe, setUniverse] = useState<string>('SP500');
+
+  const comboLegend = {
+    A: `Kauf: ${indicator}-Crossover nach Top5-Eintritt — mit Reset (wenn beim Eintritt schon über ${indicator}, erst warten bis darunter)`,
+    B: `Kauf: Direkt am Tag des Top5-Eintritts (auch wenn schon über ${indicator} — bewusst hinterherlaufen)`,
+    K: `Kauf: Kontinuierlicher ${indicator}-Crossover in Top5 — kein Reset, sofort re-entry nach jedem Exit`,
+    C: `Verkauf: Nur bei Close < ${indicator} (Top5-Austritt ignoriert)`,
+    D: 'Verkauf: Sofort bei Top5-Austritt',
+    E: '1 Tag Top5 = Einstiegs-Berechtigung',
+    F: '5 aufeinanderfolgende Tage Top5 = Einstiegs-Berechtigung',
+  };
+
+  const universeLabel: Record<string, string> = {
+    SP500: 'S&P 500 Top 5',
+    NAS100: 'Nasdaq-100 Top 5',
+    DAX: 'DAX Top 5',
+    STOXX50: 'STOXX 50 Top 5',
+    GOLD: 'Gold (GC=F)',
+    SILVER: 'Silber (SI=F)',
+    BITCOIN: 'Bitcoin (BTC-USD)',
+    OIL: 'Rohöl WTI (CL=F)',
+  };
   const [showOptInfo, setShowOptInfo] = useState(false);
   const [results, setResults] = useState<Big5BacktestResponse | null>(null);
   const [loading, setLoading] = useState(false);
@@ -111,7 +123,7 @@ export function Big5Page() {
               Big 5 Swing Backtest
             </h1>
             <p className="text-xs mt-0.5" style={{ color: '#8B8FA8' }}>
-              S&P 500 Top 5 · Dynamische Marktkapitalisierung · 2000–2025 · 12 Kombinationen
+              {universeLabel[universe] ?? universe} · Dynamische Marktkapitalisierung · 2000–2025 · 12 Kombinationen
             </p>
           </div>
         </div>
@@ -196,20 +208,48 @@ export function Big5Page() {
           </div>
 
           <div>
-            <p className="text-xs mb-1.5" style={{ color: '#8B8FA8' }}>Universe</p>
-            <div className="flex gap-1">
-              {(['SP500', 'NAS100'] as const).map(u => (
-                <button
-                  key={u}
-                  onClick={() => setUniverse(u)}
-                  className="px-3 py-2 rounded text-sm font-medium transition-colors"
-                  style={universe === u
-                    ? { background: '#7C3AED', color: '#fff' }
-                    : { background: '#1E2130', color: '#8B8FA8' }}
-                >
-                  {u === 'SP500' ? 'S&P 500' : 'NAS100'}
-                </button>
-              ))}
+            <p className="text-xs mb-1.5" style={{ color: '#8B8FA8' }}>Universum</p>
+            <div className="space-y-1">
+              {/* Equity Indices */}
+              <div className="flex gap-1 flex-wrap">
+                {[
+                  { value: 'SP500', label: 'S&P 500' },
+                  { value: 'NAS100', label: 'NAS100' },
+                  { value: 'DAX', label: 'DAX' },
+                  { value: 'STOXX50', label: 'STOXX 50' },
+                ].map(u => (
+                  <button
+                    key={u.value}
+                    onClick={() => setUniverse(u.value)}
+                    className="px-3 py-1.5 rounded text-xs font-medium transition-colors"
+                    style={universe === u.value
+                      ? { background: '#7C3AED', color: '#fff' }
+                      : { background: '#1E2130', color: '#8B8FA8' }}
+                  >
+                    {u.label}
+                  </button>
+                ))}
+              </div>
+              {/* Commodities & Crypto */}
+              <div className="flex gap-1 flex-wrap">
+                {[
+                  { value: 'GOLD', label: 'Gold' },
+                  { value: 'SILVER', label: 'Silber' },
+                  { value: 'BITCOIN', label: 'Bitcoin' },
+                  { value: 'OIL', label: 'Öl (WTI)' },
+                ].map(u => (
+                  <button
+                    key={u.value}
+                    onClick={() => setUniverse(u.value)}
+                    className="px-3 py-1.5 rounded text-xs font-medium transition-colors"
+                    style={universe === u.value
+                      ? { background: '#F5A623', color: '#000' }
+                      : { background: '#1E2130', color: '#8B8FA8' }}
+                  >
+                    {u.label}
+                  </button>
+                ))}
+              </div>
             </div>
           </div>
 
@@ -236,7 +276,7 @@ export function Big5Page() {
         {/* Strategy legend */}
         <div className="rounded p-4 text-xs space-y-1" style={{ background: '#1A1D27', color: '#8B8FA8' }}>
           <p className="font-medium mb-2" style={{ color: '#E8EAED' }}>Kombinationslegende</p>
-          {Object.entries(COMBO_LEGEND).map(([k, v]) => (
+          {Object.entries(comboLegend).map(([k, v]) => (
             <p key={k}><span className="font-mono font-bold" style={{ color: '#00C48C' }}>{k}</span> — {v}</p>
           ))}
         </div>

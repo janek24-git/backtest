@@ -27,6 +27,8 @@ CACHE_DIR = Path(__file__).parent.parent.parent / "cache"
 CACHE_DIR.mkdir(exist_ok=True)
 CACHE_MAX_AGE_HOURS = 23
 
+SINGLE_ASSET_UNIVERSES = {"GOLD", "SILVER", "BITCOIN", "OIL"}
+
 # ── Candidate universes ───────────────────────────────────────────────────────
 # All stocks that have historically appeared in the S&P 500 Top 5 (2000–2025)
 SP500_CANDIDATES = [
@@ -43,6 +45,32 @@ NAS100_CANDIDATES = [
     "TSLA", "NFLX", "ADBE", "PYPL",  "CMCSA",
     "AVGO", "COST", "TXN",  "AMGN",  "GOOG",
 ]
+
+GOLD_CANDIDATES = ["GC=F"]
+SILVER_CANDIDATES = ["SI=F"]
+BITCOIN_CANDIDATES = ["BTC-USD"]
+OIL_CANDIDATES = ["CL=F"]
+
+DAX_CANDIDATES = [
+    "SAP", "LIN", "SIEGY", "ALIZY", "MURGY",
+    "DTEGY", "BMWYY", "BAYRY", "BASFY", "VWAGY",
+]
+
+STOXX50_CANDIDATES = [
+    "ASML", "NVO", "SAP", "LVMUY", "TTE",
+    "EADSY", "SBGSY", "SNY", "LRLCY", "INGA",
+]
+
+UNIVERSE_CANDIDATES = {
+    "SP500": SP500_CANDIDATES,
+    "NAS100": NAS100_CANDIDATES,
+    "GOLD": GOLD_CANDIDATES,
+    "SILVER": SILVER_CANDIDATES,
+    "BITCOIN": BITCOIN_CANDIDATES,
+    "OIL": OIL_CANDIDATES,
+    "DAX": DAX_CANDIDATES,
+    "STOXX50": STOXX50_CANDIDATES,
+}
 
 # ── Historical market cap corrections (billion USD, approximate annual) ───────
 # Used for companies whose price × current_shares gives wrong historical results
@@ -190,7 +218,7 @@ def _fetch_shares_sync(ticker: str) -> float | None:
 
 async def fetch_candidate_data(from_date: str = "2000-01-01", to_date: str = "2025-12-31", universe: str = "SP500") -> dict[str, pd.DataFrame]:
     """Fetch OHLCV for all candidates (cached per ticker)."""
-    candidates = SP500_CANDIDATES if universe == "SP500" else NAS100_CANDIDATES
+    candidates = UNIVERSE_CANDIDATES.get(universe, SP500_CANDIDATES)
     loop = asyncio.get_running_loop()
 
     async def fetch_one(ticker: str) -> tuple[str, pd.DataFrame]:
@@ -236,6 +264,12 @@ def compute_top5_history(price_data: dict[str, pd.DataFrame], universe: str = "S
       2. HIST_MCAP_B lookup → accurate for complex-history tickers (GE, XOM, CSCO…)
       3. price × shares_outstanding → fallback for modern tickers
     """
+    # Single-asset fast-path: no ranking needed, asset is always "in top5"
+    if universe in SINGLE_ASSET_UNIVERSES:
+        tickers = list(price_data.keys())
+        all_dates = sorted(set().union(*[set(pd.to_datetime(df.index)) for df in price_data.values()]))
+        return {dt.date(): tickers for dt in all_dates}
+
     # Load constituency data (may be None if download failed or not available)
     if universe == "SP500":
         constituents_df = sp500_load_constituents()
@@ -244,10 +278,15 @@ def compute_top5_history(price_data: dict[str, pd.DataFrame], universe: str = "S
             logger.info("Using real S&P 500 constituency data (%d snapshots)", len(constituents_df))
         else:
             logger.warning("S&P 500 constituency data unavailable — using candidate list only")
-    else:
+    elif universe == "NAS100":
         constituents_df = nas100_load_constituents()
         _get_members = nas100_get_members_on_date
         logger.info("NAS100 mode: no historical constituency data — using NAS100_CANDIDATES only")
+    else:
+        # DAX, STOXX50: no historical constituency data — candidate-only mode
+        constituents_df = None
+        _get_members = None
+        logger.info("%s mode: candidate-only (no constituency filter)", universe)
 
     # Fetch current shares for fallback tickers
     shares_map: dict[str, float] = {}

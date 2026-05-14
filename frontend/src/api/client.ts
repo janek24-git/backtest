@@ -46,7 +46,7 @@ export async function runBig5Backtest(
   fromDate: string = '2000-01-01',
   toDate: string = '2025-12-31',
   optimized: boolean = false,
-  universe: 'SP500' | 'NAS100' = 'SP500',
+  universe: string = 'SP500',
 ): Promise<Big5BacktestResponse> {
   const { data } = await api.post<Big5BacktestResponse>('/big5/run', {
     indicator,

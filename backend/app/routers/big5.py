@@ -82,9 +82,20 @@ async def analyze_big5(req: Big5AnalysisRequest):
         ])
 
         opt_note = (
-            "\nMODUS: Optimiert (0,5% Mindestabstand zur EMA beim Einstieg)\n"
+            f"\nMODUS: Optimiert (0,5% {req.indicator}-Threshold beim Einstieg)\n"
             if req.optimized else "\nMODUS: Raw (alle Signale, keine Filter)\n"
         )
+
+        universe_desc = {
+            "SP500": "Die 5 größten S&P-500-Unternehmen nach täglicher Marktkapitalisierung (dynamisch)",
+            "NAS100": "Die 5 größten Nasdaq-100-Unternehmen nach täglicher Marktkapitalisierung (dynamisch)",
+            "GOLD": "Gold (GC=F) — Einzel-Asset EMA-Strategie",
+            "SILVER": "Silber (SI=F) — Einzel-Asset EMA-Strategie",
+            "BITCOIN": "Bitcoin (BTC-USD) — Einzel-Asset EMA-Strategie",
+            "OIL": "Rohöl WTI (CL=F) — Einzel-Asset EMA-Strategie",
+            "DAX": "Die 5 größten DAX-Unternehmen nach Marktkapitalisierung",
+            "STOXX50": "Die 5 größten EURO STOXX 50-Unternehmen nach Marktkapitalisierung",
+        }.get(req.universe, req.universe)
 
         prompt = f"""WICHTIG: Antworte AUSSCHLIESSLICH auf Deutsch.
 
@@ -92,17 +103,17 @@ Du bist ein erfahrener Investor und systematischer Trader. Deine Aufgabe ist kei
 
 ## STRATEGIE-KONTEXT
 
-**Universum:** Die 5 größten S&P-500-Unternehmen nach täglicher Marktkapitalisierung (dynamisch, täglich neu berechnet).
+**Universum:** {universe_desc}
 **Trendfilter:** {req.indicator}{req.period}
 **Zeitraum:** {req.from_date} bis {req.to_date}
 {opt_note}
 **Entry-Modi:**
-- A: EMA-Crossover in Top5, mit Reset beim Eintritt (wenn schon über EMA → erst warten bis darunter). Sauberster Einstieg, konservativ.
-- B: Kauf direkt am Tag des Top5-Eintritts, auch wenn schon weit über EMA. Aggressiv, hinterherrennen bewusst.
-- K: Kontinuierlicher EMA-Crossover während Top5-Mitgliedschaft, kein Reset. Maximale Aktivität, handelt jeden Auf/Ab-Zyklus.
+- A: {req.indicator}-Crossover in Top5, mit Reset beim Eintritt (wenn schon über {req.indicator} → erst warten bis darunter). Sauberster Einstieg, konservativ.
+- B: Kauf direkt am Tag des Top5-Eintritts, auch wenn schon weit über {req.indicator}. Aggressiv, hinterherrennen bewusst.
+- K: Kontinuierlicher {req.indicator}-Crossover während Top5-Mitgliedschaft, kein Reset. Maximale Aktivität, handelt jeden Auf/Ab-Zyklus.
 
 **Exit-Modi:**
-- C: Nur Verkauf wenn Close unter EMA fällt. Trendfolge pur, ignoriert Rang-Verlust.
+- C: Nur Verkauf wenn Close unter {req.indicator} fällt. Trendfolge pur, ignoriert Rang-Verlust.
 - D: Sofortiger Verkauf bei Top5-Austritt. Rang-basiert, unabhängig vom Trend.
 
 **Filter:**

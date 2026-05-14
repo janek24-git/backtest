@@ -58,7 +58,7 @@ class Big5BacktestRequest(BaseModel):
     from_date: str = "2000-01-01"
     to_date: str = "2025-12-31"
     optimized: bool = False
-    universe: Literal["SP500", "NAS100"] = "SP500"
+    universe: Literal["SP500", "NAS100", "GOLD", "SILVER", "BITCOIN", "OIL", "DAX", "STOXX50"] = "SP500"
 
 
 class Big5Trade(BaseModel):
@@ -106,6 +106,7 @@ class Big5AnalysisRequest(BaseModel):
     from_date: str
     to_date: str
     optimized: bool = False
+    universe: str = "SP500"
 
 
 class Big5AnalysisResponse(BaseModel):
