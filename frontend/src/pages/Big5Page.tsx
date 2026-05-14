@@ -6,7 +6,7 @@ import { EquityCurve } from '../components/EquityCurve';
 import { AnalysisSection } from '../components/AnalysisSection';
 import type { Big5BacktestResponse, Big5ComboResult } from '../types';
 
-const OPTIMIZE_INFO = '0,5% Mindestabstand zur EMA beim Einstieg + 5 Handelstage Mindesthaltedauer. Reduziert Noise und Whipsaws. Hinweis: Die Mindesthaltedauer ist im Live-Betrieb nicht vollständig replizierbar (wird erst im Nachhinein bekannt).';
+const OPTIMIZE_INFO = '0,5% Mindestabstand zur EMA beim Einstieg. Reduziert Noise und Whipsaws — im Live-Betrieb replizierbar.';
 
 
 
@@ -71,6 +71,25 @@ export function Big5Page() {
   }
 
   const activeResult = results?.results.find(r => r.kombination === activeCombo);
+  const [csvCombo, setCsvCombo] = useState<string>('ACE');
+
+  function downloadCsv(combos: Big5ComboResult[]) {
+    const headers = ['Kombination', 'Nr', 'Typ', 'Ticker', 'Datum', 'Haltedauer', 'Preis', 'Perf_%', 'Kum_%', 'Kapital_EUR'];
+    const rows: string[][] = [];
+    for (const combo of combos) {
+      for (const t of combo.trades) {
+        rows.push([combo.kombination, String(t.nr), t.typ, t.ticker, t.datum, String(t.haltdauer), String(t.open_preis), String(t.perf_pct), String(t.kum_perf_pct), String(t.kapital_eur)]);
+      }
+    }
+    const csv = [headers, ...rows].map(r => r.join(',')).join('\n');
+    const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `big5_${combos.length === 1 ? combos[0].kombination : 'alle'}_${results?.from_date}_${results?.to_date}.csv`;
+    a.click();
+    URL.revokeObjectURL(url);
+  }
 
   return (
     <div className="min-h-screen p-6" style={{ background: '#0F1117' }}>
@@ -336,41 +355,36 @@ export function Big5Page() {
                         </span>
                       )}
                     </div>
-                    <button
-                      onClick={() => {
-                        if (!results) return;
-                        const headers = ['Kombination', 'Nr', 'Typ', 'Ticker', 'Datum', 'Haltedauer', 'Preis', 'Perf_%', 'Kum_%', 'Kapital_EUR'];
-                        const rows: string[][] = [];
-                        for (const combo of results.results) {
-                          for (const t of combo.trades) {
-                            rows.push([
-                              combo.kombination,
-                              String(t.nr),
-                              t.typ,
-                              t.ticker,
-                              t.datum,
-                              String(t.haltdauer),
-                              String(t.open_preis),
-                              String(t.perf_pct),
-                              String(t.kum_perf_pct),
-                              String(t.kapital_eur),
-                            ]);
-                          }
-                        }
-                        const csvContent = [headers, ...rows].map(r => r.join(',')).join('\n');
-                        const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
-                        const url = URL.createObjectURL(blob);
-                        const a = document.createElement('a');
-                        a.href = url;
-                        a.download = `big5_backtest_alle_kombos_${results.from_date}_${results.to_date}.csv`;
-                        a.click();
-                        URL.revokeObjectURL(url);
-                      }}
-                      className="px-3 py-1.5 rounded text-xs font-medium"
-                      style={{ background: '#1E2130', color: '#8B8FA8', border: '1px solid #2A2D3E' }}
-                    >
-                      ↓ CSV Export (alle Kombos)
-                    </button>
+                    <div className="flex items-center gap-2">
+                      <select
+                        value={csvCombo}
+                        onChange={e => setCsvCombo(e.target.value)}
+                        className="rounded text-xs px-2 py-1.5"
+                        style={{ background: '#1E2130', color: '#8B8FA8', border: '1px solid #2A2D3E' }}
+                      >
+                        {results.results.map(r => (
+                          <option key={r.kombination} value={r.kombination}>{r.kombination}</option>
+                        ))}
+                      </select>
+                      <button
+                        onClick={() => {
+                          if (!results) return;
+                          const combo = results.results.find(r => r.kombination === csvCombo);
+                          if (combo) downloadCsv([combo]);
+                        }}
+                        className="px-3 py-1.5 rounded text-xs font-medium"
+                        style={{ background: '#1E2130', color: '#8B8FA8', border: '1px solid #2A2D3E' }}
+                      >
+                        ↓ CSV Einzel
+                      </button>
+                      <button
+                        onClick={() => results && downloadCsv(results.results)}
+                        className="px-3 py-1.5 rounded text-xs font-medium"
+                        style={{ background: '#1E2130', color: '#8B8FA8', border: '1px solid #2A2D3E' }}
+                      >
+                        ↓ CSV Alle
+                      </button>
+                    </div>
                   </div>
                   <Big5Table trades={activeResult.trades} metrics={activeResult.metrics} />
                 </div>
