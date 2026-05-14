@@ -97,8 +97,8 @@ def _run_one_combination(
     } for t in dfs}
 
     trades: list[dict] = []
-    nr = 0          # sequential trade counter
-    kum_perf = 0.0  # cumulative performance (simple sum of closed trades)
+    nr = 0           # sequential trade counter
+    equity = 1.0     # compound equity (starts at 1 = 100%)
 
     def next_trading_day_open(ticker: str, current_idx: int) -> tuple[str, float] | None:
         """Returns (date_str, open_price) for the next trading day."""
@@ -153,7 +153,7 @@ def _run_one_combination(
                         "haltdauer": 0,
                         "open_preis": round(open_price, 4),
                         "perf_pct": 0.0,
-                        "kum_perf_pct": round(kum_perf, 4),
+                        "kum_perf_pct": round((equity - 1) * 100, 4),
                     })
                     s["in_position"] = True
                     s["entry_price"] = open_price
@@ -165,7 +165,8 @@ def _run_one_combination(
                 open_price = float(row["open"])
                 if not pd.isna(open_price) and s["entry_price"] is not None:
                     perf = (open_price - s["entry_price"]) / s["entry_price"] * 100
-                    kum_perf += perf
+                    equity *= (1 + perf / 100)
+                    kum_perf_pct = round((equity - 1) * 100, 4)
                     hold_days = row_idx - s["entry_idx"] if s["entry_idx"] is not None else 0
                     nr += 1
                     trades.append({
@@ -176,7 +177,7 @@ def _run_one_combination(
                         "haltdauer": hold_days,
                         "open_preis": round(open_price, 4),
                         "perf_pct": round(perf, 4),
-                        "kum_perf_pct": round(kum_perf, 4),
+                        "kum_perf_pct": kum_perf_pct,
                     })
                     s["in_position"] = False
                     s["entry_price"] = None
@@ -244,7 +245,7 @@ def _run_one_combination(
             last_row = df.iloc[-1]
             exit_price = float(last_row["close"])
             perf = (exit_price - s["entry_price"]) / s["entry_price"] * 100
-            kum_perf += perf
+            equity *= (1 + perf / 100)
             hold_days = len(df) - 1 - (s["entry_idx"] or 0)
             nr += 1
             trades.append({
@@ -255,7 +256,7 @@ def _run_one_combination(
                 "haltdauer": hold_days,
                 "open_preis": round(exit_price, 4),
                 "perf_pct": round(perf, 4),
-                "kum_perf_pct": round(kum_perf, 4),
+                "kum_perf_pct": round((equity - 1) * 100, 4),
             })
 
     # Sort by execution date, then nr
