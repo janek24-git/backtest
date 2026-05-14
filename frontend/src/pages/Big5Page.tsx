@@ -8,27 +8,6 @@ import type { Big5BacktestResponse, Big5ComboResult } from '../types';
 
 const OPTIMIZE_INFO = '0,5% Mindestabstand zur EMA beim Einstieg + 5 Handelstage Mindesthaltedauer. Reduziert Noise und Whipsaws. Hinweis: Die Mindesthaltedauer ist im Live-Betrieb nicht vollständig replizierbar (wird erst im Nachhinein bekannt).';
 
-function exportCSV(result: Big5ComboResult, indicator: string, period: number, optimized: boolean) {
-  const modeLabel = optimized ? 'Optimiert (0.5% Threshold + 5T Min-Hold)' : 'Raw';
-  const headers = ['Nr', 'Typ', 'Ticker', 'Datum', 'Haltdauer (Tage)', 'Preis (9:30 ET)', 'Performance %', 'Kum. Performance %', 'Kapital €'];
-  const rows = result.trades.map(t => [
-    t.nr, t.typ, t.ticker, t.datum,
-    t.haltdauer || '',
-    t.open_preis.toFixed(4),
-    t.perf_pct !== 0 ? t.perf_pct.toFixed(4) : '',
-    t.kum_perf_pct.toFixed(4),
-    t.kapital_eur?.toFixed(2) ?? '',
-  ]);
-  const meta = [`# Modus: ${modeLabel}`, `# Kombination: ${result.kombination}`, `# Indikator: ${indicator}${period}`, ''];
-  const csv = [...meta, headers.join(';'), ...rows.map(r => r.join(';'))].join('\n');
-  const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement('a');
-  a.href = url;
-  a.download = `Big5_${result.kombination}_${indicator}${period}_${optimized ? 'optimiert' : 'raw'}_2000-2025.csv`;
-  a.click();
-  URL.revokeObjectURL(url);
-}
 
 
 const COMBO_LEGEND = {
@@ -48,6 +27,7 @@ export function Big5Page() {
   const [indicator, setIndicator] = useState<'EMA' | 'SMA'>('EMA');
   const [period, setPeriod] = useState(200);
   const [optimized, setOptimized] = useState(false);
+  const [universe, setUniverse] = useState<'SP500' | 'NAS100'>('SP500');
   const [showOptInfo, setShowOptInfo] = useState(false);
   const [results, setResults] = useState<Big5BacktestResponse | null>(null);
   const [loading, setLoading] = useState(false);
@@ -62,7 +42,7 @@ export function Big5Page() {
     setResults(null);
     setCompareResults(null);
     try {
-      const data = await runBig5Backtest(indicator, period, '2000-01-01', '2025-12-31', optimized);
+      const data = await runBig5Backtest(indicator, period, '2000-01-01', '2025-12-31', optimized, universe);
       setResults(data);
       setActiveCombo('ACE');
     } catch (e: any) {
@@ -193,6 +173,24 @@ export function Big5Page() {
                   </div>
                 )}
               </div>
+            </div>
+          </div>
+
+          <div>
+            <p className="text-xs mb-1.5" style={{ color: '#8B8FA8' }}>Universe</p>
+            <div className="flex gap-1">
+              {(['SP500', 'NAS100'] as const).map(u => (
+                <button
+                  key={u}
+                  onClick={() => setUniverse(u)}
+                  className="px-3 py-2 rounded text-sm font-medium transition-colors"
+                  style={universe === u
+                    ? { background: '#7C3AED', color: '#fff' }
+                    : { background: '#1E2130', color: '#8B8FA8' }}
+                >
+                  {u === 'SP500' ? 'S&P 500' : 'NAS100'}
+                </button>
+              ))}
             </div>
           </div>
 
@@ -339,11 +337,39 @@ export function Big5Page() {
                       )}
                     </div>
                     <button
-                      onClick={() => exportCSV(activeResult, indicator, period, results.optimized ?? false)}
+                      onClick={() => {
+                        if (!results) return;
+                        const headers = ['Kombination', 'Nr', 'Typ', 'Ticker', 'Datum', 'Haltedauer', 'Preis', 'Perf_%', 'Kum_%', 'Kapital_EUR'];
+                        const rows: string[][] = [];
+                        for (const combo of results.results) {
+                          for (const t of combo.trades) {
+                            rows.push([
+                              combo.kombination,
+                              String(t.nr),
+                              t.typ,
+                              t.ticker,
+                              t.datum,
+                              String(t.haltdauer),
+                              String(t.open_preis),
+                              String(t.perf_pct),
+                              String(t.kum_perf_pct),
+                              String(t.kapital_eur),
+                            ]);
+                          }
+                        }
+                        const csvContent = [headers, ...rows].map(r => r.join(',')).join('\n');
+                        const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+                        const url = URL.createObjectURL(blob);
+                        const a = document.createElement('a');
+                        a.href = url;
+                        a.download = `big5_backtest_alle_kombos_${results.from_date}_${results.to_date}.csv`;
+                        a.click();
+                        URL.revokeObjectURL(url);
+                      }}
                       className="px-3 py-1.5 rounded text-xs font-medium"
                       style={{ background: '#1E2130', color: '#8B8FA8', border: '1px solid #2A2D3E' }}
                     >
-                      ↓ CSV Export
+                      ↓ CSV Export (alle Kombos)
                     </button>
                   </div>
                   <Big5Table trades={activeResult.trades} metrics={activeResult.metrics} />

@@ -88,6 +88,7 @@ export interface Big5BacktestResponse {
   from_date: string;
   to_date: string;
   optimized?: boolean;
+  universe?: string;
 }
 
 export interface Big5AnalysisResponse {

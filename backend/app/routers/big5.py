@@ -23,12 +23,12 @@ router = APIRouter()
 async def run_big5_backtest(req: Big5BacktestRequest):
     try:
         # Fetch price data for all candidates
-        price_data = await fetch_candidate_data(req.from_date, req.to_date)
+        price_data = await fetch_candidate_data(req.from_date, req.to_date, universe=req.universe)
         if not price_data:
             raise HTTPException(status_code=500, detail="No price data available")
 
         # Build daily top5 history
-        top5_history = compute_top5_history(price_data)
+        top5_history = compute_top5_history(price_data, universe=req.universe)
 
         # Run all 8 combinations
         raw_results = run_all_combinations(
@@ -52,6 +52,7 @@ async def run_big5_backtest(req: Big5BacktestRequest):
             from_date=req.from_date,
             to_date=req.to_date,
             optimized=req.optimized,
+            universe=req.universe,
         )
     except HTTPException:
         raise

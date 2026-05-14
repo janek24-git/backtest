@@ -18,7 +18,8 @@ import yfinance as yf
 from pathlib import Path
 from datetime import datetime, timedelta, timezone
 
-from app.services.sp500_constituents import load_constituents, get_members_on_date
+from app.services.sp500_constituents import load_constituents as sp500_load_constituents, get_members_on_date as sp500_get_members_on_date
+from app.services.nas100_constituents import load_constituents as nas100_load_constituents, get_members_on_date as nas100_get_members_on_date
 
 logger = logging.getLogger(__name__)
 
@@ -26,13 +27,21 @@ CACHE_DIR = Path(__file__).parent.parent.parent / "cache"
 CACHE_DIR.mkdir(exist_ok=True)
 CACHE_MAX_AGE_HOURS = 23
 
-# ── Candidate universe ────────────────────────────────────────────────────────
+# ── Candidate universes ───────────────────────────────────────────────────────
 # All stocks that have historically appeared in the S&P 500 Top 5 (2000–2025)
-CANDIDATES = [
+SP500_CANDIDATES = [
     "MSFT",   "AAPL",  "AMZN",  "GOOGL", "META",
     "NVDA",   "XOM",   "GE",    "BRK-B", "WMT",
     "CSCO",   "JNJ",   "JPM",   "CVX",   "INTC",
     "PG",     "C",     "BAC",   "HD",    "PFE",
+]
+
+# All stocks that have historically appeared in the Nasdaq-100 Top 5 (2000–2025)
+NAS100_CANDIDATES = [
+    "MSFT", "AAPL", "AMZN", "GOOGL", "META",
+    "NVDA", "INTC", "CSCO", "ORCL",  "QCOM",
+    "TSLA", "NFLX", "ADBE", "PYPL",  "CMCSA",
+    "AVGO", "COST", "TXN",  "AMGN",  "GOOG",
 ]
 
 # ── Historical market cap corrections (billion USD, approximate annual) ───────
@@ -82,6 +91,14 @@ HIST_MCAP_B: dict[str, dict[int, float]] = {
         2000: 75,  2001: 65,  2002: 60,  2003: 105, 2004: 175,
         2005: 185, 2006: 220, 2007: 180, 2008: 55,  2009: 120,
         2010: 130,
+    },
+    "ORCL": {
+        2000: 230, 2001: 50, 2002: 30, 2003: 55, 2004: 65,
+        2005: 60,  2006: 80, 2007: 95, 2008: 60,
+    },
+    "QCOM": {
+        2000: 130, 2001: 30, 2002: 20, 2003: 30, 2004: 50,
+        2005: 65,  2006: 75, 2007: 100, 2008: 55,
     },
 }
 
@@ -156,8 +173,9 @@ def _fetch_shares_sync(ticker: str) -> float | None:
     return None
 
 
-async def fetch_candidate_data(from_date: str = "2000-01-01", to_date: str = "2025-12-31") -> dict[str, pd.DataFrame]:
+async def fetch_candidate_data(from_date: str = "2000-01-01", to_date: str = "2025-12-31", universe: str = "SP500") -> dict[str, pd.DataFrame]:
     """Fetch OHLCV for all candidates (cached per ticker)."""
+    candidates = SP500_CANDIDATES if universe == "SP500" else NAS100_CANDIDATES
     loop = asyncio.get_running_loop()
 
     async def fetch_one(ticker: str) -> tuple[str, pd.DataFrame]:
@@ -178,7 +196,7 @@ async def fetch_candidate_data(from_date: str = "2000-01-01", to_date: str = "20
                 df.to_parquet(path)
         return ticker, df
 
-    results = await asyncio.gather(*[fetch_one(t) for t in CANDIDATES], return_exceptions=True)
+    results = await asyncio.gather(*[fetch_one(t) for t in candidates], return_exceptions=True)
     out = {}
     for r in results:
         if isinstance(r, Exception):
@@ -192,21 +210,29 @@ async def fetch_candidate_data(from_date: str = "2000-01-01", to_date: str = "20
 
 # ── Top5 history computation ──────────────────────────────────────────────────
 
-def compute_top5_history(price_data: dict[str, pd.DataFrame]) -> dict:
+def compute_top5_history(price_data: dict[str, pd.DataFrame], universe: str = "SP500") -> dict:
     """
-    For each trading day, determine the S&P 500 Top 5 by approximate market cap.
+    For each trading day, determine the Top 5 by approximate market cap.
 
     Priority:
-      1. fja05680/sp500 constituency → only real S&P 500 members considered
+      1. Constituency data → only real index members considered
+         SP500: fja05680/sp500 dataset (1996–present)
+         NAS100: no historical dataset available — candidate-only mode
       2. HIST_MCAP_B lookup → accurate for complex-history tickers (GE, XOM, CSCO…)
       3. price × shares_outstanding → fallback for modern tickers
     """
-    # Load constituency data (may be None if download failed)
-    sp500_df = load_constituents()
-    if sp500_df is not None:
-        logger.info("Using real S&P 500 constituency data (%d snapshots)", len(sp500_df))
+    # Load constituency data (may be None if download failed or not available)
+    if universe == "SP500":
+        constituents_df = sp500_load_constituents()
+        _get_members = sp500_get_members_on_date
+        if constituents_df is not None:
+            logger.info("Using real S&P 500 constituency data (%d snapshots)", len(constituents_df))
+        else:
+            logger.warning("S&P 500 constituency data unavailable — using candidate list only")
     else:
-        logger.warning("S&P 500 constituency data unavailable — using candidate list only")
+        constituents_df = nas100_load_constituents()
+        _get_members = nas100_get_members_on_date
+        logger.info("NAS100 mode: no historical constituency data — using NAS100_CANDIDATES only")
 
     # Fetch current shares for fallback tickers
     shares_map: dict[str, float] = {}
@@ -222,21 +248,20 @@ def compute_top5_history(price_data: dict[str, pd.DataFrame]) -> dict:
     close_df = close_df.sort_index()
 
     # Precompute constituency sets per unique snapshot date for speed
-    sp500_cache: dict = {}
+    constituents_cache: dict = {}
 
     top5_history: dict = {}
 
     for dt, row in close_df.iterrows():
         year = dt.year
 
-        # Get S&P 500 members on this date
-        if sp500_df is not None:
-            dt_key = dt.date()
+        # Get index members on this date
+        if constituents_df is not None:
             # Cache by snapshot (constituency changes ~monthly)
             month_key = (dt.year, dt.month)
-            if month_key not in sp500_cache:
-                sp500_cache[month_key] = get_members_on_date(sp500_df, dt)
-            members = sp500_cache[month_key]
+            if month_key not in constituents_cache:
+                constituents_cache[month_key] = _get_members(constituents_df, dt)
+            members = constituents_cache[month_key]
         else:
             members = None  # No filter: use all candidates
 
