@@ -72,74 +72,70 @@ async def analyze_big5(req: Big5AnalysisRequest):
             )
         metrics_summary = "\n".join(metrics_lines)
 
-        best = max(req.results, key=lambda r: r.metrics.sharpe)
-        worst = min(req.results, key=lambda r: r.metrics.total_return)
+        sorted_by_sharpe = sorted(req.results, key=lambda r: r.metrics.sharpe, reverse=True)
+        top3 = sorted_by_sharpe[:3]
+        top3_summary = "\n".join([
+            f"{r.kombination}: Return={r.metrics.total_return:+.1f}% | Sharpe={r.metrics.sharpe:.2f} | "
+            f"WinRate={r.metrics.win_rate:.1f}% | MaxDD={r.metrics.max_drawdown:.1f}% | Trades={r.metrics.num_trades} | Portfolio-End=€{r.metrics.portfolio_end_eur:.0f}"
+            for r in top3
+        ])
 
         opt_note = (
-            "\nMODUS: Optimiert (Rauschunterdrückung aktiv)\n"
-            "- Einstieg nur wenn Schlusskurs mind. 0,5% über {ind}{per} liegt (verhindert marginale Crossovers)\n"
-            "- Mindesthaltedauer 5 Handelstage nach Kauf (verhindert 1-Tages-Whipsaws)\n"
-            "- WICHTIG: Die Mindesthaltedauer ist im Live-Betrieb nicht replizierbar — sie ist erst im Nachhinein bekannt.\n"
-            "  Weise explizit darauf hin, dass Optimiert-Ergebnisse besser als live erzielbar sind.\n"
-            .format(ind=req.indicator, per=req.period)
-            if req.optimized else "\nMODUS: Raw (keine Filterung, alle Signale werden ausgeführt)\n"
+            "\nMODUS: Optimiert (0,5% EMA-Threshold + 5T Mindesthaltedauer — im Live-Betrieb nicht vollständig replizierbar)\n"
+            if req.optimized else "\nMODUS: Raw (alle Signale, keine Filter)\n"
         )
 
         prompt = f"""WICHTIG: Antworte AUSSCHLIESSLICH auf Deutsch.
 
-Du bist ein erfahrener quantitativer Portfolio-Manager und schreibst einen präzisen Backtest-Report für ein Investment-Komitee.
+Du bist ein erfahrener Investor und systematischer Trader. Deine Aufgabe ist keine Schulaufgabe — du sollst ehrlich abwägen, philosophieren, Grautöne zeigen. Es gibt keine perfekte Kombination. Jede hat Vor- und Nachteile die vom Investor-Typ abhängen.
 
-## STRATEGIE-KONTEXT (lies das genau — das ist die Grundlage deiner Analyse)
+## STRATEGIE-KONTEXT
 
-**Universum:** Die 5 größten S&P-500-Unternehmen nach täglicher Marktkapitalisierung (dynamisch berechnet).
-**Trendfilter:** {req.indicator}{req.period} — Kauf nur wenn Trend aufwärts zeigt.
+**Universum:** Die 5 größten S&P-500-Unternehmen nach täglicher Marktkapitalisierung (dynamisch, täglich neu berechnet).
+**Trendfilter:** {req.indicator}{req.period}
 **Zeitraum:** {req.from_date} bis {req.to_date}
 {opt_note}
-**Kauf-Logik im Detail (3 Entry-Modi):**
-- A (mit Reset): EMA-Crossover während Top5-Mitgliedschaft. Beim ersten Eintritt in Top5, falls bereits über EMA → muss erst darunter fallen bevor Kauf. Nach jedem Exit: direkter Wiedereinstieg beim nächsten Crossover. Ziel: echte frische Trendbestätigungen.
-- B (Eintrittstag): Kauf direkt am Tag des Top5-Eintritts, auch wenn bereits über EMA. Einmalige Chance pro Eintritt. Höheres Risiko weil Einstieg nicht auf EMA-Niveau.
-- K (kontinuierlich): Jedes Mal wenn Close über EMA kreuzt während in Top5 — kein Reset, sofortiger Wiedereinstieg nach jedem Exit. Maximale Handelsfrequenz innerhalb Top5-Mitgliedschaft.
+**Entry-Modi:**
+- A: EMA-Crossover in Top5, mit Reset beim Eintritt (wenn schon über EMA → erst warten bis darunter). Sauberster Einstieg, konservativ.
+- B: Kauf direkt am Tag des Top5-Eintritts, auch wenn schon weit über EMA. Aggressiv, hinterherrennen bewusst.
+- K: Kontinuierlicher EMA-Crossover während Top5-Mitgliedschaft, kein Reset. Maximale Aktivität, handelt jeden Auf/Ab-Zyklus.
 
-**Verkauf-Logik:**
-- C: Verkauf nur wenn Schlusskurs unter {req.indicator}{req.period} fällt. Top5-Austritt ignoriert.
-- D: Sofortiger Verkauf bei Top5-Austritt (rangbasiert).
+**Exit-Modi:**
+- C: Nur Verkauf wenn Close unter EMA fällt. Trendfolge pur, ignoriert Rang-Verlust.
+- D: Sofortiger Verkauf bei Top5-Austritt. Rang-basiert, unabhängig vom Trend.
 
-**Top5-Filter:**
-- E: 1 Tag in Top5 = Einstiegs-Berechtigung
-- F: 5 aufeinanderfolgende Tage in Top5 nötig
+**Filter:**
+- E: 1 Tag in Top5 reicht.
+- F: 5 aufeinanderfolgende Tage in Top5 nötig. Filtert kurzfristige Fluktuationen.
 
-**Erwartungen:** K sollte durch kontinuierliches Trading mehr Crossovers einfangen als A. A sollte sauberer einsteigen als B. F sollte Whipsaws reduzieren vs E.
-**Warum F besser als E sein sollte:** F eliminiert Rauschen durch kurzfristige Marktcap-Schwankungen. Nur Unternehmen die 5 Tage stabil in den Top5 sind, bekommen ein Signal.
-**Warum C besser als D sein sollte:** Rangverlust ≠ Trendwende. Ein Unternehmen kann Rang 6 werden obwohl sein Kurs weiter steigt — D würde hier fälschlicherweise verkaufen.
-
-## ERGEBNISSE
+## ALLE ERGEBNISSE
 
 {metrics_summary}
 
+## TOP 3 (nach Sharpe)
+
+{top3_summary}
+
 ## DEIN AUFTRAG
 
-Schreibe diese Abschnitte mit exakt diesen Überschriften. Keine Floskeln. Direkt und datengetrieben.
-Verwende: Kauf-Signal, Verkauf-Signal, Haltedauer, Drawdown, Trendfilter, Top5-Eintritt, Top5-Austritt, Kumulierte Performance, Handelsanzahl, Trefferquote, Rendite-Risiko-Verhältnis.
+Schreibe folgende Abschnitte. Sei ehrlich, nuanciert, denke laut. Kein "Kombination X ist klar der Gewinner" — sondern: für wen, unter welchen Umständen, mit welchen Kompromissen?
 
-## Zusammenfassung
-3 Sätze: Was macht die Strategie, was ist das wichtigste Ergebnis, welche Kombination dominiert?
+## Überblick
+2-3 Sätze: Was zeigen die Daten insgesamt? Gibt es einen klaren Trend oder ist es uneinheitlich?
 
-## Beste Kombination: {best.kombination}
-Erkläre WARUM diese Kombination strukturell überlegen ist — nicht nur die Zahlen, sondern die Logik dahinter. Bestätigt das Ergebnis die Erwartung (A>B, F>E, C>D)? Wenn nicht, warum?
+## Top 3 im Vergleich
+Gehe durch die Top 3 Kombinationen. Für jede: Was spricht dafür? Was dagegen? Wer würde sie wählen — der aktive Trader, der passive Investor, der risikoscheue Anleger? Denke in Dimensionen: Rendite, Risiko (Drawdown), Aufwand (Handelsfrequenz), Psychologie (wie viele Trades kann man wirklich diszipliniert ausführen?), Replizierbarkeit im echten Leben.
 
-## Schwächste Kombination: {worst.kombination}
-Welcher strukturelle Fehler steckt dahinter? Was sagt das über die Strategie-Logik aus?
+## Spannungsfelder
+Was sind die echten Zielkonflikte dieser Strategie? Z.B.: Mehr Trades = mehr Chancen, aber auch mehr Fehler und Kosten. Langer Halt = weniger Stress, aber größere Drawdowns. Diskutiere diese Abwägungen ohne falsche Auflösung — manche Fragen haben keine beste Antwort.
 
-## Überraschende Erkenntnisse
-Gibt es Kombinationen die gegen die Erwartung performen? Z.B. B besser als A, oder E besser als F? Falls ja: warum könnte das sein?
+## Realitäts-Check
+Was würde im echten Trading anders laufen als im Backtest? Slippage, Emotionen, Marktphasen die im Backtest nicht vorkamen (z.B. ein 2000er Crash der NVDA trifft). Sei konkret.
 
-## Risiken
-Tabelle: Klumpenrisiko, Überanpassung, Survivorship Bias, Ausführungskosten, Replizierbarkeit (bei Optimiert-Modus). Mit Bewertung und Gegenmaßnahme.
+## Fazit ohne Dogma
+Keine einzelne Empfehlung. Stattdessen: 2-3 Szenarien ("Wenn du X bist, dann Y — weil Z"). Lass den Leser selbst entscheiden.
 
-## Handlungsempfehlung
-Konkret: Welche Kombination live, Positionsgröße (Half-Kelly), eine sofort umsetzbare Zusatzregel.
-
-Maximal 500 Wörter gesamt."""
+Maximal 600 Wörter gesamt. Kein Marketingsprech."""
 
         client = anthropic.Anthropic(api_key=os.environ.get("ANTHROPIC_API_KEY"))
         message = client.messages.create(
