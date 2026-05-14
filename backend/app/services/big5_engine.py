@@ -29,6 +29,7 @@ from datetime import date
 logger = logging.getLogger(__name__)
 
 COMBINATIONS = ["ACE", "ACF", "ADE", "ADF", "BCE", "BCF", "BDE", "BDF", "KCE", "KCF", "KDE", "KDF"]
+SINGLE_ASSET_COMBINATIONS = ["GC"]  # G: pure indicator crossover, no Top5 logic
 FILTER_DAYS = {"E": 1, "F": 5}
 
 
@@ -231,7 +232,11 @@ def _run_one_combination(
                 if min_hold_ok and (ema_exit or top5_exit):
                     s["pending_sell"] = True
 
-            # ENTRY signal
+            # ENTRY signal — G mode bypasses Top5 eligibility entirely
+            if entry_mode == "G" and not s["in_position"] and not s["pending_buy"]:
+                if above_ind_entry:
+                    s["pending_buy"] = True
+
             if not s["in_position"] and not s["pending_buy"] and s["eligible"]:
                 if entry_mode == "A":
                     # Fresh close > EMA + 0.5% buffer; if needs_reset, wait for dip first
@@ -324,6 +329,9 @@ def _calc_metrics(trades: list[dict]) -> dict:
     }
 
 
+SINGLE_ASSET_UNIVERSES = {"GOLD", "SILVER", "BITCOIN", "OIL"}
+
+
 def run_all_combinations(
     price_data: dict[str, pd.DataFrame],
     top5_history: dict,
@@ -331,13 +339,15 @@ def run_all_combinations(
     period: int = 200,
     entry_threshold: float = 0.0,
     min_hold_days: int = 0,
+    universe: str = "SP500",
 ) -> list[dict]:
-    """Run all 12 combinations and return list of results."""
+    """Run all combinations and return list of results."""
+    combos = COMBINATIONS if universe not in SINGLE_ASSET_UNIVERSES else SINGLE_ASSET_COMBINATIONS
     results = []
-    for combo in COMBINATIONS:
-        entry_mode = combo[0]   # A or B
-        exit_mode = combo[1]    # C or D
-        filter_mode = combo[2]  # E or F
+    for combo in combos:
+        entry_mode = combo[0]
+        exit_mode = combo[1]
+        filter_mode = combo[2] if len(combo) > 2 else "E"  # GC has no filter
         logger.info("Running combination %s ...", combo)
         try:
             trades = _run_one_combination(

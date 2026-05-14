@@ -20,7 +20,13 @@ export function Big5Page() {
   const [optimized, setOptimized] = useState(false);
   const [universe, setUniverse] = useState<string>('SP500');
 
-  const comboLegend = {
+  const SINGLE_ASSET_UNIVERSES = new Set(['GOLD', 'SILVER', 'BITCOIN', 'OIL']);
+  const isSingleAsset = SINGLE_ASSET_UNIVERSES.has(universe);
+
+  const comboLegend = isSingleAsset ? {
+    G: `Kauf: Close > ${indicator} — Verkauf: Close < ${indicator} (reiner Indikator-Crossover, kein Index-Filter)`,
+    C: `Verkauf: Close < ${indicator}`,
+  } : {
     A: `Kauf: ${indicator}-Crossover nach Top5-Eintritt — mit Reset (wenn beim Eintritt schon über ${indicator}, erst warten bis darunter)`,
     B: `Kauf: Direkt am Tag des Top5-Eintritts (auch wenn schon über ${indicator} — bewusst hinterherlaufen)`,
     K: `Kauf: Kontinuierlicher ${indicator}-Crossover in Top5 — kein Reset, sofort re-entry nach jedem Exit`,
@@ -56,7 +62,8 @@ export function Big5Page() {
     try {
       const data = await runBig5Backtest(indicator, period, '2000-01-01', '2025-12-31', optimized, universe);
       setResults(data);
-      setActiveCombo('ACE');
+      setActiveCombo(data.results[0]?.kombination ?? 'ACE');
+      setCsvCombo(data.results[0]?.kombination ?? 'ACE');
     } catch (e: any) {
       setError(e?.message ?? 'Backtest fehlgeschlagen');
     } finally {
@@ -123,7 +130,7 @@ export function Big5Page() {
               Big 5 Swing Backtest
             </h1>
             <p className="text-xs mt-0.5" style={{ color: '#8B8FA8' }}>
-              {universeLabel[universe] ?? universe} · Dynamische Marktkapitalisierung · 2000–2025 · 12 Kombinationen
+              {universeLabel[universe] ?? universe} · 2000–2025 · {isSingleAsset ? '1 Kombination (GC)' : '12 Kombinationen'}
             </p>
           </div>
         </div>
@@ -354,7 +361,7 @@ export function Big5Page() {
               <p className="text-xs mb-3" style={{ color: '#8B8FA8' }}>
                 {indicator}{period} · {results.from_date} bis {results.to_date}
               </p>
-              <div className="grid grid-cols-4 gap-2 mb-4" style={{ gridTemplateColumns: 'repeat(4, 1fr)' }}>
+              <div className="grid gap-2 mb-4" style={{ gridTemplateColumns: isSingleAsset ? '1fr' : 'repeat(4, 1fr)' }}>
                 {results.results.map(r => (
                   <button
                     key={r.kombination}

@@ -37,6 +37,7 @@ async def run_big5_backtest(req: Big5BacktestRequest):
             period=req.period,
             entry_threshold=0.005 if req.optimized else 0.0,
             min_hold_days=0,
+            universe=req.universe,
         )
 
         results = []
