@@ -62,6 +62,7 @@ export interface Big5Trade {
   open_preis: number;
   perf_pct: number;
   kum_perf_pct: number;
+  kapital_eur: number;
 }
 
 export interface Big5ComboMetrics {
@@ -70,6 +71,8 @@ export interface Big5ComboMetrics {
   total_return: number;
   sharpe: number;
   max_drawdown: number;
+  portfolio_end_eur: number;
+  slots_used: number;
 }
 
 export interface Big5ComboResult {

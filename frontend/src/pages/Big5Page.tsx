@@ -10,13 +10,14 @@ const OPTIMIZE_INFO = '0,5% Mindestabstand zur EMA beim Einstieg + 5 Handelstage
 
 function exportCSV(result: Big5ComboResult, indicator: string, period: number, optimized: boolean) {
   const modeLabel = optimized ? 'Optimiert (0.5% Threshold + 5T Min-Hold)' : 'Raw';
-  const headers = ['Nr', 'Typ', 'Ticker', 'Datum', 'Haltdauer (Tage)', 'Preis (9:30 ET)', 'Performance %', 'Kum. Performance %'];
+  const headers = ['Nr', 'Typ', 'Ticker', 'Datum', 'Haltdauer (Tage)', 'Preis (9:30 ET)', 'Performance %', 'Kum. Performance %', 'Kapital €'];
   const rows = result.trades.map(t => [
     t.nr, t.typ, t.ticker, t.datum,
     t.haltdauer || '',
     t.open_preis.toFixed(4),
     t.perf_pct !== 0 ? t.perf_pct.toFixed(4) : '',
     t.kum_perf_pct.toFixed(4),
+    t.kapital_eur?.toFixed(2) ?? '',
   ]);
   const meta = [`# Modus: ${modeLabel}`, `# Kombination: ${result.kombination}`, `# Indikator: ${indicator}${period}`, ''];
   const csv = [...meta, headers.join(';'), ...rows.map(r => r.join(';'))].join('\n');
@@ -307,8 +308,8 @@ export function Big5Page() {
                     }}
                   >
                     <p className="font-mono font-bold text-sm" style={{ color: '#E8EAED' }}>{r.kombination}</p>
-                    <p className="text-xs mt-1" style={{ color: r.metrics.total_return >= 0 ? '#00C48C' : '#FF4757' }}>
-                      {r.metrics.total_return >= 0 ? '+' : ''}{r.metrics.total_return.toFixed(1)}%
+                    <p className="text-xs mt-1" style={{ color: r.metrics.portfolio_end_eur >= 1000 ? '#00C48C' : '#FF4757' }}>
+                      {r.metrics.portfolio_end_eur > 0 ? `€${r.metrics.portfolio_end_eur.toLocaleString('de-DE', { maximumFractionDigits: 0 })}` : `${r.metrics.total_return >= 0 ? '+' : ''}${r.metrics.total_return.toFixed(1)}%`}
                     </p>
                     <p className="text-xs" style={{ color: '#8B8FA8' }}>
                       {r.metrics.num_trades} Trades · WR {r.metrics.win_rate.toFixed(0)}%
