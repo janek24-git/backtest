@@ -81,5 +81,14 @@
     "check_date": "2026-05-27",
     "rel_vol": 5.09,
     "pct_above_ema": 12.7
+  },
+  {
+    "ticker": "AUR",
+    "signal_date": "2026-05-14",
+    "entry_price": 8.4,
+    "source": "WSB",
+    "tp_pct": 20.0,
+    "sl_pct": 10.0,
+    "check_date": "2026-05-28"
   }
 ]
