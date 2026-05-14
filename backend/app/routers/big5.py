@@ -95,19 +95,20 @@ Du bist ein erfahrener quantitativer Portfolio-Manager und schreibst einen präz
 **Trendfilter:** {req.indicator}{req.period} — Kauf nur wenn Trend aufwärts zeigt.
 **Zeitraum:** {req.from_date} bis {req.to_date}
 {opt_note}
-**Kauf-Logik im Detail:**
-- A-Case (mit Reset): Jedes Mal wenn Close über {req.indicator}{req.period} kreuzt während Aktie in Top5 ist — ABER: beim ersten Top5-Eintritt, falls Kurs bereits über EMA, muss er erst darunter fallen ("Reset") bevor ein Kauf möglich ist. Nach jedem Exit: direkter Wiedereinstieg beim nächsten Crossover. Ziel: echte Trendbestätigungen, kein Einstieg in bereits laufende Bewegungen.
-- B-Case (kein Reset): Jedes Mal wenn Close über {req.indicator}{req.period} kreuzt während Aktie in Top5 ist — ohne Reset-Mechanismus. Beim Top5-Eintritt bereits über EMA → sofortiger Kauf. Nach jedem Exit: direkter Wiedereinstieg. Höhere Handelsfrequenz, aggressiver.
+**Kauf-Logik im Detail (3 Entry-Modi):**
+- A (mit Reset): EMA-Crossover während Top5-Mitgliedschaft. Beim ersten Eintritt in Top5, falls bereits über EMA → muss erst darunter fallen bevor Kauf. Nach jedem Exit: direkter Wiedereinstieg beim nächsten Crossover. Ziel: echte frische Trendbestätigungen.
+- B (Eintrittstag): Kauf direkt am Tag des Top5-Eintritts, auch wenn bereits über EMA. Einmalige Chance pro Eintritt. Höheres Risiko weil Einstieg nicht auf EMA-Niveau.
+- K (kontinuierlich): Jedes Mal wenn Close über EMA kreuzt während in Top5 — kein Reset, sofortiger Wiedereinstieg nach jedem Exit. Maximale Handelsfrequenz innerhalb Top5-Mitgliedschaft.
 
 **Verkauf-Logik:**
-- C: Verkauf nur wenn Schlusskurs unter {req.indicator}{req.period} fällt. Top5-Austritt wird ignoriert — Trend entscheidet.
-- D: Sofortiger Verkauf sobald das Unternehmen aus den Top5 fällt (rangbasiert, nicht preisbasiert).
+- C: Verkauf nur wenn Schlusskurs unter {req.indicator}{req.period} fällt. Top5-Austritt ignoriert.
+- D: Sofortiger Verkauf bei Top5-Austritt (rangbasiert).
 
 **Top5-Filter:**
-- E: 1 Tag in Top5 reicht für Einstiegs-Berechtigung
-- F: 5 aufeinanderfolgende Tage in Top5 nötig (filtert kurzfristige Rangverschiebungen heraus)
+- E: 1 Tag in Top5 = Einstiegs-Berechtigung
+- F: 5 aufeinanderfolgende Tage in Top5 nötig
 
-**Erwartung A vs B:** A sollte durch den Reset-Mechanismus weniger Fehlsignale produzieren (kein Einstieg in überhitzte Bewegungen). B ist aggressiver und handelt mehr, was zu mehr Whipsaws aber auch mehr Gewinnen führen kann.
+**Erwartungen:** K sollte durch kontinuierliches Trading mehr Crossovers einfangen als A. A sollte sauberer einsteigen als B. F sollte Whipsaws reduzieren vs E.
 **Warum F besser als E sein sollte:** F eliminiert Rauschen durch kurzfristige Marktcap-Schwankungen. Nur Unternehmen die 5 Tage stabil in den Top5 sind, bekommen ein Signal.
 **Warum C besser als D sein sollte:** Rangverlust ≠ Trendwende. Ein Unternehmen kann Rang 6 werden obwohl sein Kurs weiter steigt — D würde hier fälschlicherweise verkaufen.
 

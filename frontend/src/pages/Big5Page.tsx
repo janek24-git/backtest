@@ -32,8 +32,9 @@ function exportCSV(result: Big5ComboResult, indicator: string, period: number, o
 
 
 const COMBO_LEGEND = {
-  A: 'Kauf: EMA-Crossover in Top5 — mit Reset (wenn Eintritt bereits über EMA, erst warten bis darunter)',
-  B: 'Kauf: EMA-Crossover in Top5 — kein Reset (sofortiger Wiedereinstieg, auch beim Eintritt über EMA)',
+  A: 'Kauf: EMA-Crossover nach Top5-Eintritt — mit Reset (wenn beim Eintritt schon über EMA, erst warten bis darunter)',
+  B: 'Kauf: Direkt am Tag des Top5-Eintritts (auch wenn schon über EMA — bewusst hinterherlaufen)',
+  K: 'Kauf: Kontinuierlicher EMA-Crossover in Top5 — kein Reset, sofort re-entry nach jedem Exit',
   C: 'Verkauf: Nur bei Close < EMA (Top5-Austritt ignoriert)',
   D: 'Verkauf: Sofort bei Top5-Austritt',
   E: '1 Tag Top5 = Einstiegs-Berechtigung',
@@ -111,7 +112,7 @@ export function Big5Page() {
               Big 5 Swing Backtest
             </h1>
             <p className="text-xs mt-0.5" style={{ color: '#8B8FA8' }}>
-              S&P 500 Top 5 · Dynamische Marktkapitalisierung · 2000–2025 · 8 Kombinationen
+              S&P 500 Top 5 · Dynamische Marktkapitalisierung · 2000–2025 · 12 Kombinationen
             </p>
           </div>
         </div>
@@ -296,7 +297,7 @@ export function Big5Page() {
               <p className="text-xs mb-3" style={{ color: '#8B8FA8' }}>
                 {indicator}{period} · {results.from_date} bis {results.to_date}
               </p>
-              <div className="grid grid-cols-4 gap-2 mb-4">
+              <div className="grid grid-cols-4 gap-2 mb-4" style={{ gridTemplateColumns: 'repeat(4, 1fr)' }}>
                 {results.results.map(r => (
                   <button
                     key={r.kombination}

@@ -28,7 +28,7 @@ from datetime import date
 
 logger = logging.getLogger(__name__)
 
-COMBINATIONS = ["ACE", "ACF", "ADE", "ADF", "BCE", "BCF", "BDE", "BDF"]
+COMBINATIONS = ["ACE", "ACF", "ADE", "ADF", "BCE", "BCF", "BDE", "BDF", "KCE", "KCF", "KDE", "KDF"]
 FILTER_DAYS = {"E": 1, "F": 5}
 
 
@@ -238,7 +238,11 @@ def _run_one_combination(
                     if above_ind_entry and not s["needs_reset"]:
                         s["pending_buy"] = True
                 elif entry_mode == "B":
-                    # Any close > EMA while in Top5 — no reset, immediate re-entry after exits
+                    # Buy only on the day of Top5 entry (just_eligible), even if already above EMA
+                    if s["just_eligible"] and above_ind_entry:
+                        s["pending_buy"] = True
+                elif entry_mode == "K":
+                    # Continuous EMA crossover while in Top5 — no reset, re-entry after every exit
                     if above_ind_entry:
                         s["pending_buy"] = True
 
@@ -328,7 +332,7 @@ def run_all_combinations(
     entry_threshold: float = 0.0,
     min_hold_days: int = 0,
 ) -> list[dict]:
-    """Run all 8 combinations and return list of results."""
+    """Run all 12 combinations and return list of results."""
     results = []
     for combo in COMBINATIONS:
         entry_mode = combo[0]   # A or B
