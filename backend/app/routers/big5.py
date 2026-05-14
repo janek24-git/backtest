@@ -36,7 +36,7 @@ async def run_big5_backtest(req: Big5BacktestRequest):
             indicator=req.indicator,
             period=req.period,
             entry_threshold=0.005 if req.optimized else 0.0,
-            min_hold_days=5 if req.optimized else 0,
+            min_hold_days=0,
         )
 
         results = []
@@ -82,7 +82,7 @@ async def analyze_big5(req: Big5AnalysisRequest):
         ])
 
         opt_note = (
-            "\nMODUS: Optimiert (0,5% EMA-Threshold + 5T Mindesthaltedauer — im Live-Betrieb nicht vollständig replizierbar)\n"
+            "\nMODUS: Optimiert (0,5% Mindestabstand zur EMA beim Einstieg)\n"
             if req.optimized else "\nMODUS: Raw (alle Signale, keine Filter)\n"
         )
 
