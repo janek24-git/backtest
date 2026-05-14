@@ -98,7 +98,8 @@ def _run_one_combination(
 
     trades: list[dict] = []
     nr = 0           # sequential trade counter
-    equity = 1.0     # compound equity (starts at 1 = 100%)
+    SLOT_START = 1000.0                              # €1.000 per slot
+    slot_equity: dict[str, float] = {}              # per-ticker capital (initialised on first buy)
 
     def next_trading_day_open(ticker: str, current_idx: int) -> tuple[str, float] | None:
         """Returns (date_str, open_price) for the next trading day."""
@@ -144,6 +145,8 @@ def _run_one_combination(
             if s["pending_buy"] and not s["in_position"]:
                 open_price = float(row["open"])
                 if not pd.isna(open_price):
+                    if ticker not in slot_equity:
+                        slot_equity[ticker] = SLOT_START   # fresh slot: €1.000
                     nr += 1
                     trades.append({
                         "nr": nr,
@@ -153,7 +156,8 @@ def _run_one_combination(
                         "haltdauer": 0,
                         "open_preis": round(open_price, 4),
                         "perf_pct": 0.0,
-                        "kum_perf_pct": round((equity - 1) * 100, 4),
+                        "kum_perf_pct": round((slot_equity[ticker] / SLOT_START - 1) * 100, 4),
+                        "kapital_eur": round(slot_equity[ticker], 2),
                     })
                     s["in_position"] = True
                     s["entry_price"] = open_price
@@ -165,8 +169,9 @@ def _run_one_combination(
                 open_price = float(row["open"])
                 if not pd.isna(open_price) and s["entry_price"] is not None:
                     perf = (open_price - s["entry_price"]) / s["entry_price"] * 100
-                    equity *= (1 + perf / 100)
-                    kum_perf_pct = round((equity - 1) * 100, 4)
+                    if ticker not in slot_equity:
+                        slot_equity[ticker] = SLOT_START
+                    slot_equity[ticker] *= (1 + perf / 100)
                     hold_days = row_idx - s["entry_idx"] if s["entry_idx"] is not None else 0
                     nr += 1
                     trades.append({
@@ -177,7 +182,8 @@ def _run_one_combination(
                         "haltdauer": hold_days,
                         "open_preis": round(open_price, 4),
                         "perf_pct": round(perf, 4),
-                        "kum_perf_pct": kum_perf_pct,
+                        "kum_perf_pct": round((slot_equity[ticker] / SLOT_START - 1) * 100, 4),
+                        "kapital_eur": round(slot_equity[ticker], 2),
                     })
                     s["in_position"] = False
                     s["entry_price"] = None
@@ -245,7 +251,9 @@ def _run_one_combination(
             last_row = df.iloc[-1]
             exit_price = float(last_row["close"])
             perf = (exit_price - s["entry_price"]) / s["entry_price"] * 100
-            equity *= (1 + perf / 100)
+            if ticker not in slot_equity:
+                slot_equity[ticker] = SLOT_START
+            slot_equity[ticker] *= (1 + perf / 100)
             hold_days = len(df) - 1 - (s["entry_idx"] or 0)
             nr += 1
             trades.append({
@@ -256,7 +264,8 @@ def _run_one_combination(
                 "haltdauer": hold_days,
                 "open_preis": round(exit_price, 4),
                 "perf_pct": round(perf, 4),
-                "kum_perf_pct": round((equity - 1) * 100, 4),
+                "kum_perf_pct": round((slot_equity[ticker] / SLOT_START - 1) * 100, 4),
+                "kapital_eur": round(slot_equity[ticker], 2),
             })
 
     # Sort by execution date, then nr
@@ -267,7 +276,8 @@ def _run_one_combination(
 def _calc_metrics(trades: list[dict]) -> dict:
     sells = [t for t in trades if t["typ"] == "VERKAUF"]
     if not sells:
-        return {"num_trades": 0, "win_rate": 0.0, "total_return": 0.0, "sharpe": 0.0, "max_drawdown": 0.0}
+        return {"num_trades": 0, "win_rate": 0.0, "total_return": 0.0, "sharpe": 0.0, "max_drawdown": 0.0,
+                "portfolio_end_eur": 0.0, "slots_used": 0}
 
     returns = [t["perf_pct"] for t in sells]
     winners = [r for r in returns if r > 0]
@@ -292,12 +302,21 @@ def _calc_metrics(trades: list[dict]) -> dict:
         dd = (peak - v) / peak * 100
         max_dd = max(max_dd, dd)
 
+    # Portfolio end value: sum of last kapital_eur per slot
+    last_by_ticker: dict[str, float] = {}
+    for t in sells:
+        if "kapital_eur" in t:
+            last_by_ticker[t["ticker"]] = t["kapital_eur"]
+    portfolio_end = sum(last_by_ticker.values())
+
     return {
         "num_trades": len(sells),
         "win_rate": round(win_rate, 2),
         "total_return": round(total_return, 4),
         "sharpe": round(sharpe, 4),
         "max_drawdown": round(-max_dd, 4),
+        "portfolio_end_eur": round(portfolio_end, 2),
+        "slots_used": len(last_by_ticker),
     }
 
 

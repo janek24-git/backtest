@@ -64,11 +64,12 @@ class Big5Trade(BaseModel):
     nr: int
     typ: Literal["KAUF", "VERKAUF"]
     ticker: str
-    datum: str           # Ausführungsdatum (nächster Handelstag nach Signal)
-    haltdauer: int       # Handelstage gehalten (0 bei KAUF)
-    open_preis: float    # Ausführungspreis (9:30 ET Open = 9:00 MESZ Näherung)
-    perf_pct: float      # % Return dieser Halteperiode (0 bei KAUF)
-    kum_perf_pct: float  # Kumulierte Performance aller abgeschlossenen Trades
+    datum: str
+    haltdauer: int
+    open_preis: float
+    perf_pct: float
+    kum_perf_pct: float
+    kapital_eur: float = 1000.0  # Slot-Kapital nach diesem Trade (€)
 
 
 class Big5ComboMetrics(BaseModel):
@@ -77,6 +78,8 @@ class Big5ComboMetrics(BaseModel):
     total_return: float
     sharpe: float
     max_drawdown: float
+    portfolio_end_eur: float = 0.0   # Summe aller Slot-Endwerte in €
+    slots_used: int = 0              # Anzahl unterschiedliche Ticker die je getradet wurden
 
 
 class Big5ComboResult(BaseModel):
