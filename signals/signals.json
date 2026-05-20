@@ -144,5 +144,14 @@
     "tp_pct": 20.0,
     "sl_pct": 10.0,
     "check_date": "2026-06-02"
+  },
+  {
+    "ticker": "CLSK",
+    "signal_date": "2026-05-20",
+    "entry_price": 14.69,
+    "source": "WSB",
+    "tp_pct": 20.0,
+    "sl_pct": 10.0,
+    "check_date": "2026-06-03"
   }
 ]
