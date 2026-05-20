@@ -162,5 +162,16 @@
     "tp_pct": 20.0,
     "sl_pct": 10.0,
     "check_date": "2026-06-03"
+  },
+  {
+    "ticker": "AAL",
+    "signal_date": "2026-05-20",
+    "entry_price": 12.95,
+    "source": "EMA200",
+    "tp_pct": 10.0,
+    "sl_pct": 5.0,
+    "check_date": "2026-06-03",
+    "rel_vol": 1.64,
+    "pct_above_ema": 1.04
   }
 ]
