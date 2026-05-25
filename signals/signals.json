@@ -227,5 +227,27 @@
     "tp_pct": 20.0,
     "sl_pct": 10.0,
     "check_date": "2026-06-08"
+  },
+  {
+    "ticker": "HPQ",
+    "signal_date": "2026-05-25",
+    "entry_price": 25.24,
+    "source": "EMA200",
+    "tp_pct": 10.0,
+    "sl_pct": 5.0,
+    "check_date": "2026-06-08",
+    "rel_vol": 3.17,
+    "pct_above_ema": 13.43
+  },
+  {
+    "ticker": "AKTX",
+    "signal_date": "2026-05-25",
+    "entry_price": 18.27,
+    "source": "EMA200",
+    "tp_pct": 10.0,
+    "sl_pct": 5.0,
+    "check_date": "2026-06-08",
+    "rel_vol": 99.49,
+    "pct_above_ema": 1.81
   }
 ]
