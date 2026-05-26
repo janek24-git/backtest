@@ -1,23 +1,5 @@
 [
   {
-    "ticker": "IONQ",
-    "signal_date": "2026-05-12",
-    "entry_price": 56.89,
-    "source": "WSB",
-    "tp_pct": 20.0,
-    "sl_pct": 10.0,
-    "check_date": "2026-05-26"
-  },
-  {
-    "ticker": "QUBT",
-    "signal_date": "2026-05-12",
-    "entry_price": 11.5035,
-    "source": "WSB",
-    "tp_pct": 20.0,
-    "sl_pct": 10.0,
-    "check_date": "2026-05-26"
-  },
-  {
     "ticker": "QUBT",
     "signal_date": "2026-05-13",
     "entry_price": 11.78,
@@ -175,42 +157,6 @@
     "check_date": "2026-06-05"
   },
   {
-    "ticker": "EOSE",
-    "signal_date": "2026-05-11",
-    "entry_price": 8.01,
-    "source": "WSB",
-    "tp_pct": 20.0,
-    "sl_pct": 10.0,
-    "check_date": "2026-05-25"
-  },
-  {
-    "ticker": "IONQ",
-    "signal_date": "2026-05-11",
-    "entry_price": 56.585,
-    "source": "WSB",
-    "tp_pct": 20.0,
-    "sl_pct": 10.0,
-    "check_date": "2026-05-25"
-  },
-  {
-    "ticker": "FLNC",
-    "signal_date": "2026-05-08",
-    "entry_price": 18.97,
-    "source": "WSB",
-    "tp_pct": 20.0,
-    "sl_pct": 10.0,
-    "check_date": "2026-05-22"
-  },
-  {
-    "ticker": "EOSE",
-    "signal_date": "2026-05-08",
-    "entry_price": 7.805,
-    "source": "WSB",
-    "tp_pct": 20.0,
-    "sl_pct": 10.0,
-    "check_date": "2026-05-22"
-  },
-  {
     "ticker": "HPQ",
     "signal_date": "2026-05-25",
     "entry_price": 25.24,
@@ -249,5 +195,59 @@
     "check_date": "2026-06-08",
     "rel_vol": 99.49,
     "pct_above_ema": 1.81
+  },
+  {
+    "ticker": "IONQ",
+    "signal_date": "2026-05-12",
+    "entry_price": 56.89,
+    "source": "WSB",
+    "tp_pct": 20.0,
+    "sl_pct": 10.0,
+    "check_date": "2026-05-26"
+  },
+  {
+    "ticker": "QUBT",
+    "signal_date": "2026-05-12",
+    "entry_price": 11.5035,
+    "source": "WSB",
+    "tp_pct": 20.0,
+    "sl_pct": 10.0,
+    "check_date": "2026-05-26"
+  },
+  {
+    "ticker": "EOSE",
+    "signal_date": "2026-05-11",
+    "entry_price": 8.01,
+    "source": "WSB",
+    "tp_pct": 20.0,
+    "sl_pct": 10.0,
+    "check_date": "2026-05-25"
+  },
+  {
+    "ticker": "IONQ",
+    "signal_date": "2026-05-11",
+    "entry_price": 56.585,
+    "source": "WSB",
+    "tp_pct": 20.0,
+    "sl_pct": 10.0,
+    "check_date": "2026-05-25"
+  },
+  {
+    "ticker": "FLNC",
+    "signal_date": "2026-05-08",
+    "entry_price": 18.97,
+    "source": "WSB",
+    "tp_pct": 20.0,
+    "sl_pct": 10.0,
+    "check_date": "2026-05-22"
+  },
+  {
+    "ticker": "EOSE",
+    "signal_date": "2026-05-08",
+    "entry_price": 7.805,
+    "source": "WSB",
+    "tp_pct": 20.0,
+    "sl_pct": 10.0,
+    "check_date": "2026-05-22"
   }
 ]
