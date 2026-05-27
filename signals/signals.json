@@ -1,34 +1,5 @@
 [
   {
-    "ticker": "QUBT",
-    "signal_date": "2026-05-13",
-    "entry_price": 11.78,
-    "source": "WSB",
-    "tp_pct": 20.0,
-    "sl_pct": 10.0,
-    "check_date": "2026-05-27"
-  },
-  {
-    "ticker": "VNET",
-    "signal_date": "2026-05-13",
-    "entry_price": 11.475,
-    "source": "WSB",
-    "tp_pct": 20.0,
-    "sl_pct": 10.0,
-    "check_date": "2026-05-27"
-  },
-  {
-    "ticker": "F",
-    "signal_date": "2026-05-13",
-    "entry_price": 13.57,
-    "source": "EMA200",
-    "tp_pct": 10.0,
-    "sl_pct": 5.0,
-    "check_date": "2026-05-27",
-    "rel_vol": 5.09,
-    "pct_above_ema": 12.7
-  },
-  {
     "ticker": "AUR",
     "signal_date": "2026-05-14",
     "entry_price": 8.4,
@@ -197,6 +168,44 @@
     "pct_above_ema": 1.81
   },
   {
+    "ticker": "ASTS",
+    "signal_date": "2026-05-26",
+    "entry_price": 123.9,
+    "source": "WSB",
+    "tp_pct": 20.0,
+    "sl_pct": 10.0,
+    "check_date": "2026-06-09"
+  },
+  {
+    "ticker": "QUBT",
+    "signal_date": "2026-05-13",
+    "entry_price": 11.78,
+    "source": "WSB",
+    "tp_pct": 20.0,
+    "sl_pct": 10.0,
+    "check_date": "2026-05-27"
+  },
+  {
+    "ticker": "VNET",
+    "signal_date": "2026-05-13",
+    "entry_price": 11.475,
+    "source": "WSB",
+    "tp_pct": 20.0,
+    "sl_pct": 10.0,
+    "check_date": "2026-05-27"
+  },
+  {
+    "ticker": "F",
+    "signal_date": "2026-05-13",
+    "entry_price": 13.57,
+    "source": "EMA200",
+    "tp_pct": 10.0,
+    "sl_pct": 5.0,
+    "check_date": "2026-05-27",
+    "rel_vol": 5.09,
+    "pct_above_ema": 12.7
+  },
+  {
     "ticker": "IONQ",
     "signal_date": "2026-05-12",
     "entry_price": 56.89,
@@ -249,14 +258,5 @@
     "tp_pct": 20.0,
     "sl_pct": 10.0,
     "check_date": "2026-05-22"
-  },
-  {
-    "ticker": "ASTS",
-    "signal_date": "2026-05-26",
-    "entry_price": 123.9,
-    "source": "WSB",
-    "tp_pct": 20.0,
-    "sl_pct": 10.0,
-    "check_date": "2026-06-09"
   }
 ]
