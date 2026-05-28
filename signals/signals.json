@@ -1,23 +1,5 @@
 [
   {
-    "ticker": "AUR",
-    "signal_date": "2026-05-14",
-    "entry_price": 8.4,
-    "source": "WSB",
-    "tp_pct": 20.0,
-    "sl_pct": 10.0,
-    "check_date": "2026-05-28"
-  },
-  {
-    "ticker": "ONDS",
-    "signal_date": "2026-05-14",
-    "entry_price": 11.45,
-    "source": "WSB",
-    "tp_pct": 20.0,
-    "sl_pct": 10.0,
-    "check_date": "2026-05-28"
-  },
-  {
     "ticker": "UPST",
     "signal_date": "2026-05-15",
     "entry_price": 29.71,
@@ -177,6 +159,53 @@
     "check_date": "2026-06-09"
   },
   {
+    "ticker": "TE",
+    "signal_date": "2026-05-27",
+    "entry_price": 10.45,
+    "source": "WSB",
+    "tp_pct": 20.0,
+    "sl_pct": 10.0,
+    "check_date": "2026-06-10"
+  },
+  {
+    "ticker": "IREN",
+    "signal_date": "2026-05-27",
+    "entry_price": 66.16,
+    "source": "WSB",
+    "tp_pct": 20.0,
+    "sl_pct": 10.0,
+    "check_date": "2026-06-10"
+  },
+  {
+    "ticker": "MNTS",
+    "signal_date": "2026-05-27",
+    "entry_price": 19.5,
+    "source": "EMA200",
+    "tp_pct": 10.0,
+    "sl_pct": 5.0,
+    "check_date": "2026-06-10",
+    "rel_vol": 6.56,
+    "pct_above_ema": 11.35
+  },
+  {
+    "ticker": "AUR",
+    "signal_date": "2026-05-14",
+    "entry_price": 8.4,
+    "source": "WSB",
+    "tp_pct": 20.0,
+    "sl_pct": 10.0,
+    "check_date": "2026-05-28"
+  },
+  {
+    "ticker": "ONDS",
+    "signal_date": "2026-05-14",
+    "entry_price": 11.45,
+    "source": "WSB",
+    "tp_pct": 20.0,
+    "sl_pct": 10.0,
+    "check_date": "2026-05-28"
+  },
+  {
     "ticker": "QUBT",
     "signal_date": "2026-05-13",
     "entry_price": 11.78,
@@ -258,34 +287,5 @@
     "tp_pct": 20.0,
     "sl_pct": 10.0,
     "check_date": "2026-05-22"
-  },
-  {
-    "ticker": "TE",
-    "signal_date": "2026-05-27",
-    "entry_price": 10.45,
-    "source": "WSB",
-    "tp_pct": 20.0,
-    "sl_pct": 10.0,
-    "check_date": "2026-06-10"
-  },
-  {
-    "ticker": "IREN",
-    "signal_date": "2026-05-27",
-    "entry_price": 66.16,
-    "source": "WSB",
-    "tp_pct": 20.0,
-    "sl_pct": 10.0,
-    "check_date": "2026-06-10"
-  },
-  {
-    "ticker": "MNTS",
-    "signal_date": "2026-05-27",
-    "entry_price": 19.5,
-    "source": "EMA200",
-    "tp_pct": 10.0,
-    "sl_pct": 5.0,
-    "check_date": "2026-06-10",
-    "rel_vol": 6.56,
-    "pct_above_ema": 11.35
   }
 ]
