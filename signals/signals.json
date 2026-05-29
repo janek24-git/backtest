@@ -323,5 +323,38 @@
     "tp_pct": 20.0,
     "sl_pct": 10.0,
     "check_date": "2026-06-12"
+  },
+  {
+    "ticker": "MSFT",
+    "signal_date": "2026-05-29",
+    "entry_price": 450.24,
+    "source": "EMA200",
+    "tp_pct": 10.0,
+    "sl_pct": 5.0,
+    "check_date": "2026-06-12",
+    "rel_vol": 2.24,
+    "pct_above_ema": 3.75
+  },
+  {
+    "ticker": "PLTR",
+    "signal_date": "2026-05-29",
+    "entry_price": 156.54,
+    "source": "EMA200",
+    "tp_pct": 10.0,
+    "sl_pct": 5.0,
+    "check_date": "2026-06-12",
+    "rel_vol": 2.18,
+    "pct_above_ema": 6.57
+  },
+  {
+    "ticker": "HOOD",
+    "signal_date": "2026-05-29",
+    "entry_price": 94.3,
+    "source": "EMA200",
+    "tp_pct": 10.0,
+    "sl_pct": 5.0,
+    "check_date": "2026-06-12",
+    "rel_vol": 2.73,
+    "pct_above_ema": 6.88
   }
 ]
