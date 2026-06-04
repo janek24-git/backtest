@@ -441,5 +441,16 @@
     "tp_pct": 20.0,
     "sl_pct": 10.0,
     "check_date": "2026-06-18"
+  },
+  {
+    "ticker": "XLF",
+    "signal_date": "2026-06-04",
+    "entry_price": 52.19,
+    "source": "EMA200",
+    "tp_pct": 10.0,
+    "sl_pct": 5.0,
+    "check_date": "2026-06-18",
+    "rel_vol": 1.63,
+    "pct_above_ema": 1.32
   }
 ]
