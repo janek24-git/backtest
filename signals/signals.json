@@ -1,23 +1,5 @@
 [
   {
-    "ticker": "TE",
-    "signal_date": "2026-05-21",
-    "entry_price": 8.7,
-    "source": "WSB",
-    "tp_pct": 20.0,
-    "sl_pct": 10.0,
-    "check_date": "2026-06-04"
-  },
-  {
-    "ticker": "QUBT",
-    "signal_date": "2026-05-21",
-    "entry_price": 11.195,
-    "source": "WSB",
-    "tp_pct": 20.0,
-    "sl_pct": 10.0,
-    "check_date": "2026-06-04"
-  },
-  {
     "ticker": "QBTS",
     "signal_date": "2026-05-22",
     "entry_price": 25.74,
@@ -232,6 +214,42 @@
     "check_date": "2026-06-16"
   },
   {
+    "ticker": "LEGN",
+    "signal_date": "2026-06-03",
+    "entry_price": 36.28,
+    "source": "WSB",
+    "tp_pct": 20.0,
+    "sl_pct": 10.0,
+    "check_date": "2026-06-17"
+  },
+  {
+    "ticker": "NVTS",
+    "signal_date": "2026-06-03",
+    "entry_price": 31.216,
+    "source": "WSB",
+    "tp_pct": 20.0,
+    "sl_pct": 10.0,
+    "check_date": "2026-06-17"
+  },
+  {
+    "ticker": "TE",
+    "signal_date": "2026-05-21",
+    "entry_price": 8.7,
+    "source": "WSB",
+    "tp_pct": 20.0,
+    "sl_pct": 10.0,
+    "check_date": "2026-06-04"
+  },
+  {
+    "ticker": "QUBT",
+    "signal_date": "2026-05-21",
+    "entry_price": 11.195,
+    "source": "WSB",
+    "tp_pct": 20.0,
+    "sl_pct": 10.0,
+    "check_date": "2026-06-04"
+  },
+  {
     "ticker": "CLSK",
     "signal_date": "2026-05-20",
     "entry_price": 14.69,
@@ -405,23 +423,5 @@
     "tp_pct": 20.0,
     "sl_pct": 10.0,
     "check_date": "2026-05-22"
-  },
-  {
-    "ticker": "LEGN",
-    "signal_date": "2026-06-03",
-    "entry_price": 36.28,
-    "source": "WSB",
-    "tp_pct": 20.0,
-    "sl_pct": 10.0,
-    "check_date": "2026-06-17"
-  },
-  {
-    "ticker": "NVTS",
-    "signal_date": "2026-06-03",
-    "entry_price": 31.216,
-    "source": "WSB",
-    "tp_pct": 20.0,
-    "sl_pct": 10.0,
-    "check_date": "2026-06-17"
   }
 ]
