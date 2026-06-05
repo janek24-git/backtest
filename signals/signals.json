@@ -1,23 +1,5 @@
 [
   {
-    "ticker": "QBTS",
-    "signal_date": "2026-05-22",
-    "entry_price": 25.74,
-    "source": "WSB",
-    "tp_pct": 20.0,
-    "sl_pct": 10.0,
-    "check_date": "2026-06-05"
-  },
-  {
-    "ticker": "RDW",
-    "signal_date": "2026-05-22",
-    "entry_price": 17.495,
-    "source": "WSB",
-    "tp_pct": 20.0,
-    "sl_pct": 10.0,
-    "check_date": "2026-06-05"
-  },
-  {
     "ticker": "HPQ",
     "signal_date": "2026-05-25",
     "entry_price": 25.24,
@@ -232,6 +214,53 @@
     "check_date": "2026-06-17"
   },
   {
+    "ticker": "NVTS",
+    "signal_date": "2026-06-04",
+    "entry_price": 30.84,
+    "source": "WSB",
+    "tp_pct": 20.0,
+    "sl_pct": 10.0,
+    "check_date": "2026-06-18"
+  },
+  {
+    "ticker": "RDW",
+    "signal_date": "2026-06-04",
+    "entry_price": 21.86,
+    "source": "WSB",
+    "tp_pct": 20.0,
+    "sl_pct": 10.0,
+    "check_date": "2026-06-18"
+  },
+  {
+    "ticker": "XLF",
+    "signal_date": "2026-06-04",
+    "entry_price": 52.19,
+    "source": "EMA200",
+    "tp_pct": 10.0,
+    "sl_pct": 5.0,
+    "check_date": "2026-06-18",
+    "rel_vol": 1.63,
+    "pct_above_ema": 1.32
+  },
+  {
+    "ticker": "QBTS",
+    "signal_date": "2026-05-22",
+    "entry_price": 25.74,
+    "source": "WSB",
+    "tp_pct": 20.0,
+    "sl_pct": 10.0,
+    "check_date": "2026-06-05"
+  },
+  {
+    "ticker": "RDW",
+    "signal_date": "2026-05-22",
+    "entry_price": 17.495,
+    "source": "WSB",
+    "tp_pct": 20.0,
+    "sl_pct": 10.0,
+    "check_date": "2026-06-05"
+  },
+  {
     "ticker": "TE",
     "signal_date": "2026-05-21",
     "entry_price": 8.7,
@@ -423,34 +452,5 @@
     "tp_pct": 20.0,
     "sl_pct": 10.0,
     "check_date": "2026-05-22"
-  },
-  {
-    "ticker": "NVTS",
-    "signal_date": "2026-06-04",
-    "entry_price": 30.84,
-    "source": "WSB",
-    "tp_pct": 20.0,
-    "sl_pct": 10.0,
-    "check_date": "2026-06-18"
-  },
-  {
-    "ticker": "RDW",
-    "signal_date": "2026-06-04",
-    "entry_price": 21.86,
-    "source": "WSB",
-    "tp_pct": 20.0,
-    "sl_pct": 10.0,
-    "check_date": "2026-06-18"
-  },
-  {
-    "ticker": "XLF",
-    "signal_date": "2026-06-04",
-    "entry_price": 52.19,
-    "source": "EMA200",
-    "tp_pct": 10.0,
-    "sl_pct": 5.0,
-    "check_date": "2026-06-18",
-    "rel_vol": 1.63,
-    "pct_above_ema": 1.32
   }
 ]
