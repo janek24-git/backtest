@@ -1,45 +1,5 @@
 [
   {
-    "ticker": "HPQ",
-    "signal_date": "2026-05-25",
-    "entry_price": 25.24,
-    "source": "WSB",
-    "tp_pct": 20.0,
-    "sl_pct": 10.0,
-    "check_date": "2026-06-08"
-  },
-  {
-    "ticker": "HPQ",
-    "signal_date": "2026-05-25",
-    "entry_price": 25.24,
-    "source": "WSB",
-    "tp_pct": 20.0,
-    "sl_pct": 10.0,
-    "check_date": "2026-06-08"
-  },
-  {
-    "ticker": "HPQ",
-    "signal_date": "2026-05-25",
-    "entry_price": 25.24,
-    "source": "EMA200",
-    "tp_pct": 10.0,
-    "sl_pct": 5.0,
-    "check_date": "2026-06-08",
-    "rel_vol": 3.17,
-    "pct_above_ema": 13.43
-  },
-  {
-    "ticker": "AKTX",
-    "signal_date": "2026-05-25",
-    "entry_price": 18.27,
-    "source": "EMA200",
-    "tp_pct": 10.0,
-    "sl_pct": 5.0,
-    "check_date": "2026-06-08",
-    "rel_vol": 99.49,
-    "pct_above_ema": 1.81
-  },
-  {
     "ticker": "ASTS",
     "signal_date": "2026-05-26",
     "entry_price": 123.9,
@@ -241,6 +201,64 @@
     "check_date": "2026-06-18",
     "rel_vol": 1.63,
     "pct_above_ema": 1.32
+  },
+  {
+    "ticker": "RDW",
+    "signal_date": "2026-06-05",
+    "entry_price": 21.43,
+    "source": "WSB",
+    "tp_pct": 20.0,
+    "sl_pct": 10.0,
+    "check_date": "2026-06-19"
+  },
+  {
+    "ticker": "PL",
+    "signal_date": "2026-06-05",
+    "entry_price": 32.55,
+    "source": "WSB",
+    "tp_pct": 20.0,
+    "sl_pct": 10.0,
+    "check_date": "2026-06-19"
+  },
+  {
+    "ticker": "HPQ",
+    "signal_date": "2026-05-25",
+    "entry_price": 25.24,
+    "source": "WSB",
+    "tp_pct": 20.0,
+    "sl_pct": 10.0,
+    "check_date": "2026-06-08"
+  },
+  {
+    "ticker": "HPQ",
+    "signal_date": "2026-05-25",
+    "entry_price": 25.24,
+    "source": "WSB",
+    "tp_pct": 20.0,
+    "sl_pct": 10.0,
+    "check_date": "2026-06-08"
+  },
+  {
+    "ticker": "HPQ",
+    "signal_date": "2026-05-25",
+    "entry_price": 25.24,
+    "source": "EMA200",
+    "tp_pct": 10.0,
+    "sl_pct": 5.0,
+    "check_date": "2026-06-08",
+    "rel_vol": 3.17,
+    "pct_above_ema": 13.43
+  },
+  {
+    "ticker": "AKTX",
+    "signal_date": "2026-05-25",
+    "entry_price": 18.27,
+    "source": "EMA200",
+    "tp_pct": 10.0,
+    "sl_pct": 5.0,
+    "check_date": "2026-06-08",
+    "rel_vol": 99.49,
+    "pct_above_ema": 1.81
   },
   {
     "ticker": "QBTS",
@@ -452,23 +470,5 @@
     "tp_pct": 20.0,
     "sl_pct": 10.0,
     "check_date": "2026-05-22"
-  },
-  {
-    "ticker": "RDW",
-    "signal_date": "2026-06-05",
-    "entry_price": 21.43,
-    "source": "WSB",
-    "tp_pct": 20.0,
-    "sl_pct": 10.0,
-    "check_date": "2026-06-19"
-  },
-  {
-    "ticker": "PL",
-    "signal_date": "2026-06-05",
-    "entry_price": 32.55,
-    "source": "WSB",
-    "tp_pct": 20.0,
-    "sl_pct": 10.0,
-    "check_date": "2026-06-19"
   }
 ]
