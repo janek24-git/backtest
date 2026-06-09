@@ -1,14 +1,5 @@
 [
   {
-    "ticker": "ASTS",
-    "signal_date": "2026-05-26",
-    "entry_price": 123.9,
-    "source": "WSB",
-    "tp_pct": 20.0,
-    "sl_pct": 10.0,
-    "check_date": "2026-06-09"
-  },
-  {
     "ticker": "TE",
     "signal_date": "2026-05-27",
     "entry_price": 10.45,
@@ -219,6 +210,33 @@
     "tp_pct": 20.0,
     "sl_pct": 10.0,
     "check_date": "2026-06-19"
+  },
+  {
+    "ticker": "NRIX",
+    "signal_date": "2026-06-08",
+    "entry_price": 14.64,
+    "source": "WSB",
+    "tp_pct": 20.0,
+    "sl_pct": 10.0,
+    "check_date": "2026-06-22"
+  },
+  {
+    "ticker": "TNGX",
+    "signal_date": "2026-06-08",
+    "entry_price": 30.94,
+    "source": "WSB",
+    "tp_pct": 20.0,
+    "sl_pct": 10.0,
+    "check_date": "2026-06-22"
+  },
+  {
+    "ticker": "ASTS",
+    "signal_date": "2026-05-26",
+    "entry_price": 123.9,
+    "source": "WSB",
+    "tp_pct": 20.0,
+    "sl_pct": 10.0,
+    "check_date": "2026-06-09"
   },
   {
     "ticker": "HPQ",
@@ -470,23 +488,5 @@
     "tp_pct": 20.0,
     "sl_pct": 10.0,
     "check_date": "2026-05-22"
-  },
-  {
-    "ticker": "NRIX",
-    "signal_date": "2026-06-08",
-    "entry_price": 14.64,
-    "source": "WSB",
-    "tp_pct": 20.0,
-    "sl_pct": 10.0,
-    "check_date": "2026-06-22"
-  },
-  {
-    "ticker": "TNGX",
-    "signal_date": "2026-06-08",
-    "entry_price": 30.94,
-    "source": "WSB",
-    "tp_pct": 20.0,
-    "sl_pct": 10.0,
-    "check_date": "2026-06-22"
   }
 ]
