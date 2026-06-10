@@ -1,34 +1,5 @@
 [
   {
-    "ticker": "TE",
-    "signal_date": "2026-05-27",
-    "entry_price": 10.45,
-    "source": "WSB",
-    "tp_pct": 20.0,
-    "sl_pct": 10.0,
-    "check_date": "2026-06-10"
-  },
-  {
-    "ticker": "IREN",
-    "signal_date": "2026-05-27",
-    "entry_price": 66.16,
-    "source": "WSB",
-    "tp_pct": 20.0,
-    "sl_pct": 10.0,
-    "check_date": "2026-06-10"
-  },
-  {
-    "ticker": "MNTS",
-    "signal_date": "2026-05-27",
-    "entry_price": 19.5,
-    "source": "EMA200",
-    "tp_pct": 10.0,
-    "sl_pct": 5.0,
-    "check_date": "2026-06-10",
-    "rel_vol": 6.56,
-    "pct_above_ema": 11.35
-  },
-  {
     "ticker": "ONDS",
     "signal_date": "2026-05-28",
     "entry_price": 10.8,
@@ -228,6 +199,53 @@
     "tp_pct": 20.0,
     "sl_pct": 10.0,
     "check_date": "2026-06-22"
+  },
+  {
+    "ticker": "TNGX",
+    "signal_date": "2026-06-09",
+    "entry_price": 30.93,
+    "source": "WSB",
+    "tp_pct": 20.0,
+    "sl_pct": 10.0,
+    "check_date": "2026-06-23"
+  },
+  {
+    "ticker": "NUVL",
+    "signal_date": "2026-06-09",
+    "entry_price": 123.085,
+    "source": "WSB",
+    "tp_pct": 20.0,
+    "sl_pct": 10.0,
+    "check_date": "2026-06-23"
+  },
+  {
+    "ticker": "TE",
+    "signal_date": "2026-05-27",
+    "entry_price": 10.45,
+    "source": "WSB",
+    "tp_pct": 20.0,
+    "sl_pct": 10.0,
+    "check_date": "2026-06-10"
+  },
+  {
+    "ticker": "IREN",
+    "signal_date": "2026-05-27",
+    "entry_price": 66.16,
+    "source": "WSB",
+    "tp_pct": 20.0,
+    "sl_pct": 10.0,
+    "check_date": "2026-06-10"
+  },
+  {
+    "ticker": "MNTS",
+    "signal_date": "2026-05-27",
+    "entry_price": 19.5,
+    "source": "EMA200",
+    "tp_pct": 10.0,
+    "sl_pct": 5.0,
+    "check_date": "2026-06-10",
+    "rel_vol": 6.56,
+    "pct_above_ema": 11.35
   },
   {
     "ticker": "ASTS",
@@ -488,23 +506,5 @@
     "tp_pct": 20.0,
     "sl_pct": 10.0,
     "check_date": "2026-05-22"
-  },
-  {
-    "ticker": "TNGX",
-    "signal_date": "2026-06-09",
-    "entry_price": 30.93,
-    "source": "WSB",
-    "tp_pct": 20.0,
-    "sl_pct": 10.0,
-    "check_date": "2026-06-23"
-  },
-  {
-    "ticker": "NUVL",
-    "signal_date": "2026-06-09",
-    "entry_price": 123.085,
-    "source": "WSB",
-    "tp_pct": 20.0,
-    "sl_pct": 10.0,
-    "check_date": "2026-06-23"
   }
 ]
