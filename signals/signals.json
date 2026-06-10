@@ -515,5 +515,14 @@
     "tp_pct": 20.0,
     "sl_pct": 10.0,
     "check_date": "2026-06-24"
+  },
+  {
+    "ticker": "SMCI",
+    "signal_date": "2026-06-10",
+    "entry_price": 32.415,
+    "source": "WSB",
+    "tp_pct": 20.0,
+    "sl_pct": 10.0,
+    "check_date": "2026-06-24"
   }
 ]
