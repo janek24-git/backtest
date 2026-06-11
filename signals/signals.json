@@ -524,5 +524,14 @@
     "tp_pct": 20.0,
     "sl_pct": 10.0,
     "check_date": "2026-05-22"
+  },
+  {
+    "ticker": "BATL",
+    "signal_date": "2026-06-11",
+    "entry_price": 2.06,
+    "source": "WSB",
+    "tp_pct": 20.0,
+    "sl_pct": 10.0,
+    "check_date": "2026-06-25"
   }
 ]
