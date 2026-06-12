@@ -1,56 +1,5 @@
 [
   {
-    "ticker": "ONDS",
-    "signal_date": "2026-05-29",
-    "entry_price": 13.25,
-    "source": "WSB",
-    "tp_pct": 20.0,
-    "sl_pct": 10.0,
-    "check_date": "2026-06-12"
-  },
-  {
-    "ticker": "ASTS",
-    "signal_date": "2026-05-29",
-    "entry_price": 111.21,
-    "source": "WSB",
-    "tp_pct": 20.0,
-    "sl_pct": 10.0,
-    "check_date": "2026-06-12"
-  },
-  {
-    "ticker": "MSFT",
-    "signal_date": "2026-05-29",
-    "entry_price": 450.24,
-    "source": "EMA200",
-    "tp_pct": 10.0,
-    "sl_pct": 5.0,
-    "check_date": "2026-06-12",
-    "rel_vol": 2.24,
-    "pct_above_ema": 3.75
-  },
-  {
-    "ticker": "PLTR",
-    "signal_date": "2026-05-29",
-    "entry_price": 156.54,
-    "source": "EMA200",
-    "tp_pct": 10.0,
-    "sl_pct": 5.0,
-    "check_date": "2026-06-12",
-    "rel_vol": 2.18,
-    "pct_above_ema": 6.57
-  },
-  {
-    "ticker": "HOOD",
-    "signal_date": "2026-05-29",
-    "entry_price": 94.3,
-    "source": "EMA200",
-    "tp_pct": 10.0,
-    "sl_pct": 5.0,
-    "check_date": "2026-06-12",
-    "rel_vol": 2.73,
-    "pct_above_ema": 6.88
-  },
-  {
     "ticker": "FLNC",
     "signal_date": "2026-06-01",
     "entry_price": 25.865,
@@ -217,6 +166,75 @@
     "tp_pct": 20.0,
     "sl_pct": 10.0,
     "check_date": "2026-06-24"
+  },
+  {
+    "ticker": "BATL",
+    "signal_date": "2026-06-11",
+    "entry_price": 2.06,
+    "source": "WSB",
+    "tp_pct": 20.0,
+    "sl_pct": 10.0,
+    "check_date": "2026-06-25"
+  },
+  {
+    "ticker": "SATS",
+    "signal_date": "2026-06-11",
+    "entry_price": 125.575,
+    "source": "WSB",
+    "tp_pct": 20.0,
+    "sl_pct": 10.0,
+    "check_date": "2026-06-25"
+  },
+  {
+    "ticker": "ONDS",
+    "signal_date": "2026-05-29",
+    "entry_price": 13.25,
+    "source": "WSB",
+    "tp_pct": 20.0,
+    "sl_pct": 10.0,
+    "check_date": "2026-06-12"
+  },
+  {
+    "ticker": "ASTS",
+    "signal_date": "2026-05-29",
+    "entry_price": 111.21,
+    "source": "WSB",
+    "tp_pct": 20.0,
+    "sl_pct": 10.0,
+    "check_date": "2026-06-12"
+  },
+  {
+    "ticker": "MSFT",
+    "signal_date": "2026-05-29",
+    "entry_price": 450.24,
+    "source": "EMA200",
+    "tp_pct": 10.0,
+    "sl_pct": 5.0,
+    "check_date": "2026-06-12",
+    "rel_vol": 2.24,
+    "pct_above_ema": 3.75
+  },
+  {
+    "ticker": "PLTR",
+    "signal_date": "2026-05-29",
+    "entry_price": 156.54,
+    "source": "EMA200",
+    "tp_pct": 10.0,
+    "sl_pct": 5.0,
+    "check_date": "2026-06-12",
+    "rel_vol": 2.18,
+    "pct_above_ema": 6.57
+  },
+  {
+    "ticker": "HOOD",
+    "signal_date": "2026-05-29",
+    "entry_price": 94.3,
+    "source": "EMA200",
+    "tp_pct": 10.0,
+    "sl_pct": 5.0,
+    "check_date": "2026-06-12",
+    "rel_vol": 2.73,
+    "pct_above_ema": 6.88
   },
   {
     "ticker": "ONDS",
@@ -524,23 +542,5 @@
     "tp_pct": 20.0,
     "sl_pct": 10.0,
     "check_date": "2026-05-22"
-  },
-  {
-    "ticker": "BATL",
-    "signal_date": "2026-06-11",
-    "entry_price": 2.06,
-    "source": "WSB",
-    "tp_pct": 20.0,
-    "sl_pct": 10.0,
-    "check_date": "2026-06-25"
-  },
-  {
-    "ticker": "SATS",
-    "signal_date": "2026-06-11",
-    "entry_price": 125.575,
-    "source": "WSB",
-    "tp_pct": 20.0,
-    "sl_pct": 10.0,
-    "check_date": "2026-06-25"
   }
 ]
