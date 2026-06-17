@@ -596,5 +596,14 @@
     "tp_pct": 20.0,
     "sl_pct": 10.0,
     "check_date": "2026-07-01"
+  },
+  {
+    "ticker": "TE",
+    "signal_date": "2026-06-17",
+    "entry_price": 9.685,
+    "source": "WSB",
+    "tp_pct": 20.0,
+    "sl_pct": 10.0,
+    "check_date": "2026-07-01"
   }
 ]
