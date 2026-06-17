@@ -1,23 +1,5 @@
 [
   {
-    "ticker": "LEGN",
-    "signal_date": "2026-06-03",
-    "entry_price": 36.28,
-    "source": "WSB",
-    "tp_pct": 20.0,
-    "sl_pct": 10.0,
-    "check_date": "2026-06-17"
-  },
-  {
-    "ticker": "NVTS",
-    "signal_date": "2026-06-03",
-    "entry_price": 31.216,
-    "source": "WSB",
-    "tp_pct": 20.0,
-    "sl_pct": 10.0,
-    "check_date": "2026-06-17"
-  },
-  {
     "ticker": "NVTS",
     "signal_date": "2026-06-04",
     "entry_price": 30.84,
@@ -162,6 +144,42 @@
     "tp_pct": 20.0,
     "sl_pct": 10.0,
     "check_date": "2026-06-29"
+  },
+  {
+    "ticker": "WDC",
+    "signal_date": "2026-06-16",
+    "entry_price": 653.53,
+    "source": "WSB",
+    "tp_pct": 20.0,
+    "sl_pct": 10.0,
+    "check_date": "2026-06-30"
+  },
+  {
+    "ticker": "EOSE",
+    "signal_date": "2026-06-16",
+    "entry_price": 6.985,
+    "source": "WSB",
+    "tp_pct": 20.0,
+    "sl_pct": 10.0,
+    "check_date": "2026-06-30"
+  },
+  {
+    "ticker": "LEGN",
+    "signal_date": "2026-06-03",
+    "entry_price": 36.28,
+    "source": "WSB",
+    "tp_pct": 20.0,
+    "sl_pct": 10.0,
+    "check_date": "2026-06-17"
+  },
+  {
+    "ticker": "NVTS",
+    "signal_date": "2026-06-03",
+    "entry_price": 31.216,
+    "source": "WSB",
+    "tp_pct": 20.0,
+    "sl_pct": 10.0,
+    "check_date": "2026-06-17"
   },
   {
     "ticker": "FLNC",
@@ -569,23 +587,5 @@
     "tp_pct": 20.0,
     "sl_pct": 10.0,
     "check_date": "2026-05-22"
-  },
-  {
-    "ticker": "WDC",
-    "signal_date": "2026-06-16",
-    "entry_price": 653.53,
-    "source": "WSB",
-    "tp_pct": 20.0,
-    "sl_pct": 10.0,
-    "check_date": "2026-06-30"
-  },
-  {
-    "ticker": "EOSE",
-    "signal_date": "2026-06-16",
-    "entry_price": 6.985,
-    "source": "WSB",
-    "tp_pct": 20.0,
-    "sl_pct": 10.0,
-    "check_date": "2026-06-30"
   }
 ]
