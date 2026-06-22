@@ -1,23 +1,5 @@
 [
   {
-    "ticker": "NRIX",
-    "signal_date": "2026-06-08",
-    "entry_price": 14.64,
-    "source": "WSB",
-    "tp_pct": 20.0,
-    "sl_pct": 10.0,
-    "check_date": "2026-06-22"
-  },
-  {
-    "ticker": "TNGX",
-    "signal_date": "2026-06-08",
-    "entry_price": 30.94,
-    "source": "WSB",
-    "tp_pct": 20.0,
-    "sl_pct": 10.0,
-    "check_date": "2026-06-22"
-  },
-  {
     "ticker": "TNGX",
     "signal_date": "2026-06-09",
     "entry_price": 30.93,
@@ -151,6 +133,42 @@
     "tp_pct": 20.0,
     "sl_pct": 10.0,
     "check_date": "2026-07-02"
+  },
+  {
+    "ticker": "QS",
+    "signal_date": "2026-06-19",
+    "entry_price": 8.04,
+    "source": "WSB",
+    "tp_pct": 20.0,
+    "sl_pct": 10.0,
+    "check_date": "2026-07-03"
+  },
+  {
+    "ticker": "BFLY",
+    "signal_date": "2026-06-19",
+    "entry_price": 8.9,
+    "source": "WSB",
+    "tp_pct": 20.0,
+    "sl_pct": 10.0,
+    "check_date": "2026-07-03"
+  },
+  {
+    "ticker": "NRIX",
+    "signal_date": "2026-06-08",
+    "entry_price": 14.64,
+    "source": "WSB",
+    "tp_pct": 20.0,
+    "sl_pct": 10.0,
+    "check_date": "2026-06-22"
+  },
+  {
+    "ticker": "TNGX",
+    "signal_date": "2026-06-08",
+    "entry_price": 30.94,
+    "source": "WSB",
+    "tp_pct": 20.0,
+    "sl_pct": 10.0,
+    "check_date": "2026-06-22"
   },
   {
     "ticker": "RDW",
@@ -623,23 +641,5 @@
     "tp_pct": 20.0,
     "sl_pct": 10.0,
     "check_date": "2026-05-22"
-  },
-  {
-    "ticker": "QS",
-    "signal_date": "2026-06-19",
-    "entry_price": 8.04,
-    "source": "WSB",
-    "tp_pct": 20.0,
-    "sl_pct": 10.0,
-    "check_date": "2026-07-03"
-  },
-  {
-    "ticker": "BFLY",
-    "signal_date": "2026-06-19",
-    "entry_price": 8.9,
-    "source": "WSB",
-    "tp_pct": 20.0,
-    "sl_pct": 10.0,
-    "check_date": "2026-07-03"
   }
 ]
