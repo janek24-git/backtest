@@ -1,23 +1,5 @@
 [
   {
-    "ticker": "BATL",
-    "signal_date": "2026-06-11",
-    "entry_price": 2.06,
-    "source": "WSB",
-    "tp_pct": 20.0,
-    "sl_pct": 10.0,
-    "check_date": "2026-06-25"
-  },
-  {
-    "ticker": "SATS",
-    "signal_date": "2026-06-11",
-    "entry_price": 125.575,
-    "source": "WSB",
-    "tp_pct": 20.0,
-    "sl_pct": 10.0,
-    "check_date": "2026-06-25"
-  },
-  {
     "ticker": "RDW",
     "signal_date": "2026-06-12",
     "entry_price": 17.09,
@@ -151,6 +133,42 @@
     "tp_pct": 20.0,
     "sl_pct": 10.0,
     "check_date": "2026-07-07"
+  },
+  {
+    "ticker": "VKTX",
+    "signal_date": "2026-06-24",
+    "entry_price": 34.81,
+    "source": "WSB",
+    "tp_pct": 20.0,
+    "sl_pct": 10.0,
+    "check_date": "2026-07-08"
+  },
+  {
+    "ticker": "RUN",
+    "signal_date": "2026-06-24",
+    "entry_price": 16.08,
+    "source": "WSB",
+    "tp_pct": 20.0,
+    "sl_pct": 10.0,
+    "check_date": "2026-07-08"
+  },
+  {
+    "ticker": "BATL",
+    "signal_date": "2026-06-11",
+    "entry_price": 2.06,
+    "source": "WSB",
+    "tp_pct": 20.0,
+    "sl_pct": 10.0,
+    "check_date": "2026-06-25"
+  },
+  {
+    "ticker": "SATS",
+    "signal_date": "2026-06-11",
+    "entry_price": 125.575,
+    "source": "WSB",
+    "tp_pct": 20.0,
+    "sl_pct": 10.0,
+    "check_date": "2026-06-25"
   },
   {
     "ticker": "NUVL",
@@ -677,23 +695,5 @@
     "tp_pct": 20.0,
     "sl_pct": 10.0,
     "check_date": "2026-05-22"
-  },
-  {
-    "ticker": "VKTX",
-    "signal_date": "2026-06-24",
-    "entry_price": 34.81,
-    "source": "WSB",
-    "tp_pct": 20.0,
-    "sl_pct": 10.0,
-    "check_date": "2026-07-08"
-  },
-  {
-    "ticker": "RUN",
-    "signal_date": "2026-06-24",
-    "entry_price": 16.08,
-    "source": "WSB",
-    "tp_pct": 20.0,
-    "sl_pct": 10.0,
-    "check_date": "2026-07-08"
   }
 ]
