@@ -1,23 +1,5 @@
 [
   {
-    "ticker": "RDW",
-    "signal_date": "2026-06-12",
-    "entry_price": 17.09,
-    "source": "WSB",
-    "tp_pct": 20.0,
-    "sl_pct": 10.0,
-    "check_date": "2026-06-26"
-  },
-  {
-    "ticker": "ASTS",
-    "signal_date": "2026-06-12",
-    "entry_price": 83.73,
-    "source": "WSB",
-    "tp_pct": 20.0,
-    "sl_pct": 10.0,
-    "check_date": "2026-06-26"
-  },
-  {
     "ticker": "QBTS",
     "signal_date": "2026-06-15",
     "entry_price": 25.7901,
@@ -151,6 +133,42 @@
     "tp_pct": 20.0,
     "sl_pct": 10.0,
     "check_date": "2026-07-08"
+  },
+  {
+    "ticker": "RUN",
+    "signal_date": "2026-06-25",
+    "entry_price": 14.42,
+    "source": "WSB",
+    "tp_pct": 20.0,
+    "sl_pct": 10.0,
+    "check_date": "2026-07-09"
+  },
+  {
+    "ticker": "SLS",
+    "signal_date": "2026-06-25",
+    "entry_price": 10.55,
+    "source": "WSB",
+    "tp_pct": 20.0,
+    "sl_pct": 10.0,
+    "check_date": "2026-07-09"
+  },
+  {
+    "ticker": "RDW",
+    "signal_date": "2026-06-12",
+    "entry_price": 17.09,
+    "source": "WSB",
+    "tp_pct": 20.0,
+    "sl_pct": 10.0,
+    "check_date": "2026-06-26"
+  },
+  {
+    "ticker": "ASTS",
+    "signal_date": "2026-06-12",
+    "entry_price": 83.73,
+    "source": "WSB",
+    "tp_pct": 20.0,
+    "sl_pct": 10.0,
+    "check_date": "2026-06-26"
   },
   {
     "ticker": "BATL",
@@ -695,23 +713,5 @@
     "tp_pct": 20.0,
     "sl_pct": 10.0,
     "check_date": "2026-05-22"
-  },
-  {
-    "ticker": "RUN",
-    "signal_date": "2026-06-25",
-    "entry_price": 14.42,
-    "source": "WSB",
-    "tp_pct": 20.0,
-    "sl_pct": 10.0,
-    "check_date": "2026-07-09"
-  },
-  {
-    "ticker": "SLS",
-    "signal_date": "2026-06-25",
-    "entry_price": 10.55,
-    "source": "WSB",
-    "tp_pct": 20.0,
-    "sl_pct": 10.0,
-    "check_date": "2026-07-09"
   }
 ]
