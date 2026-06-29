@@ -1,14 +1,5 @@
 [
   {
-    "ticker": "QBTS",
-    "signal_date": "2026-06-15",
-    "entry_price": 25.7901,
-    "source": "WSB",
-    "tp_pct": 20.0,
-    "sl_pct": 10.0,
-    "check_date": "2026-06-29"
-  },
-  {
     "ticker": "WDC",
     "signal_date": "2026-06-16",
     "entry_price": 653.53,
@@ -151,6 +142,33 @@
     "tp_pct": 20.0,
     "sl_pct": 10.0,
     "check_date": "2026-07-09"
+  },
+  {
+    "ticker": "SLS",
+    "signal_date": "2026-06-26",
+    "entry_price": 10.53,
+    "source": "WSB",
+    "tp_pct": 20.0,
+    "sl_pct": 10.0,
+    "check_date": "2026-07-10"
+  },
+  {
+    "ticker": "SLS",
+    "signal_date": "2026-06-26",
+    "entry_price": 11.9799,
+    "source": "WSB",
+    "tp_pct": 20.0,
+    "sl_pct": 10.0,
+    "check_date": "2026-07-10"
+  },
+  {
+    "ticker": "QBTS",
+    "signal_date": "2026-06-15",
+    "entry_price": 25.7901,
+    "source": "WSB",
+    "tp_pct": 20.0,
+    "sl_pct": 10.0,
+    "check_date": "2026-06-29"
   },
   {
     "ticker": "RDW",
@@ -713,23 +731,5 @@
     "tp_pct": 20.0,
     "sl_pct": 10.0,
     "check_date": "2026-05-22"
-  },
-  {
-    "ticker": "SLS",
-    "signal_date": "2026-06-26",
-    "entry_price": 10.53,
-    "source": "WSB",
-    "tp_pct": 20.0,
-    "sl_pct": 10.0,
-    "check_date": "2026-07-10"
-  },
-  {
-    "ticker": "SLS",
-    "signal_date": "2026-06-26",
-    "entry_price": 11.9799,
-    "source": "WSB",
-    "tp_pct": 20.0,
-    "sl_pct": 10.0,
-    "check_date": "2026-07-10"
   }
 ]
