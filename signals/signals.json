@@ -1,23 +1,5 @@
 [
   {
-    "ticker": "MRNA",
-    "signal_date": "2026-06-17",
-    "entry_price": 55.4,
-    "source": "WSB",
-    "tp_pct": 20.0,
-    "sl_pct": 10.0,
-    "check_date": "2026-07-01"
-  },
-  {
-    "ticker": "TE",
-    "signal_date": "2026-06-17",
-    "entry_price": 9.685,
-    "source": "WSB",
-    "tp_pct": 20.0,
-    "sl_pct": 10.0,
-    "check_date": "2026-07-01"
-  },
-  {
     "ticker": "EOSE",
     "signal_date": "2026-06-18",
     "entry_price": 7.6,
@@ -171,6 +153,53 @@
     "check_date": "2026-07-13",
     "rel_vol": 1.22,
     "pct_above_ema": 2.44
+  },
+  {
+    "ticker": "SMCI",
+    "signal_date": "2026-06-30",
+    "entry_price": 28.15,
+    "source": "WSB",
+    "tp_pct": 20.0,
+    "sl_pct": 10.0,
+    "check_date": "2026-07-14"
+  },
+  {
+    "ticker": "MBLY",
+    "signal_date": "2026-06-30",
+    "entry_price": 9.2286,
+    "source": "WSB",
+    "tp_pct": 20.0,
+    "sl_pct": 10.0,
+    "check_date": "2026-07-14"
+  },
+  {
+    "ticker": "RKT",
+    "signal_date": "2026-06-30",
+    "entry_price": 15.75,
+    "source": "EMA200",
+    "tp_pct": 10.0,
+    "sl_pct": 5.0,
+    "check_date": "2026-07-14",
+    "rel_vol": 1.74,
+    "pct_above_ema": 0.19
+  },
+  {
+    "ticker": "MRNA",
+    "signal_date": "2026-06-17",
+    "entry_price": 55.4,
+    "source": "WSB",
+    "tp_pct": 20.0,
+    "sl_pct": 10.0,
+    "check_date": "2026-07-01"
+  },
+  {
+    "ticker": "TE",
+    "signal_date": "2026-06-17",
+    "entry_price": 9.685,
+    "source": "WSB",
+    "tp_pct": 20.0,
+    "sl_pct": 10.0,
+    "check_date": "2026-07-01"
   },
   {
     "ticker": "WDC",
@@ -760,34 +789,5 @@
     "tp_pct": 20.0,
     "sl_pct": 10.0,
     "check_date": "2026-05-22"
-  },
-  {
-    "ticker": "SMCI",
-    "signal_date": "2026-06-30",
-    "entry_price": 28.15,
-    "source": "WSB",
-    "tp_pct": 20.0,
-    "sl_pct": 10.0,
-    "check_date": "2026-07-14"
-  },
-  {
-    "ticker": "MBLY",
-    "signal_date": "2026-06-30",
-    "entry_price": 9.2286,
-    "source": "WSB",
-    "tp_pct": 20.0,
-    "sl_pct": 10.0,
-    "check_date": "2026-07-14"
-  },
-  {
-    "ticker": "RKT",
-    "signal_date": "2026-06-30",
-    "entry_price": 15.75,
-    "source": "EMA200",
-    "tp_pct": 10.0,
-    "sl_pct": 5.0,
-    "check_date": "2026-07-14",
-    "rel_vol": 1.74,
-    "pct_above_ema": 0.19
   }
 ]
