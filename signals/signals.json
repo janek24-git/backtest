@@ -1,23 +1,5 @@
 [
   {
-    "ticker": "EOSE",
-    "signal_date": "2026-06-18",
-    "entry_price": 7.6,
-    "source": "WSB",
-    "tp_pct": 20.0,
-    "sl_pct": 10.0,
-    "check_date": "2026-07-02"
-  },
-  {
-    "ticker": "QS",
-    "signal_date": "2026-06-18",
-    "entry_price": 7.7297,
-    "source": "WSB",
-    "tp_pct": 20.0,
-    "sl_pct": 10.0,
-    "check_date": "2026-07-02"
-  },
-  {
     "ticker": "QS",
     "signal_date": "2026-06-19",
     "entry_price": 8.04,
@@ -182,6 +164,42 @@
     "check_date": "2026-07-14",
     "rel_vol": 1.74,
     "pct_above_ema": 0.19
+  },
+  {
+    "ticker": "SOC",
+    "signal_date": "2026-07-01",
+    "entry_price": 3.08,
+    "source": "WSB",
+    "tp_pct": 20.0,
+    "sl_pct": 10.0,
+    "check_date": "2026-07-15"
+  },
+  {
+    "ticker": "OPEN",
+    "signal_date": "2026-07-01",
+    "entry_price": 5.045,
+    "source": "WSB",
+    "tp_pct": 20.0,
+    "sl_pct": 10.0,
+    "check_date": "2026-07-15"
+  },
+  {
+    "ticker": "EOSE",
+    "signal_date": "2026-06-18",
+    "entry_price": 7.6,
+    "source": "WSB",
+    "tp_pct": 20.0,
+    "sl_pct": 10.0,
+    "check_date": "2026-07-02"
+  },
+  {
+    "ticker": "QS",
+    "signal_date": "2026-06-18",
+    "entry_price": 7.7297,
+    "source": "WSB",
+    "tp_pct": 20.0,
+    "sl_pct": 10.0,
+    "check_date": "2026-07-02"
   },
   {
     "ticker": "MRNA",
@@ -789,23 +807,5 @@
     "tp_pct": 20.0,
     "sl_pct": 10.0,
     "check_date": "2026-05-22"
-  },
-  {
-    "ticker": "SOC",
-    "signal_date": "2026-07-01",
-    "entry_price": 3.08,
-    "source": "WSB",
-    "tp_pct": 20.0,
-    "sl_pct": 10.0,
-    "check_date": "2026-07-15"
-  },
-  {
-    "ticker": "OPEN",
-    "signal_date": "2026-07-01",
-    "entry_price": 5.045,
-    "source": "WSB",
-    "tp_pct": 20.0,
-    "sl_pct": 10.0,
-    "check_date": "2026-07-15"
   }
 ]
