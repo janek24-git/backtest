@@ -1,23 +1,5 @@
 [
   {
-    "ticker": "QS",
-    "signal_date": "2026-06-19",
-    "entry_price": 8.04,
-    "source": "WSB",
-    "tp_pct": 20.0,
-    "sl_pct": 10.0,
-    "check_date": "2026-07-03"
-  },
-  {
-    "ticker": "BFLY",
-    "signal_date": "2026-06-19",
-    "entry_price": 8.9,
-    "source": "WSB",
-    "tp_pct": 20.0,
-    "sl_pct": 10.0,
-    "check_date": "2026-07-03"
-  },
-  {
     "ticker": "APGE",
     "signal_date": "2026-06-22",
     "entry_price": 132.605,
@@ -182,6 +164,42 @@
     "tp_pct": 20.0,
     "sl_pct": 10.0,
     "check_date": "2026-07-15"
+  },
+  {
+    "ticker": "CRWV",
+    "signal_date": "2026-07-02",
+    "entry_price": 85.685,
+    "source": "WSB",
+    "tp_pct": 20.0,
+    "sl_pct": 10.0,
+    "check_date": "2026-07-16"
+  },
+  {
+    "ticker": "RIVN",
+    "signal_date": "2026-07-02",
+    "entry_price": 18.66,
+    "source": "WSB",
+    "tp_pct": 20.0,
+    "sl_pct": 10.0,
+    "check_date": "2026-07-16"
+  },
+  {
+    "ticker": "QS",
+    "signal_date": "2026-06-19",
+    "entry_price": 8.04,
+    "source": "WSB",
+    "tp_pct": 20.0,
+    "sl_pct": 10.0,
+    "check_date": "2026-07-03"
+  },
+  {
+    "ticker": "BFLY",
+    "signal_date": "2026-06-19",
+    "entry_price": 8.9,
+    "source": "WSB",
+    "tp_pct": 20.0,
+    "sl_pct": 10.0,
+    "check_date": "2026-07-03"
   },
   {
     "ticker": "EOSE",
@@ -807,23 +825,5 @@
     "tp_pct": 20.0,
     "sl_pct": 10.0,
     "check_date": "2026-05-22"
-  },
-  {
-    "ticker": "CRWV",
-    "signal_date": "2026-07-02",
-    "entry_price": 85.685,
-    "source": "WSB",
-    "tp_pct": 20.0,
-    "sl_pct": 10.0,
-    "check_date": "2026-07-16"
-  },
-  {
-    "ticker": "RIVN",
-    "signal_date": "2026-07-02",
-    "entry_price": 18.66,
-    "source": "WSB",
-    "tp_pct": 20.0,
-    "sl_pct": 10.0,
-    "check_date": "2026-07-16"
   }
 ]
