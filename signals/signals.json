@@ -834,5 +834,14 @@
     "tp_pct": 20.0,
     "sl_pct": 10.0,
     "check_date": "2026-07-17"
+  },
+  {
+    "ticker": "RIVN",
+    "signal_date": "2026-07-03",
+    "entry_price": 18.63,
+    "source": "WSB",
+    "tp_pct": 20.0,
+    "sl_pct": 10.0,
+    "check_date": "2026-07-17"
   }
 ]
