@@ -1,24 +1,6 @@
 [
   {
     "ticker": "APGE",
-    "signal_date": "2026-06-22",
-    "entry_price": 132.605,
-    "source": "WSB",
-    "tp_pct": 20.0,
-    "sl_pct": 10.0,
-    "check_date": "2026-07-06"
-  },
-  {
-    "ticker": "SMCI",
-    "signal_date": "2026-06-22",
-    "entry_price": 36.185,
-    "source": "WSB",
-    "tp_pct": 20.0,
-    "sl_pct": 10.0,
-    "check_date": "2026-07-06"
-  },
-  {
-    "ticker": "APGE",
     "signal_date": "2026-06-23",
     "entry_price": 132.55,
     "source": "WSB",
@@ -182,6 +164,42 @@
     "tp_pct": 20.0,
     "sl_pct": 10.0,
     "check_date": "2026-07-16"
+  },
+  {
+    "ticker": "RIVN",
+    "signal_date": "2026-07-03",
+    "entry_price": 18.63,
+    "source": "WSB",
+    "tp_pct": 20.0,
+    "sl_pct": 10.0,
+    "check_date": "2026-07-17"
+  },
+  {
+    "ticker": "RIVN",
+    "signal_date": "2026-07-03",
+    "entry_price": 18.63,
+    "source": "WSB",
+    "tp_pct": 20.0,
+    "sl_pct": 10.0,
+    "check_date": "2026-07-17"
+  },
+  {
+    "ticker": "APGE",
+    "signal_date": "2026-06-22",
+    "entry_price": 132.605,
+    "source": "WSB",
+    "tp_pct": 20.0,
+    "sl_pct": 10.0,
+    "check_date": "2026-07-06"
+  },
+  {
+    "ticker": "SMCI",
+    "signal_date": "2026-06-22",
+    "entry_price": 36.185,
+    "source": "WSB",
+    "tp_pct": 20.0,
+    "sl_pct": 10.0,
+    "check_date": "2026-07-06"
   },
   {
     "ticker": "QS",
@@ -825,23 +843,5 @@
     "tp_pct": 20.0,
     "sl_pct": 10.0,
     "check_date": "2026-05-22"
-  },
-  {
-    "ticker": "RIVN",
-    "signal_date": "2026-07-03",
-    "entry_price": 18.63,
-    "source": "WSB",
-    "tp_pct": 20.0,
-    "sl_pct": 10.0,
-    "check_date": "2026-07-17"
-  },
-  {
-    "ticker": "RIVN",
-    "signal_date": "2026-07-03",
-    "entry_price": 18.63,
-    "source": "WSB",
-    "tp_pct": 20.0,
-    "sl_pct": 10.0,
-    "check_date": "2026-07-17"
   }
 ]
