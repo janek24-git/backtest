@@ -1,23 +1,5 @@
 [
   {
-    "ticker": "APGE",
-    "signal_date": "2026-06-23",
-    "entry_price": 132.55,
-    "source": "WSB",
-    "tp_pct": 20.0,
-    "sl_pct": 10.0,
-    "check_date": "2026-07-07"
-  },
-  {
-    "ticker": "ZETA",
-    "signal_date": "2026-06-23",
-    "entry_price": 19.805,
-    "source": "WSB",
-    "tp_pct": 20.0,
-    "sl_pct": 10.0,
-    "check_date": "2026-07-07"
-  },
-  {
     "ticker": "VKTX",
     "signal_date": "2026-06-24",
     "entry_price": 34.81,
@@ -182,6 +164,42 @@
     "tp_pct": 20.0,
     "sl_pct": 10.0,
     "check_date": "2026-07-17"
+  },
+  {
+    "ticker": "ONDS",
+    "signal_date": "2026-07-06",
+    "entry_price": 7.41,
+    "source": "WSB",
+    "tp_pct": 20.0,
+    "sl_pct": 10.0,
+    "check_date": "2026-07-20"
+  },
+  {
+    "ticker": "IREN",
+    "signal_date": "2026-07-06",
+    "entry_price": 43.86,
+    "source": "WSB",
+    "tp_pct": 20.0,
+    "sl_pct": 10.0,
+    "check_date": "2026-07-20"
+  },
+  {
+    "ticker": "APGE",
+    "signal_date": "2026-06-23",
+    "entry_price": 132.55,
+    "source": "WSB",
+    "tp_pct": 20.0,
+    "sl_pct": 10.0,
+    "check_date": "2026-07-07"
+  },
+  {
+    "ticker": "ZETA",
+    "signal_date": "2026-06-23",
+    "entry_price": 19.805,
+    "source": "WSB",
+    "tp_pct": 20.0,
+    "sl_pct": 10.0,
+    "check_date": "2026-07-07"
   },
   {
     "ticker": "APGE",
@@ -843,23 +861,5 @@
     "tp_pct": 20.0,
     "sl_pct": 10.0,
     "check_date": "2026-05-22"
-  },
-  {
-    "ticker": "ONDS",
-    "signal_date": "2026-07-06",
-    "entry_price": 7.41,
-    "source": "WSB",
-    "tp_pct": 20.0,
-    "sl_pct": 10.0,
-    "check_date": "2026-07-20"
-  },
-  {
-    "ticker": "IREN",
-    "signal_date": "2026-07-06",
-    "entry_price": 43.86,
-    "source": "WSB",
-    "tp_pct": 20.0,
-    "sl_pct": 10.0,
-    "check_date": "2026-07-20"
   }
 ]
