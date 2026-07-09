@@ -915,5 +915,16 @@
     "tp_pct": 20.0,
     "sl_pct": 10.0,
     "check_date": "2026-07-23"
+  },
+  {
+    "ticker": "MARA",
+    "signal_date": "2026-07-09",
+    "entry_price": 13.22,
+    "source": "EMA200",
+    "tp_pct": 10.0,
+    "sl_pct": 5.0,
+    "check_date": "2026-07-23",
+    "rel_vol": 1.84,
+    "pct_above_ema": 4.76
   }
 ]
