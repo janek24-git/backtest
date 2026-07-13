@@ -1,34 +1,5 @@
 [
   {
-    "ticker": "IBRX",
-    "signal_date": "2026-06-29",
-    "entry_price": 8.71,
-    "source": "WSB",
-    "tp_pct": 20.0,
-    "sl_pct": 10.0,
-    "check_date": "2026-07-13"
-  },
-  {
-    "ticker": "ASTS",
-    "signal_date": "2026-06-29",
-    "entry_price": 85.225,
-    "source": "WSB",
-    "tp_pct": 20.0,
-    "sl_pct": 10.0,
-    "check_date": "2026-07-13"
-  },
-  {
-    "ticker": "AMZN",
-    "signal_date": "2026-06-29",
-    "entry_price": 240.14,
-    "source": "EMA200",
-    "tp_pct": 10.0,
-    "sl_pct": 5.0,
-    "check_date": "2026-07-13",
-    "rel_vol": 1.22,
-    "pct_above_ema": 2.44
-  },
-  {
     "ticker": "SMCI",
     "signal_date": "2026-06-30",
     "entry_price": 28.15,
@@ -193,6 +164,53 @@
     "check_date": "2026-07-23",
     "rel_vol": 1.84,
     "pct_above_ema": 4.76
+  },
+  {
+    "ticker": "MARA",
+    "signal_date": "2026-07-10",
+    "entry_price": 13.22,
+    "source": "WSB",
+    "tp_pct": 20.0,
+    "sl_pct": 10.0,
+    "check_date": "2026-07-24"
+  },
+  {
+    "ticker": "MRNA",
+    "signal_date": "2026-07-10",
+    "entry_price": 67.8,
+    "source": "WSB",
+    "tp_pct": 20.0,
+    "sl_pct": 10.0,
+    "check_date": "2026-07-24"
+  },
+  {
+    "ticker": "IBRX",
+    "signal_date": "2026-06-29",
+    "entry_price": 8.71,
+    "source": "WSB",
+    "tp_pct": 20.0,
+    "sl_pct": 10.0,
+    "check_date": "2026-07-13"
+  },
+  {
+    "ticker": "ASTS",
+    "signal_date": "2026-06-29",
+    "entry_price": 85.225,
+    "source": "WSB",
+    "tp_pct": 20.0,
+    "sl_pct": 10.0,
+    "check_date": "2026-07-13"
+  },
+  {
+    "ticker": "AMZN",
+    "signal_date": "2026-06-29",
+    "entry_price": 240.14,
+    "source": "EMA200",
+    "tp_pct": 10.0,
+    "sl_pct": 5.0,
+    "check_date": "2026-07-13",
+    "rel_vol": 1.22,
+    "pct_above_ema": 2.44
   },
   {
     "ticker": "SLS",
@@ -926,23 +944,5 @@
     "tp_pct": 20.0,
     "sl_pct": 10.0,
     "check_date": "2026-05-22"
-  },
-  {
-    "ticker": "MARA",
-    "signal_date": "2026-07-10",
-    "entry_price": 13.22,
-    "source": "WSB",
-    "tp_pct": 20.0,
-    "sl_pct": 10.0,
-    "check_date": "2026-07-24"
-  },
-  {
-    "ticker": "MRNA",
-    "signal_date": "2026-07-10",
-    "entry_price": 67.8,
-    "source": "WSB",
-    "tp_pct": 20.0,
-    "sl_pct": 10.0,
-    "check_date": "2026-07-24"
   }
 ]
