@@ -944,5 +944,14 @@
     "tp_pct": 20.0,
     "sl_pct": 10.0,
     "check_date": "2026-05-22"
+  },
+  {
+    "ticker": "AGEN",
+    "signal_date": "2026-07-13",
+    "entry_price": 3.35,
+    "source": "WSB",
+    "tp_pct": 20.0,
+    "sl_pct": 10.0,
+    "check_date": "2026-07-27"
   }
 ]
