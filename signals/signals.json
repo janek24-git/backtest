@@ -980,5 +980,16 @@
     "tp_pct": 20.0,
     "sl_pct": 10.0,
     "check_date": "2026-07-28"
+  },
+  {
+    "ticker": "VEEE",
+    "signal_date": "2026-07-14",
+    "entry_price": 38.51,
+    "source": "EMA200",
+    "tp_pct": 10.0,
+    "sl_pct": 5.0,
+    "check_date": "2026-07-28",
+    "rel_vol": 5.74,
+    "pct_above_ema": 3.87
   }
 ]
