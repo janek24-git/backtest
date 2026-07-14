@@ -1,34 +1,5 @@
 [
   {
-    "ticker": "SMCI",
-    "signal_date": "2026-06-30",
-    "entry_price": 28.15,
-    "source": "WSB",
-    "tp_pct": 20.0,
-    "sl_pct": 10.0,
-    "check_date": "2026-07-14"
-  },
-  {
-    "ticker": "MBLY",
-    "signal_date": "2026-06-30",
-    "entry_price": 9.2286,
-    "source": "WSB",
-    "tp_pct": 20.0,
-    "sl_pct": 10.0,
-    "check_date": "2026-07-14"
-  },
-  {
-    "ticker": "RKT",
-    "signal_date": "2026-06-30",
-    "entry_price": 15.75,
-    "source": "EMA200",
-    "tp_pct": 10.0,
-    "sl_pct": 5.0,
-    "check_date": "2026-07-14",
-    "rel_vol": 1.74,
-    "pct_above_ema": 0.19
-  },
-  {
     "ticker": "SOC",
     "signal_date": "2026-07-01",
     "entry_price": 3.08,
@@ -182,6 +153,53 @@
     "tp_pct": 20.0,
     "sl_pct": 10.0,
     "check_date": "2026-07-24"
+  },
+  {
+    "ticker": "AGEN",
+    "signal_date": "2026-07-13",
+    "entry_price": 3.35,
+    "source": "WSB",
+    "tp_pct": 20.0,
+    "sl_pct": 10.0,
+    "check_date": "2026-07-27"
+  },
+  {
+    "ticker": "TMDX",
+    "signal_date": "2026-07-13",
+    "entry_price": 76.43,
+    "source": "WSB",
+    "tp_pct": 20.0,
+    "sl_pct": 10.0,
+    "check_date": "2026-07-27"
+  },
+  {
+    "ticker": "SMCI",
+    "signal_date": "2026-06-30",
+    "entry_price": 28.15,
+    "source": "WSB",
+    "tp_pct": 20.0,
+    "sl_pct": 10.0,
+    "check_date": "2026-07-14"
+  },
+  {
+    "ticker": "MBLY",
+    "signal_date": "2026-06-30",
+    "entry_price": 9.2286,
+    "source": "WSB",
+    "tp_pct": 20.0,
+    "sl_pct": 10.0,
+    "check_date": "2026-07-14"
+  },
+  {
+    "ticker": "RKT",
+    "signal_date": "2026-06-30",
+    "entry_price": 15.75,
+    "source": "EMA200",
+    "tp_pct": 10.0,
+    "sl_pct": 5.0,
+    "check_date": "2026-07-14",
+    "rel_vol": 1.74,
+    "pct_above_ema": 0.19
   },
   {
     "ticker": "IBRX",
@@ -944,23 +962,5 @@
     "tp_pct": 20.0,
     "sl_pct": 10.0,
     "check_date": "2026-05-22"
-  },
-  {
-    "ticker": "AGEN",
-    "signal_date": "2026-07-13",
-    "entry_price": 3.35,
-    "source": "WSB",
-    "tp_pct": 20.0,
-    "sl_pct": 10.0,
-    "check_date": "2026-07-27"
-  },
-  {
-    "ticker": "TMDX",
-    "signal_date": "2026-07-13",
-    "entry_price": 76.43,
-    "source": "WSB",
-    "tp_pct": 20.0,
-    "sl_pct": 10.0,
-    "check_date": "2026-07-27"
   }
 ]
