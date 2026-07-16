@@ -1018,5 +1018,14 @@
     "tp_pct": 20.0,
     "sl_pct": 10.0,
     "check_date": "2026-07-30"
+  },
+  {
+    "ticker": "ASTS",
+    "signal_date": "2026-07-16",
+    "entry_price": 54.87,
+    "source": "WSB",
+    "tp_pct": 20.0,
+    "sl_pct": 10.0,
+    "check_date": "2026-07-30"
   }
 ]
