@@ -1027,5 +1027,14 @@
     "tp_pct": 20.0,
     "sl_pct": 10.0,
     "check_date": "2026-05-22"
+  },
+  {
+    "ticker": "CDNA",
+    "signal_date": "2026-07-17",
+    "entry_price": 40.34,
+    "source": "WSB",
+    "tp_pct": 20.0,
+    "sl_pct": 10.0,
+    "check_date": "2026-07-31"
   }
 ]
