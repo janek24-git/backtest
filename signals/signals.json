@@ -1,23 +1,5 @@
 [
   {
-    "ticker": "RIVN",
-    "signal_date": "2026-07-03",
-    "entry_price": 18.63,
-    "source": "WSB",
-    "tp_pct": 20.0,
-    "sl_pct": 10.0,
-    "check_date": "2026-07-17"
-  },
-  {
-    "ticker": "RIVN",
-    "signal_date": "2026-07-03",
-    "entry_price": 18.63,
-    "source": "WSB",
-    "tp_pct": 20.0,
-    "sl_pct": 10.0,
-    "check_date": "2026-07-17"
-  },
-  {
     "ticker": "ONDS",
     "signal_date": "2026-07-06",
     "entry_price": 7.41,
@@ -182,6 +164,42 @@
     "tp_pct": 20.0,
     "sl_pct": 10.0,
     "check_date": "2026-07-29"
+  },
+  {
+    "ticker": "IOVA",
+    "signal_date": "2026-07-16",
+    "entry_price": 4.74,
+    "source": "WSB",
+    "tp_pct": 20.0,
+    "sl_pct": 10.0,
+    "check_date": "2026-07-30"
+  },
+  {
+    "ticker": "ASTS",
+    "signal_date": "2026-07-16",
+    "entry_price": 54.87,
+    "source": "WSB",
+    "tp_pct": 20.0,
+    "sl_pct": 10.0,
+    "check_date": "2026-07-30"
+  },
+  {
+    "ticker": "RIVN",
+    "signal_date": "2026-07-03",
+    "entry_price": 18.63,
+    "source": "WSB",
+    "tp_pct": 20.0,
+    "sl_pct": 10.0,
+    "check_date": "2026-07-17"
+  },
+  {
+    "ticker": "RIVN",
+    "signal_date": "2026-07-03",
+    "entry_price": 18.63,
+    "source": "WSB",
+    "tp_pct": 20.0,
+    "sl_pct": 10.0,
+    "check_date": "2026-07-17"
   },
   {
     "ticker": "CRWV",
@@ -1009,23 +1027,5 @@
     "tp_pct": 20.0,
     "sl_pct": 10.0,
     "check_date": "2026-05-22"
-  },
-  {
-    "ticker": "IOVA",
-    "signal_date": "2026-07-16",
-    "entry_price": 4.74,
-    "source": "WSB",
-    "tp_pct": 20.0,
-    "sl_pct": 10.0,
-    "check_date": "2026-07-30"
-  },
-  {
-    "ticker": "ASTS",
-    "signal_date": "2026-07-16",
-    "entry_price": 54.87,
-    "source": "WSB",
-    "tp_pct": 20.0,
-    "sl_pct": 10.0,
-    "check_date": "2026-07-30"
   }
 ]
