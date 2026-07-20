@@ -1,23 +1,5 @@
 [
   {
-    "ticker": "ONDS",
-    "signal_date": "2026-07-06",
-    "entry_price": 7.41,
-    "source": "WSB",
-    "tp_pct": 20.0,
-    "sl_pct": 10.0,
-    "check_date": "2026-07-20"
-  },
-  {
-    "ticker": "IREN",
-    "signal_date": "2026-07-06",
-    "entry_price": 43.86,
-    "source": "WSB",
-    "tp_pct": 20.0,
-    "sl_pct": 10.0,
-    "check_date": "2026-07-20"
-  },
-  {
     "ticker": "CRNX",
     "signal_date": "2026-07-07",
     "entry_price": 42.03,
@@ -182,6 +164,42 @@
     "tp_pct": 20.0,
     "sl_pct": 10.0,
     "check_date": "2026-07-30"
+  },
+  {
+    "ticker": "CDNA",
+    "signal_date": "2026-07-17",
+    "entry_price": 40.34,
+    "source": "WSB",
+    "tp_pct": 20.0,
+    "sl_pct": 10.0,
+    "check_date": "2026-07-31"
+  },
+  {
+    "ticker": "ORKA",
+    "signal_date": "2026-07-17",
+    "entry_price": 90.34,
+    "source": "WSB",
+    "tp_pct": 20.0,
+    "sl_pct": 10.0,
+    "check_date": "2026-07-31"
+  },
+  {
+    "ticker": "ONDS",
+    "signal_date": "2026-07-06",
+    "entry_price": 7.41,
+    "source": "WSB",
+    "tp_pct": 20.0,
+    "sl_pct": 10.0,
+    "check_date": "2026-07-20"
+  },
+  {
+    "ticker": "IREN",
+    "signal_date": "2026-07-06",
+    "entry_price": 43.86,
+    "source": "WSB",
+    "tp_pct": 20.0,
+    "sl_pct": 10.0,
+    "check_date": "2026-07-20"
   },
   {
     "ticker": "RIVN",
@@ -1027,23 +1045,5 @@
     "tp_pct": 20.0,
     "sl_pct": 10.0,
     "check_date": "2026-05-22"
-  },
-  {
-    "ticker": "CDNA",
-    "signal_date": "2026-07-17",
-    "entry_price": 40.34,
-    "source": "WSB",
-    "tp_pct": 20.0,
-    "sl_pct": 10.0,
-    "check_date": "2026-07-31"
-  },
-  {
-    "ticker": "ORKA",
-    "signal_date": "2026-07-17",
-    "entry_price": 90.34,
-    "source": "WSB",
-    "tp_pct": 20.0,
-    "sl_pct": 10.0,
-    "check_date": "2026-07-31"
   }
 ]
