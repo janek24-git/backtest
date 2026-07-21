@@ -1081,5 +1081,16 @@
     "tp_pct": 20.0,
     "sl_pct": 10.0,
     "check_date": "2026-08-04"
+  },
+  {
+    "ticker": "NU",
+    "signal_date": "2026-07-21",
+    "entry_price": 14.39,
+    "source": "EMA200",
+    "tp_pct": 10.0,
+    "sl_pct": 5.0,
+    "check_date": "2026-08-04",
+    "rel_vol": 1.62,
+    "pct_above_ema": 1.39
   }
 ]
