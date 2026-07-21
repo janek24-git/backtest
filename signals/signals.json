@@ -1,24 +1,6 @@
 [
   {
     "ticker": "CRNX",
-    "signal_date": "2026-07-07",
-    "entry_price": 42.03,
-    "source": "WSB",
-    "tp_pct": 20.0,
-    "sl_pct": 10.0,
-    "check_date": "2026-07-21"
-  },
-  {
-    "ticker": "TE",
-    "signal_date": "2026-07-07",
-    "entry_price": 7.215,
-    "source": "WSB",
-    "tp_pct": 20.0,
-    "sl_pct": 10.0,
-    "check_date": "2026-07-21"
-  },
-  {
-    "ticker": "CRNX",
     "signal_date": "2026-07-08",
     "entry_price": 83.53,
     "source": "WSB",
@@ -182,6 +164,42 @@
     "tp_pct": 20.0,
     "sl_pct": 10.0,
     "check_date": "2026-07-31"
+  },
+  {
+    "ticker": "SLS",
+    "signal_date": "2026-07-20",
+    "entry_price": 13.19,
+    "source": "WSB",
+    "tp_pct": 20.0,
+    "sl_pct": 10.0,
+    "check_date": "2026-08-03"
+  },
+  {
+    "ticker": "ACHR",
+    "signal_date": "2026-07-20",
+    "entry_price": 5.23,
+    "source": "WSB",
+    "tp_pct": 20.0,
+    "sl_pct": 10.0,
+    "check_date": "2026-08-03"
+  },
+  {
+    "ticker": "CRNX",
+    "signal_date": "2026-07-07",
+    "entry_price": 42.03,
+    "source": "WSB",
+    "tp_pct": 20.0,
+    "sl_pct": 10.0,
+    "check_date": "2026-07-21"
+  },
+  {
+    "ticker": "TE",
+    "signal_date": "2026-07-07",
+    "entry_price": 7.215,
+    "source": "WSB",
+    "tp_pct": 20.0,
+    "sl_pct": 10.0,
+    "check_date": "2026-07-21"
   },
   {
     "ticker": "ONDS",
@@ -1045,23 +1063,5 @@
     "tp_pct": 20.0,
     "sl_pct": 10.0,
     "check_date": "2026-05-22"
-  },
-  {
-    "ticker": "SLS",
-    "signal_date": "2026-07-20",
-    "entry_price": 13.19,
-    "source": "WSB",
-    "tp_pct": 20.0,
-    "sl_pct": 10.0,
-    "check_date": "2026-08-03"
-  },
-  {
-    "ticker": "ACHR",
-    "signal_date": "2026-07-20",
-    "entry_price": 5.23,
-    "source": "WSB",
-    "tp_pct": 20.0,
-    "sl_pct": 10.0,
-    "check_date": "2026-08-03"
   }
 ]
