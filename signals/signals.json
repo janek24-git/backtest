@@ -1,23 +1,5 @@
 [
   {
-    "ticker": "CRNX",
-    "signal_date": "2026-07-08",
-    "entry_price": 83.53,
-    "source": "WSB",
-    "tp_pct": 20.0,
-    "sl_pct": 10.0,
-    "check_date": "2026-07-22"
-  },
-  {
-    "ticker": "QXO",
-    "signal_date": "2026-07-08",
-    "entry_price": 14.0,
-    "source": "WSB",
-    "tp_pct": 20.0,
-    "sl_pct": 10.0,
-    "check_date": "2026-07-22"
-  },
-  {
     "ticker": "WULF",
     "signal_date": "2026-07-09",
     "entry_price": 22.83,
@@ -182,6 +164,53 @@
     "tp_pct": 20.0,
     "sl_pct": 10.0,
     "check_date": "2026-08-03"
+  },
+  {
+    "ticker": "ACHR",
+    "signal_date": "2026-07-21",
+    "entry_price": 5.31,
+    "source": "WSB",
+    "tp_pct": 20.0,
+    "sl_pct": 10.0,
+    "check_date": "2026-08-04"
+  },
+  {
+    "ticker": "ONDS",
+    "signal_date": "2026-07-21",
+    "entry_price": 7.705,
+    "source": "WSB",
+    "tp_pct": 20.0,
+    "sl_pct": 10.0,
+    "check_date": "2026-08-04"
+  },
+  {
+    "ticker": "NU",
+    "signal_date": "2026-07-21",
+    "entry_price": 14.39,
+    "source": "EMA200",
+    "tp_pct": 10.0,
+    "sl_pct": 5.0,
+    "check_date": "2026-08-04",
+    "rel_vol": 1.62,
+    "pct_above_ema": 1.39
+  },
+  {
+    "ticker": "CRNX",
+    "signal_date": "2026-07-08",
+    "entry_price": 83.53,
+    "source": "WSB",
+    "tp_pct": 20.0,
+    "sl_pct": 10.0,
+    "check_date": "2026-07-22"
+  },
+  {
+    "ticker": "QXO",
+    "signal_date": "2026-07-08",
+    "entry_price": 14.0,
+    "source": "WSB",
+    "tp_pct": 20.0,
+    "sl_pct": 10.0,
+    "check_date": "2026-07-22"
   },
   {
     "ticker": "CRNX",
@@ -1063,34 +1092,5 @@
     "tp_pct": 20.0,
     "sl_pct": 10.0,
     "check_date": "2026-05-22"
-  },
-  {
-    "ticker": "ACHR",
-    "signal_date": "2026-07-21",
-    "entry_price": 5.31,
-    "source": "WSB",
-    "tp_pct": 20.0,
-    "sl_pct": 10.0,
-    "check_date": "2026-08-04"
-  },
-  {
-    "ticker": "ONDS",
-    "signal_date": "2026-07-21",
-    "entry_price": 7.705,
-    "source": "WSB",
-    "tp_pct": 20.0,
-    "sl_pct": 10.0,
-    "check_date": "2026-08-04"
-  },
-  {
-    "ticker": "NU",
-    "signal_date": "2026-07-21",
-    "entry_price": 14.39,
-    "source": "EMA200",
-    "tp_pct": 10.0,
-    "sl_pct": 5.0,
-    "check_date": "2026-08-04",
-    "rel_vol": 1.62,
-    "pct_above_ema": 1.39
   }
 ]
