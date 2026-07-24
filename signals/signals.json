@@ -1,23 +1,5 @@
 [
   {
-    "ticker": "MARA",
-    "signal_date": "2026-07-10",
-    "entry_price": 13.22,
-    "source": "WSB",
-    "tp_pct": 20.0,
-    "sl_pct": 10.0,
-    "check_date": "2026-07-24"
-  },
-  {
-    "ticker": "MRNA",
-    "signal_date": "2026-07-10",
-    "entry_price": 67.8,
-    "source": "WSB",
-    "tp_pct": 20.0,
-    "sl_pct": 10.0,
-    "check_date": "2026-07-24"
-  },
-  {
     "ticker": "AGEN",
     "signal_date": "2026-07-13",
     "entry_price": 3.35,
@@ -182,6 +164,42 @@
     "tp_pct": 20.0,
     "sl_pct": 10.0,
     "check_date": "2026-08-05"
+  },
+  {
+    "ticker": "PATH",
+    "signal_date": "2026-07-23",
+    "entry_price": 10.7,
+    "source": "WSB",
+    "tp_pct": 20.0,
+    "sl_pct": 10.0,
+    "check_date": "2026-08-06"
+  },
+  {
+    "ticker": "ACI",
+    "signal_date": "2026-07-23",
+    "entry_price": 11.3091,
+    "source": "WSB",
+    "tp_pct": 20.0,
+    "sl_pct": 10.0,
+    "check_date": "2026-08-06"
+  },
+  {
+    "ticker": "MARA",
+    "signal_date": "2026-07-10",
+    "entry_price": 13.22,
+    "source": "WSB",
+    "tp_pct": 20.0,
+    "sl_pct": 10.0,
+    "check_date": "2026-07-24"
+  },
+  {
+    "ticker": "MRNA",
+    "signal_date": "2026-07-10",
+    "entry_price": 67.8,
+    "source": "WSB",
+    "tp_pct": 20.0,
+    "sl_pct": 10.0,
+    "check_date": "2026-07-24"
   },
   {
     "ticker": "WULF",
@@ -1110,23 +1128,5 @@
     "tp_pct": 20.0,
     "sl_pct": 10.0,
     "check_date": "2026-05-22"
-  },
-  {
-    "ticker": "PATH",
-    "signal_date": "2026-07-23",
-    "entry_price": 10.7,
-    "source": "WSB",
-    "tp_pct": 20.0,
-    "sl_pct": 10.0,
-    "check_date": "2026-08-06"
-  },
-  {
-    "ticker": "ACI",
-    "signal_date": "2026-07-23",
-    "entry_price": 11.3091,
-    "source": "WSB",
-    "tp_pct": 20.0,
-    "sl_pct": 10.0,
-    "check_date": "2026-08-06"
   }
 ]
