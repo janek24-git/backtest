@@ -1220,5 +1220,14 @@
     "tp_pct": 20.0,
     "sl_pct": 10.0,
     "check_date": "2026-08-13"
+  },
+  {
+    "ticker": "CORT",
+    "signal_date": "2026-07-30",
+    "entry_price": 119.7373,
+    "source": "WSB",
+    "tp_pct": 20.0,
+    "sl_pct": 10.0,
+    "check_date": "2026-08-13"
   }
 ]
