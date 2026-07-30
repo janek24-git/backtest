@@ -1,23 +1,5 @@
 [
   {
-    "ticker": "IOVA",
-    "signal_date": "2026-07-16",
-    "entry_price": 4.74,
-    "source": "WSB",
-    "tp_pct": 20.0,
-    "sl_pct": 10.0,
-    "check_date": "2026-07-30"
-  },
-  {
-    "ticker": "ASTS",
-    "signal_date": "2026-07-16",
-    "entry_price": 54.87,
-    "source": "WSB",
-    "tp_pct": 20.0,
-    "sl_pct": 10.0,
-    "check_date": "2026-07-30"
-  },
-  {
     "ticker": "CDNA",
     "signal_date": "2026-07-17",
     "entry_price": 40.34,
@@ -182,6 +164,42 @@
     "tp_pct": 20.0,
     "sl_pct": 10.0,
     "check_date": "2026-08-11"
+  },
+  {
+    "ticker": "LCID",
+    "signal_date": "2026-07-29",
+    "entry_price": 7.9,
+    "source": "WSB",
+    "tp_pct": 20.0,
+    "sl_pct": 10.0,
+    "check_date": "2026-08-12"
+  },
+  {
+    "ticker": "CAKE",
+    "signal_date": "2026-07-29",
+    "entry_price": 100.21,
+    "source": "WSB",
+    "tp_pct": 20.0,
+    "sl_pct": 10.0,
+    "check_date": "2026-08-12"
+  },
+  {
+    "ticker": "IOVA",
+    "signal_date": "2026-07-16",
+    "entry_price": 4.74,
+    "source": "WSB",
+    "tp_pct": 20.0,
+    "sl_pct": 10.0,
+    "check_date": "2026-07-30"
+  },
+  {
+    "ticker": "ASTS",
+    "signal_date": "2026-07-16",
+    "entry_price": 54.87,
+    "source": "WSB",
+    "tp_pct": 20.0,
+    "sl_pct": 10.0,
+    "check_date": "2026-07-30"
   },
   {
     "ticker": "CLSK",
@@ -1193,23 +1211,5 @@
     "tp_pct": 20.0,
     "sl_pct": 10.0,
     "check_date": "2026-05-22"
-  },
-  {
-    "ticker": "LCID",
-    "signal_date": "2026-07-29",
-    "entry_price": 7.9,
-    "source": "WSB",
-    "tp_pct": 20.0,
-    "sl_pct": 10.0,
-    "check_date": "2026-08-12"
-  },
-  {
-    "ticker": "CAKE",
-    "signal_date": "2026-07-29",
-    "entry_price": 100.21,
-    "source": "WSB",
-    "tp_pct": 20.0,
-    "sl_pct": 10.0,
-    "check_date": "2026-08-12"
   }
 ]
