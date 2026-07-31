@@ -1304,5 +1304,14 @@
     "tp_pct": 20.0,
     "sl_pct": 10.0,
     "check_date": "2026-08-14"
+  },
+  {
+    "ticker": "WU",
+    "signal_date": "2026-07-31",
+    "entry_price": 6.515,
+    "source": "WSB",
+    "tp_pct": 20.0,
+    "sl_pct": 10.0,
+    "check_date": "2026-08-14"
   }
 ]
