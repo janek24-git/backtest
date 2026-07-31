@@ -1313,5 +1313,16 @@
     "tp_pct": 20.0,
     "sl_pct": 10.0,
     "check_date": "2026-08-14"
+  },
+  {
+    "ticker": "AMZN",
+    "signal_date": "2026-07-31",
+    "entry_price": 271.58,
+    "source": "EMA200",
+    "tp_pct": 10.0,
+    "sl_pct": 5.0,
+    "check_date": "2026-08-14",
+    "rel_vol": 3.03,
+    "pct_above_ema": 15.01
   }
 ]
