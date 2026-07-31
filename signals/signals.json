@@ -1,23 +1,5 @@
 [
   {
-    "ticker": "CDNA",
-    "signal_date": "2026-07-17",
-    "entry_price": 40.34,
-    "source": "WSB",
-    "tp_pct": 20.0,
-    "sl_pct": 10.0,
-    "check_date": "2026-07-31"
-  },
-  {
-    "ticker": "ORKA",
-    "signal_date": "2026-07-17",
-    "entry_price": 90.34,
-    "source": "WSB",
-    "tp_pct": 20.0,
-    "sl_pct": 10.0,
-    "check_date": "2026-07-31"
-  },
-  {
     "ticker": "SLS",
     "signal_date": "2026-07-20",
     "entry_price": 13.19,
@@ -182,6 +164,108 @@
     "tp_pct": 20.0,
     "sl_pct": 10.0,
     "check_date": "2026-08-12"
+  },
+  {
+    "ticker": "LMND",
+    "signal_date": "2026-07-30",
+    "entry_price": 47.38,
+    "source": "WSB",
+    "tp_pct": 20.0,
+    "sl_pct": 10.0,
+    "check_date": "2026-08-13"
+  },
+  {
+    "ticker": "CORT",
+    "signal_date": "2026-07-30",
+    "entry_price": 119.7373,
+    "source": "WSB",
+    "tp_pct": 20.0,
+    "sl_pct": 10.0,
+    "check_date": "2026-08-13"
+  },
+  {
+    "ticker": "MSFT",
+    "signal_date": "2026-07-30",
+    "entry_price": 451.1,
+    "source": "EMA200",
+    "tp_pct": 10.0,
+    "sl_pct": 5.0,
+    "check_date": "2026-08-13",
+    "rel_vol": 3.4,
+    "pct_above_ema": 7.68
+  },
+  {
+    "ticker": "NVDA",
+    "signal_date": "2026-07-30",
+    "entry_price": 195.04,
+    "source": "EMA200",
+    "tp_pct": 10.0,
+    "sl_pct": 5.0,
+    "check_date": "2026-08-13",
+    "rel_vol": 0.95,
+    "pct_above_ema": 2.34
+  },
+  {
+    "ticker": "MUU",
+    "signal_date": "2026-07-30",
+    "entry_price": 26.97,
+    "source": "EMA200",
+    "tp_pct": 10.0,
+    "sl_pct": 5.0,
+    "check_date": "2026-08-13",
+    "rel_vol": 1.65,
+    "pct_above_ema": 34.31
+  },
+  {
+    "ticker": "BE",
+    "signal_date": "2026-07-30",
+    "entry_price": 207.12,
+    "source": "EMA200",
+    "tp_pct": 10.0,
+    "sl_pct": 5.0,
+    "check_date": "2026-08-13",
+    "rel_vol": 2.19,
+    "pct_above_ema": 11.29
+  },
+  {
+    "ticker": "NBIS",
+    "signal_date": "2026-07-30",
+    "entry_price": 188.43,
+    "source": "EMA200",
+    "tp_pct": 10.0,
+    "sl_pct": 5.0,
+    "check_date": "2026-08-13",
+    "rel_vol": 1.95,
+    "pct_above_ema": 24.07
+  },
+  {
+    "ticker": "CORZ",
+    "signal_date": "2026-07-30",
+    "entry_price": 21.81,
+    "source": "EMA200",
+    "tp_pct": 10.0,
+    "sl_pct": 5.0,
+    "check_date": "2026-08-13",
+    "rel_vol": 1.82,
+    "pct_above_ema": 8.46
+  },
+  {
+    "ticker": "CDNA",
+    "signal_date": "2026-07-17",
+    "entry_price": 40.34,
+    "source": "WSB",
+    "tp_pct": 20.0,
+    "sl_pct": 10.0,
+    "check_date": "2026-07-31"
+  },
+  {
+    "ticker": "ORKA",
+    "signal_date": "2026-07-17",
+    "entry_price": 90.34,
+    "source": "WSB",
+    "tp_pct": 20.0,
+    "sl_pct": 10.0,
+    "check_date": "2026-07-31"
   },
   {
     "ticker": "IOVA",
@@ -1211,89 +1295,5 @@
     "tp_pct": 20.0,
     "sl_pct": 10.0,
     "check_date": "2026-05-22"
-  },
-  {
-    "ticker": "LMND",
-    "signal_date": "2026-07-30",
-    "entry_price": 47.38,
-    "source": "WSB",
-    "tp_pct": 20.0,
-    "sl_pct": 10.0,
-    "check_date": "2026-08-13"
-  },
-  {
-    "ticker": "CORT",
-    "signal_date": "2026-07-30",
-    "entry_price": 119.7373,
-    "source": "WSB",
-    "tp_pct": 20.0,
-    "sl_pct": 10.0,
-    "check_date": "2026-08-13"
-  },
-  {
-    "ticker": "MSFT",
-    "signal_date": "2026-07-30",
-    "entry_price": 451.1,
-    "source": "EMA200",
-    "tp_pct": 10.0,
-    "sl_pct": 5.0,
-    "check_date": "2026-08-13",
-    "rel_vol": 3.4,
-    "pct_above_ema": 7.68
-  },
-  {
-    "ticker": "NVDA",
-    "signal_date": "2026-07-30",
-    "entry_price": 195.04,
-    "source": "EMA200",
-    "tp_pct": 10.0,
-    "sl_pct": 5.0,
-    "check_date": "2026-08-13",
-    "rel_vol": 0.95,
-    "pct_above_ema": 2.34
-  },
-  {
-    "ticker": "MUU",
-    "signal_date": "2026-07-30",
-    "entry_price": 26.97,
-    "source": "EMA200",
-    "tp_pct": 10.0,
-    "sl_pct": 5.0,
-    "check_date": "2026-08-13",
-    "rel_vol": 1.65,
-    "pct_above_ema": 34.31
-  },
-  {
-    "ticker": "BE",
-    "signal_date": "2026-07-30",
-    "entry_price": 207.12,
-    "source": "EMA200",
-    "tp_pct": 10.0,
-    "sl_pct": 5.0,
-    "check_date": "2026-08-13",
-    "rel_vol": 2.19,
-    "pct_above_ema": 11.29
-  },
-  {
-    "ticker": "NBIS",
-    "signal_date": "2026-07-30",
-    "entry_price": 188.43,
-    "source": "EMA200",
-    "tp_pct": 10.0,
-    "sl_pct": 5.0,
-    "check_date": "2026-08-13",
-    "rel_vol": 1.95,
-    "pct_above_ema": 24.07
-  },
-  {
-    "ticker": "CORZ",
-    "signal_date": "2026-07-30",
-    "entry_price": 21.81,
-    "source": "EMA200",
-    "tp_pct": 10.0,
-    "sl_pct": 5.0,
-    "check_date": "2026-08-13",
-    "rel_vol": 1.82,
-    "pct_above_ema": 8.46
   }
 ]
