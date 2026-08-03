@@ -1,23 +1,5 @@
 [
   {
-    "ticker": "SLS",
-    "signal_date": "2026-07-20",
-    "entry_price": 13.19,
-    "source": "WSB",
-    "tp_pct": 20.0,
-    "sl_pct": 10.0,
-    "check_date": "2026-08-03"
-  },
-  {
-    "ticker": "ACHR",
-    "signal_date": "2026-07-20",
-    "entry_price": 5.23,
-    "source": "WSB",
-    "tp_pct": 20.0,
-    "sl_pct": 10.0,
-    "check_date": "2026-08-03"
-  },
-  {
     "ticker": "ACHR",
     "signal_date": "2026-07-21",
     "entry_price": 5.31,
@@ -248,6 +230,53 @@
     "check_date": "2026-08-13",
     "rel_vol": 1.82,
     "pct_above_ema": 8.46
+  },
+  {
+    "ticker": "REPL",
+    "signal_date": "2026-07-31",
+    "entry_price": 5.41,
+    "source": "WSB",
+    "tp_pct": 20.0,
+    "sl_pct": 10.0,
+    "check_date": "2026-08-14"
+  },
+  {
+    "ticker": "WU",
+    "signal_date": "2026-07-31",
+    "entry_price": 6.515,
+    "source": "WSB",
+    "tp_pct": 20.0,
+    "sl_pct": 10.0,
+    "check_date": "2026-08-14"
+  },
+  {
+    "ticker": "AMZN",
+    "signal_date": "2026-07-31",
+    "entry_price": 271.58,
+    "source": "EMA200",
+    "tp_pct": 10.0,
+    "sl_pct": 5.0,
+    "check_date": "2026-08-14",
+    "rel_vol": 3.03,
+    "pct_above_ema": 15.01
+  },
+  {
+    "ticker": "SLS",
+    "signal_date": "2026-07-20",
+    "entry_price": 13.19,
+    "source": "WSB",
+    "tp_pct": 20.0,
+    "sl_pct": 10.0,
+    "check_date": "2026-08-03"
+  },
+  {
+    "ticker": "ACHR",
+    "signal_date": "2026-07-20",
+    "entry_price": 5.23,
+    "source": "WSB",
+    "tp_pct": 20.0,
+    "sl_pct": 10.0,
+    "check_date": "2026-08-03"
   },
   {
     "ticker": "CDNA",
@@ -1295,34 +1324,5 @@
     "tp_pct": 20.0,
     "sl_pct": 10.0,
     "check_date": "2026-05-22"
-  },
-  {
-    "ticker": "REPL",
-    "signal_date": "2026-07-31",
-    "entry_price": 5.41,
-    "source": "WSB",
-    "tp_pct": 20.0,
-    "sl_pct": 10.0,
-    "check_date": "2026-08-14"
-  },
-  {
-    "ticker": "WU",
-    "signal_date": "2026-07-31",
-    "entry_price": 6.515,
-    "source": "WSB",
-    "tp_pct": 20.0,
-    "sl_pct": 10.0,
-    "check_date": "2026-08-14"
-  },
-  {
-    "ticker": "AMZN",
-    "signal_date": "2026-07-31",
-    "entry_price": 271.58,
-    "source": "EMA200",
-    "tp_pct": 10.0,
-    "sl_pct": 5.0,
-    "check_date": "2026-08-14",
-    "rel_vol": 3.03,
-    "pct_above_ema": 15.01
   }
 ]
