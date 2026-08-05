@@ -1,23 +1,5 @@
 [
   {
-    "ticker": "ONDS",
-    "signal_date": "2026-07-22",
-    "entry_price": 7.66,
-    "source": "WSB",
-    "tp_pct": 20.0,
-    "sl_pct": 10.0,
-    "check_date": "2026-08-05"
-  },
-  {
-    "ticker": "PATH",
-    "signal_date": "2026-07-22",
-    "entry_price": 10.595,
-    "source": "WSB",
-    "tp_pct": 20.0,
-    "sl_pct": 10.0,
-    "check_date": "2026-08-05"
-  },
-  {
     "ticker": "PATH",
     "signal_date": "2026-07-23",
     "entry_price": 10.7,
@@ -248,6 +230,64 @@
     "tp_pct": 20.0,
     "sl_pct": 10.0,
     "check_date": "2026-08-17"
+  },
+  {
+    "ticker": "GME",
+    "signal_date": "2026-08-04",
+    "entry_price": 19.06,
+    "source": "WSB",
+    "tp_pct": 20.0,
+    "sl_pct": 10.0,
+    "check_date": "2026-08-18"
+  },
+  {
+    "ticker": "BRKR",
+    "signal_date": "2026-08-04",
+    "entry_price": 52.06,
+    "source": "WSB",
+    "tp_pct": 20.0,
+    "sl_pct": 10.0,
+    "check_date": "2026-08-18"
+  },
+  {
+    "ticker": "PLTR",
+    "signal_date": "2026-08-04",
+    "entry_price": 162.66,
+    "source": "EMA200",
+    "tp_pct": 10.0,
+    "sl_pct": 5.0,
+    "check_date": "2026-08-18",
+    "rel_vol": 4.77,
+    "pct_above_ema": 15.82
+  },
+  {
+    "ticker": "OWL",
+    "signal_date": "2026-08-04",
+    "entry_price": 11.57,
+    "source": "EMA200",
+    "tp_pct": 10.0,
+    "sl_pct": 5.0,
+    "check_date": "2026-08-18",
+    "rel_vol": 1.65,
+    "pct_above_ema": 0.17
+  },
+  {
+    "ticker": "ONDS",
+    "signal_date": "2026-07-22",
+    "entry_price": 7.66,
+    "source": "WSB",
+    "tp_pct": 20.0,
+    "sl_pct": 10.0,
+    "check_date": "2026-08-05"
+  },
+  {
+    "ticker": "PATH",
+    "signal_date": "2026-07-22",
+    "entry_price": 10.595,
+    "source": "WSB",
+    "tp_pct": 20.0,
+    "sl_pct": 10.0,
+    "check_date": "2026-08-05"
   },
   {
     "ticker": "ACHR",
@@ -1342,45 +1382,5 @@
     "tp_pct": 20.0,
     "sl_pct": 10.0,
     "check_date": "2026-05-22"
-  },
-  {
-    "ticker": "GME",
-    "signal_date": "2026-08-04",
-    "entry_price": 19.06,
-    "source": "WSB",
-    "tp_pct": 20.0,
-    "sl_pct": 10.0,
-    "check_date": "2026-08-18"
-  },
-  {
-    "ticker": "BRKR",
-    "signal_date": "2026-08-04",
-    "entry_price": 52.06,
-    "source": "WSB",
-    "tp_pct": 20.0,
-    "sl_pct": 10.0,
-    "check_date": "2026-08-18"
-  },
-  {
-    "ticker": "PLTR",
-    "signal_date": "2026-08-04",
-    "entry_price": 162.66,
-    "source": "EMA200",
-    "tp_pct": 10.0,
-    "sl_pct": 5.0,
-    "check_date": "2026-08-18",
-    "rel_vol": 4.77,
-    "pct_above_ema": 15.82
-  },
-  {
-    "ticker": "OWL",
-    "signal_date": "2026-08-04",
-    "entry_price": 11.57,
-    "source": "EMA200",
-    "tp_pct": 10.0,
-    "sl_pct": 5.0,
-    "check_date": "2026-08-18",
-    "rel_vol": 1.65,
-    "pct_above_ema": 0.17
   }
 ]
