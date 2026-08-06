@@ -1,23 +1,5 @@
 [
   {
-    "ticker": "PATH",
-    "signal_date": "2026-07-23",
-    "entry_price": 10.7,
-    "source": "WSB",
-    "tp_pct": 20.0,
-    "sl_pct": 10.0,
-    "check_date": "2026-08-06"
-  },
-  {
-    "ticker": "ACI",
-    "signal_date": "2026-07-23",
-    "entry_price": 11.3091,
-    "source": "WSB",
-    "tp_pct": 20.0,
-    "sl_pct": 10.0,
-    "check_date": "2026-08-06"
-  },
-  {
     "ticker": "NVCR",
     "signal_date": "2026-07-24",
     "entry_price": 19.99,
@@ -270,6 +252,42 @@
     "check_date": "2026-08-18",
     "rel_vol": 1.65,
     "pct_above_ema": 0.17
+  },
+  {
+    "ticker": "CIFR",
+    "signal_date": "2026-08-05",
+    "entry_price": 20.38,
+    "source": "WSB",
+    "tp_pct": 20.0,
+    "sl_pct": 10.0,
+    "check_date": "2026-08-19"
+  },
+  {
+    "ticker": "TDC",
+    "signal_date": "2026-08-05",
+    "entry_price": 27.21,
+    "source": "WSB",
+    "tp_pct": 20.0,
+    "sl_pct": 10.0,
+    "check_date": "2026-08-19"
+  },
+  {
+    "ticker": "PATH",
+    "signal_date": "2026-07-23",
+    "entry_price": 10.7,
+    "source": "WSB",
+    "tp_pct": 20.0,
+    "sl_pct": 10.0,
+    "check_date": "2026-08-06"
+  },
+  {
+    "ticker": "ACI",
+    "signal_date": "2026-07-23",
+    "entry_price": 11.3091,
+    "source": "WSB",
+    "tp_pct": 20.0,
+    "sl_pct": 10.0,
+    "check_date": "2026-08-06"
   },
   {
     "ticker": "ONDS",
@@ -1382,23 +1400,5 @@
     "tp_pct": 20.0,
     "sl_pct": 10.0,
     "check_date": "2026-05-22"
-  },
-  {
-    "ticker": "CIFR",
-    "signal_date": "2026-08-05",
-    "entry_price": 20.38,
-    "source": "WSB",
-    "tp_pct": 20.0,
-    "sl_pct": 10.0,
-    "check_date": "2026-08-19"
-  },
-  {
-    "ticker": "TDC",
-    "signal_date": "2026-08-05",
-    "entry_price": 27.21,
-    "source": "WSB",
-    "tp_pct": 20.0,
-    "sl_pct": 10.0,
-    "check_date": "2026-08-19"
   }
 ]
