@@ -1427,5 +1427,16 @@
     "tp_pct": 20.0,
     "sl_pct": 10.0,
     "check_date": "2026-08-21"
+  },
+  {
+    "ticker": "CDE",
+    "signal_date": "2026-08-07",
+    "entry_price": 17.39,
+    "source": "EMA200",
+    "tp_pct": 10.0,
+    "sl_pct": 5.0,
+    "check_date": "2026-08-21",
+    "rel_vol": 1.58,
+    "pct_above_ema": 2.74
   }
 ]
