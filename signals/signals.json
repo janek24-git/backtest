@@ -1,34 +1,5 @@
 [
   {
-    "ticker": "NVCR",
-    "signal_date": "2026-07-24",
-    "entry_price": 19.99,
-    "source": "WSB",
-    "tp_pct": 20.0,
-    "sl_pct": 10.0,
-    "check_date": "2026-08-07"
-  },
-  {
-    "ticker": "FRMI",
-    "signal_date": "2026-07-24",
-    "entry_price": 7.47,
-    "source": "WSB",
-    "tp_pct": 20.0,
-    "sl_pct": 10.0,
-    "check_date": "2026-08-07"
-  },
-  {
-    "ticker": "GOOGL",
-    "signal_date": "2026-07-24",
-    "entry_price": 319.74,
-    "source": "EMA200",
-    "tp_pct": 10.0,
-    "sl_pct": 5.0,
-    "check_date": "2026-08-07",
-    "rel_vol": 0.91,
-    "pct_above_ema": 0.34
-  },
-  {
     "ticker": "NBIS",
     "signal_date": "2026-07-27",
     "entry_price": 187.77,
@@ -270,6 +241,44 @@
     "tp_pct": 20.0,
     "sl_pct": 10.0,
     "check_date": "2026-08-19"
+  },
+  {
+    "ticker": "SOUN",
+    "signal_date": "2026-08-06",
+    "entry_price": 6.43,
+    "source": "WSB",
+    "tp_pct": 20.0,
+    "sl_pct": 10.0,
+    "check_date": "2026-08-20"
+  },
+  {
+    "ticker": "NVCR",
+    "signal_date": "2026-07-24",
+    "entry_price": 19.99,
+    "source": "WSB",
+    "tp_pct": 20.0,
+    "sl_pct": 10.0,
+    "check_date": "2026-08-07"
+  },
+  {
+    "ticker": "FRMI",
+    "signal_date": "2026-07-24",
+    "entry_price": 7.47,
+    "source": "WSB",
+    "tp_pct": 20.0,
+    "sl_pct": 10.0,
+    "check_date": "2026-08-07"
+  },
+  {
+    "ticker": "GOOGL",
+    "signal_date": "2026-07-24",
+    "entry_price": 319.74,
+    "source": "EMA200",
+    "tp_pct": 10.0,
+    "sl_pct": 5.0,
+    "check_date": "2026-08-07",
+    "rel_vol": 0.91,
+    "pct_above_ema": 0.34
   },
   {
     "ticker": "PATH",
@@ -1400,14 +1409,5 @@
     "tp_pct": 20.0,
     "sl_pct": 10.0,
     "check_date": "2026-05-22"
-  },
-  {
-    "ticker": "SOUN",
-    "signal_date": "2026-08-06",
-    "entry_price": 6.43,
-    "source": "WSB",
-    "tp_pct": 20.0,
-    "sl_pct": 10.0,
-    "check_date": "2026-08-20"
   }
 ]
