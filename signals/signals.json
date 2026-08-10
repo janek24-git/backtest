@@ -1447,5 +1447,14 @@
     "tp_pct": 20.0,
     "sl_pct": 10.0,
     "check_date": "2026-08-24"
+  },
+  {
+    "ticker": "BTDR",
+    "signal_date": "2026-08-10",
+    "entry_price": 9.14,
+    "source": "WSB",
+    "tp_pct": 20.0,
+    "sl_pct": 10.0,
+    "check_date": "2026-08-24"
   }
 ]
