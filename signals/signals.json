@@ -1,23 +1,5 @@
 [
   {
-    "ticker": "NBIS",
-    "signal_date": "2026-07-27",
-    "entry_price": 187.77,
-    "source": "WSB",
-    "tp_pct": 20.0,
-    "sl_pct": 10.0,
-    "check_date": "2026-08-10"
-  },
-  {
-    "ticker": "CAPR",
-    "signal_date": "2026-07-27",
-    "entry_price": 7.4899,
-    "source": "WSB",
-    "tp_pct": 20.0,
-    "sl_pct": 10.0,
-    "check_date": "2026-08-10"
-  },
-  {
     "ticker": "QBTS",
     "signal_date": "2026-07-28",
     "entry_price": 16.21,
@@ -250,6 +232,53 @@
     "tp_pct": 20.0,
     "sl_pct": 10.0,
     "check_date": "2026-08-20"
+  },
+  {
+    "ticker": "IOVA",
+    "signal_date": "2026-08-07",
+    "entry_price": 6.21,
+    "source": "WSB",
+    "tp_pct": 20.0,
+    "sl_pct": 10.0,
+    "check_date": "2026-08-21"
+  },
+  {
+    "ticker": "DOCS",
+    "signal_date": "2026-08-07",
+    "entry_price": 28.266,
+    "source": "WSB",
+    "tp_pct": 20.0,
+    "sl_pct": 10.0,
+    "check_date": "2026-08-21"
+  },
+  {
+    "ticker": "CDE",
+    "signal_date": "2026-08-07",
+    "entry_price": 17.39,
+    "source": "EMA200",
+    "tp_pct": 10.0,
+    "sl_pct": 5.0,
+    "check_date": "2026-08-21",
+    "rel_vol": 1.58,
+    "pct_above_ema": 2.74
+  },
+  {
+    "ticker": "NBIS",
+    "signal_date": "2026-07-27",
+    "entry_price": 187.77,
+    "source": "WSB",
+    "tp_pct": 20.0,
+    "sl_pct": 10.0,
+    "check_date": "2026-08-10"
+  },
+  {
+    "ticker": "CAPR",
+    "signal_date": "2026-07-27",
+    "entry_price": 7.4899,
+    "source": "WSB",
+    "tp_pct": 20.0,
+    "sl_pct": 10.0,
+    "check_date": "2026-08-10"
   },
   {
     "ticker": "NVCR",
@@ -1409,34 +1438,5 @@
     "tp_pct": 20.0,
     "sl_pct": 10.0,
     "check_date": "2026-05-22"
-  },
-  {
-    "ticker": "IOVA",
-    "signal_date": "2026-08-07",
-    "entry_price": 6.21,
-    "source": "WSB",
-    "tp_pct": 20.0,
-    "sl_pct": 10.0,
-    "check_date": "2026-08-21"
-  },
-  {
-    "ticker": "DOCS",
-    "signal_date": "2026-08-07",
-    "entry_price": 28.266,
-    "source": "WSB",
-    "tp_pct": 20.0,
-    "sl_pct": 10.0,
-    "check_date": "2026-08-21"
-  },
-  {
-    "ticker": "CDE",
-    "signal_date": "2026-08-07",
-    "entry_price": 17.39,
-    "source": "EMA200",
-    "tp_pct": 10.0,
-    "sl_pct": 5.0,
-    "check_date": "2026-08-21",
-    "rel_vol": 1.58,
-    "pct_above_ema": 2.74
   }
 ]
