@@ -1465,5 +1465,14 @@
     "tp_pct": 20.0,
     "sl_pct": 10.0,
     "check_date": "2026-08-25"
+  },
+  {
+    "ticker": "LIF",
+    "signal_date": "2026-08-11",
+    "entry_price": 47.64,
+    "source": "WSB",
+    "tp_pct": 20.0,
+    "sl_pct": 10.0,
+    "check_date": "2026-08-25"
   }
 ]
