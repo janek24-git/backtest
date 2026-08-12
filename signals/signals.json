@@ -1492,5 +1492,27 @@
     "tp_pct": 20.0,
     "sl_pct": 10.0,
     "check_date": "2026-08-26"
+  },
+  {
+    "ticker": "SMCI",
+    "signal_date": "2026-08-12",
+    "entry_price": 37.61,
+    "source": "EMA200",
+    "tp_pct": 10.0,
+    "sl_pct": 5.0,
+    "check_date": "2026-08-26",
+    "rel_vol": 3.35,
+    "pct_above_ema": 15.19
+  },
+  {
+    "ticker": "CRWV",
+    "signal_date": "2026-08-12",
+    "entry_price": 107.73,
+    "source": "EMA200",
+    "tp_pct": 10.0,
+    "sl_pct": 5.0,
+    "check_date": "2026-08-26",
+    "rel_vol": 3.12,
+    "pct_above_ema": 11.72
   }
 ]
