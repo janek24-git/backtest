@@ -1,23 +1,5 @@
 [
   {
-    "ticker": "LCID",
-    "signal_date": "2026-07-29",
-    "entry_price": 7.9,
-    "source": "WSB",
-    "tp_pct": 20.0,
-    "sl_pct": 10.0,
-    "check_date": "2026-08-12"
-  },
-  {
-    "ticker": "CAKE",
-    "signal_date": "2026-07-29",
-    "entry_price": 100.21,
-    "source": "WSB",
-    "tp_pct": 20.0,
-    "sl_pct": 10.0,
-    "check_date": "2026-08-12"
-  },
-  {
     "ticker": "LMND",
     "signal_date": "2026-07-30",
     "entry_price": 47.38,
@@ -261,6 +243,42 @@
     "tp_pct": 20.0,
     "sl_pct": 10.0,
     "check_date": "2026-08-24"
+  },
+  {
+    "ticker": "SION",
+    "signal_date": "2026-08-11",
+    "entry_price": 4.5,
+    "source": "WSB",
+    "tp_pct": 20.0,
+    "sl_pct": 10.0,
+    "check_date": "2026-08-25"
+  },
+  {
+    "ticker": "LIF",
+    "signal_date": "2026-08-11",
+    "entry_price": 47.64,
+    "source": "WSB",
+    "tp_pct": 20.0,
+    "sl_pct": 10.0,
+    "check_date": "2026-08-25"
+  },
+  {
+    "ticker": "LCID",
+    "signal_date": "2026-07-29",
+    "entry_price": 7.9,
+    "source": "WSB",
+    "tp_pct": 20.0,
+    "sl_pct": 10.0,
+    "check_date": "2026-08-12"
+  },
+  {
+    "ticker": "CAKE",
+    "signal_date": "2026-07-29",
+    "entry_price": 100.21,
+    "source": "WSB",
+    "tp_pct": 20.0,
+    "sl_pct": 10.0,
+    "check_date": "2026-08-12"
   },
   {
     "ticker": "QBTS",
@@ -1456,23 +1474,5 @@
     "tp_pct": 20.0,
     "sl_pct": 10.0,
     "check_date": "2026-05-22"
-  },
-  {
-    "ticker": "SION",
-    "signal_date": "2026-08-11",
-    "entry_price": 4.5,
-    "source": "WSB",
-    "tp_pct": 20.0,
-    "sl_pct": 10.0,
-    "check_date": "2026-08-25"
-  },
-  {
-    "ticker": "LIF",
-    "signal_date": "2026-08-11",
-    "entry_price": 47.64,
-    "source": "WSB",
-    "tp_pct": 20.0,
-    "sl_pct": 10.0,
-    "check_date": "2026-08-25"
   }
 ]
