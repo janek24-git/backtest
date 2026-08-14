@@ -1541,5 +1541,14 @@
     "tp_pct": 20.0,
     "sl_pct": 10.0,
     "check_date": "2026-08-28"
+  },
+  {
+    "ticker": "DUOL",
+    "signal_date": "2026-08-14",
+    "entry_price": 134.44,
+    "source": "WSB",
+    "tp_pct": 20.0,
+    "sl_pct": 10.0,
+    "check_date": "2026-08-28"
   }
 ]
