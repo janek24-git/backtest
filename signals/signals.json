@@ -1570,5 +1570,14 @@
     "tp_pct": 20.0,
     "sl_pct": 10.0,
     "check_date": "2026-08-31"
+  },
+  {
+    "ticker": "IEP",
+    "signal_date": "2026-08-17",
+    "entry_price": 6.975,
+    "source": "WSB",
+    "tp_pct": 20.0,
+    "sl_pct": 10.0,
+    "check_date": "2026-08-31"
   }
 ]
