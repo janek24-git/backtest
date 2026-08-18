@@ -1,45 +1,5 @@
 [
   {
-    "ticker": "GME",
-    "signal_date": "2026-08-04",
-    "entry_price": 19.06,
-    "source": "WSB",
-    "tp_pct": 20.0,
-    "sl_pct": 10.0,
-    "check_date": "2026-08-18"
-  },
-  {
-    "ticker": "BRKR",
-    "signal_date": "2026-08-04",
-    "entry_price": 52.06,
-    "source": "WSB",
-    "tp_pct": 20.0,
-    "sl_pct": 10.0,
-    "check_date": "2026-08-18"
-  },
-  {
-    "ticker": "PLTR",
-    "signal_date": "2026-08-04",
-    "entry_price": 162.66,
-    "source": "EMA200",
-    "tp_pct": 10.0,
-    "sl_pct": 5.0,
-    "check_date": "2026-08-18",
-    "rel_vol": 4.77,
-    "pct_above_ema": 15.82
-  },
-  {
-    "ticker": "OWL",
-    "signal_date": "2026-08-04",
-    "entry_price": 11.57,
-    "source": "EMA200",
-    "tp_pct": 10.0,
-    "sl_pct": 5.0,
-    "check_date": "2026-08-18",
-    "rel_vol": 1.65,
-    "pct_above_ema": 0.17
-  },
-  {
     "ticker": "CIFR",
     "signal_date": "2026-08-05",
     "entry_price": 20.38,
@@ -217,6 +177,64 @@
     "check_date": "2026-08-28",
     "rel_vol": 2.04,
     "pct_above_ema": 7.41
+  },
+  {
+    "ticker": "CIFR",
+    "signal_date": "2026-08-17",
+    "entry_price": 17.855,
+    "source": "WSB",
+    "tp_pct": 20.0,
+    "sl_pct": 10.0,
+    "check_date": "2026-08-31"
+  },
+  {
+    "ticker": "IEP",
+    "signal_date": "2026-08-17",
+    "entry_price": 6.975,
+    "source": "WSB",
+    "tp_pct": 20.0,
+    "sl_pct": 10.0,
+    "check_date": "2026-08-31"
+  },
+  {
+    "ticker": "GME",
+    "signal_date": "2026-08-04",
+    "entry_price": 19.06,
+    "source": "WSB",
+    "tp_pct": 20.0,
+    "sl_pct": 10.0,
+    "check_date": "2026-08-18"
+  },
+  {
+    "ticker": "BRKR",
+    "signal_date": "2026-08-04",
+    "entry_price": 52.06,
+    "source": "WSB",
+    "tp_pct": 20.0,
+    "sl_pct": 10.0,
+    "check_date": "2026-08-18"
+  },
+  {
+    "ticker": "PLTR",
+    "signal_date": "2026-08-04",
+    "entry_price": 162.66,
+    "source": "EMA200",
+    "tp_pct": 10.0,
+    "sl_pct": 5.0,
+    "check_date": "2026-08-18",
+    "rel_vol": 4.77,
+    "pct_above_ema": 15.82
+  },
+  {
+    "ticker": "OWL",
+    "signal_date": "2026-08-04",
+    "entry_price": 11.57,
+    "source": "EMA200",
+    "tp_pct": 10.0,
+    "sl_pct": 5.0,
+    "check_date": "2026-08-18",
+    "rel_vol": 1.65,
+    "pct_above_ema": 0.17
   },
   {
     "ticker": "GME",
@@ -1561,23 +1579,5 @@
     "tp_pct": 20.0,
     "sl_pct": 10.0,
     "check_date": "2026-05-22"
-  },
-  {
-    "ticker": "CIFR",
-    "signal_date": "2026-08-17",
-    "entry_price": 17.855,
-    "source": "WSB",
-    "tp_pct": 20.0,
-    "sl_pct": 10.0,
-    "check_date": "2026-08-31"
-  },
-  {
-    "ticker": "IEP",
-    "signal_date": "2026-08-17",
-    "entry_price": 6.975,
-    "source": "WSB",
-    "tp_pct": 20.0,
-    "sl_pct": 10.0,
-    "check_date": "2026-08-31"
   }
 ]
