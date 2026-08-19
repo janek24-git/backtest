@@ -1606,5 +1606,14 @@
     "tp_pct": 20.0,
     "sl_pct": 10.0,
     "check_date": "2026-09-02"
+  },
+  {
+    "ticker": "MRNA",
+    "signal_date": "2026-08-19",
+    "entry_price": 142.0445,
+    "source": "WSB",
+    "tp_pct": 20.0,
+    "sl_pct": 10.0,
+    "check_date": "2026-09-02"
   }
 ]
