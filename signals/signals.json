@@ -1,23 +1,5 @@
 [
   {
-    "ticker": "CIFR",
-    "signal_date": "2026-08-05",
-    "entry_price": 20.38,
-    "source": "WSB",
-    "tp_pct": 20.0,
-    "sl_pct": 10.0,
-    "check_date": "2026-08-19"
-  },
-  {
-    "ticker": "TDC",
-    "signal_date": "2026-08-05",
-    "entry_price": 27.21,
-    "source": "WSB",
-    "tp_pct": 20.0,
-    "sl_pct": 10.0,
-    "check_date": "2026-08-19"
-  },
-  {
     "ticker": "SOUN",
     "signal_date": "2026-08-06",
     "entry_price": 6.43,
@@ -195,6 +177,42 @@
     "tp_pct": 20.0,
     "sl_pct": 10.0,
     "check_date": "2026-08-31"
+  },
+  {
+    "ticker": "EYPT",
+    "signal_date": "2026-08-18",
+    "entry_price": 4.87,
+    "source": "WSB",
+    "tp_pct": 20.0,
+    "sl_pct": 10.0,
+    "check_date": "2026-09-01"
+  },
+  {
+    "ticker": "AUR",
+    "signal_date": "2026-08-18",
+    "entry_price": 6.0098,
+    "source": "WSB",
+    "tp_pct": 20.0,
+    "sl_pct": 10.0,
+    "check_date": "2026-09-01"
+  },
+  {
+    "ticker": "CIFR",
+    "signal_date": "2026-08-05",
+    "entry_price": 20.38,
+    "source": "WSB",
+    "tp_pct": 20.0,
+    "sl_pct": 10.0,
+    "check_date": "2026-08-19"
+  },
+  {
+    "ticker": "TDC",
+    "signal_date": "2026-08-05",
+    "entry_price": 27.21,
+    "source": "WSB",
+    "tp_pct": 20.0,
+    "sl_pct": 10.0,
+    "check_date": "2026-08-19"
   },
   {
     "ticker": "GME",
@@ -1579,23 +1597,5 @@
     "tp_pct": 20.0,
     "sl_pct": 10.0,
     "check_date": "2026-05-22"
-  },
-  {
-    "ticker": "EYPT",
-    "signal_date": "2026-08-18",
-    "entry_price": 4.87,
-    "source": "WSB",
-    "tp_pct": 20.0,
-    "sl_pct": 10.0,
-    "check_date": "2026-09-01"
-  },
-  {
-    "ticker": "AUR",
-    "signal_date": "2026-08-18",
-    "entry_price": 6.0098,
-    "source": "WSB",
-    "tp_pct": 20.0,
-    "sl_pct": 10.0,
-    "check_date": "2026-09-01"
   }
 ]
