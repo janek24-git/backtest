@@ -1,23 +1,5 @@
 [
   {
-    "ticker": "SION",
-    "signal_date": "2026-08-11",
-    "entry_price": 4.5,
-    "source": "WSB",
-    "tp_pct": 20.0,
-    "sl_pct": 10.0,
-    "check_date": "2026-08-25"
-  },
-  {
-    "ticker": "LIF",
-    "signal_date": "2026-08-11",
-    "entry_price": 47.64,
-    "source": "WSB",
-    "tp_pct": 20.0,
-    "sl_pct": 10.0,
-    "check_date": "2026-08-25"
-  },
-  {
     "ticker": "ONDS",
     "signal_date": "2026-08-12",
     "entry_price": 9.74,
@@ -215,6 +197,42 @@
     "check_date": "2026-09-04",
     "rel_vol": 2.66,
     "pct_above_ema": 1.99
+  },
+  {
+    "ticker": "SLS",
+    "signal_date": "2026-08-24",
+    "entry_price": 15.46,
+    "source": "WSB",
+    "tp_pct": 20.0,
+    "sl_pct": 10.0,
+    "check_date": "2026-09-07"
+  },
+  {
+    "ticker": "EZPW",
+    "signal_date": "2026-08-24",
+    "entry_price": 34.445,
+    "source": "WSB",
+    "tp_pct": 20.0,
+    "sl_pct": 10.0,
+    "check_date": "2026-09-07"
+  },
+  {
+    "ticker": "SION",
+    "signal_date": "2026-08-11",
+    "entry_price": 4.5,
+    "source": "WSB",
+    "tp_pct": 20.0,
+    "sl_pct": 10.0,
+    "check_date": "2026-08-25"
+  },
+  {
+    "ticker": "LIF",
+    "signal_date": "2026-08-11",
+    "entry_price": 47.64,
+    "source": "WSB",
+    "tp_pct": 20.0,
+    "sl_pct": 10.0,
+    "check_date": "2026-08-25"
   },
   {
     "ticker": "PLUG",
@@ -1673,23 +1691,5 @@
     "tp_pct": 20.0,
     "sl_pct": 10.0,
     "check_date": "2026-05-22"
-  },
-  {
-    "ticker": "SLS",
-    "signal_date": "2026-08-24",
-    "entry_price": 15.46,
-    "source": "WSB",
-    "tp_pct": 20.0,
-    "sl_pct": 10.0,
-    "check_date": "2026-09-07"
-  },
-  {
-    "ticker": "EZPW",
-    "signal_date": "2026-08-24",
-    "entry_price": 34.445,
-    "source": "WSB",
-    "tp_pct": 20.0,
-    "sl_pct": 10.0,
-    "check_date": "2026-09-07"
   }
 ]
