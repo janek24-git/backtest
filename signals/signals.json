@@ -1,46 +1,6 @@
 [
   {
     "ticker": "ONDS",
-    "signal_date": "2026-08-12",
-    "entry_price": 9.74,
-    "source": "WSB",
-    "tp_pct": 20.0,
-    "sl_pct": 10.0,
-    "check_date": "2026-08-26"
-  },
-  {
-    "ticker": "NBIS",
-    "signal_date": "2026-08-12",
-    "entry_price": 242.12,
-    "source": "WSB",
-    "tp_pct": 20.0,
-    "sl_pct": 10.0,
-    "check_date": "2026-08-26"
-  },
-  {
-    "ticker": "SMCI",
-    "signal_date": "2026-08-12",
-    "entry_price": 37.61,
-    "source": "EMA200",
-    "tp_pct": 10.0,
-    "sl_pct": 5.0,
-    "check_date": "2026-08-26",
-    "rel_vol": 3.35,
-    "pct_above_ema": 15.19
-  },
-  {
-    "ticker": "CRWV",
-    "signal_date": "2026-08-12",
-    "entry_price": 107.73,
-    "source": "EMA200",
-    "tp_pct": 10.0,
-    "sl_pct": 5.0,
-    "check_date": "2026-08-26",
-    "rel_vol": 3.12,
-    "pct_above_ema": 11.72
-  },
-  {
-    "ticker": "ONDS",
     "signal_date": "2026-08-13",
     "entry_price": 9.77,
     "source": "WSB",
@@ -215,6 +175,75 @@
     "tp_pct": 20.0,
     "sl_pct": 10.0,
     "check_date": "2026-09-07"
+  },
+  {
+    "ticker": "ASST",
+    "signal_date": "2026-08-25",
+    "entry_price": 19.73,
+    "source": "WSB",
+    "tp_pct": 20.0,
+    "sl_pct": 10.0,
+    "check_date": "2026-09-08"
+  },
+  {
+    "ticker": "DKS",
+    "signal_date": "2026-08-25",
+    "entry_price": 129.78,
+    "source": "WSB",
+    "tp_pct": 20.0,
+    "sl_pct": 10.0,
+    "check_date": "2026-09-08"
+  },
+  {
+    "ticker": "BMNR",
+    "signal_date": "2026-08-25",
+    "entry_price": 24.82,
+    "source": "EMA200",
+    "tp_pct": 10.0,
+    "sl_pct": 5.0,
+    "check_date": "2026-09-08",
+    "rel_vol": 1.72,
+    "pct_above_ema": 1.09
+  },
+  {
+    "ticker": "ONDS",
+    "signal_date": "2026-08-12",
+    "entry_price": 9.74,
+    "source": "WSB",
+    "tp_pct": 20.0,
+    "sl_pct": 10.0,
+    "check_date": "2026-08-26"
+  },
+  {
+    "ticker": "NBIS",
+    "signal_date": "2026-08-12",
+    "entry_price": 242.12,
+    "source": "WSB",
+    "tp_pct": 20.0,
+    "sl_pct": 10.0,
+    "check_date": "2026-08-26"
+  },
+  {
+    "ticker": "SMCI",
+    "signal_date": "2026-08-12",
+    "entry_price": 37.61,
+    "source": "EMA200",
+    "tp_pct": 10.0,
+    "sl_pct": 5.0,
+    "check_date": "2026-08-26",
+    "rel_vol": 3.35,
+    "pct_above_ema": 15.19
+  },
+  {
+    "ticker": "CRWV",
+    "signal_date": "2026-08-12",
+    "entry_price": 107.73,
+    "source": "EMA200",
+    "tp_pct": 10.0,
+    "sl_pct": 5.0,
+    "check_date": "2026-08-26",
+    "rel_vol": 3.12,
+    "pct_above_ema": 11.72
   },
   {
     "ticker": "SION",
@@ -1691,34 +1720,5 @@
     "tp_pct": 20.0,
     "sl_pct": 10.0,
     "check_date": "2026-05-22"
-  },
-  {
-    "ticker": "ASST",
-    "signal_date": "2026-08-25",
-    "entry_price": 19.73,
-    "source": "WSB",
-    "tp_pct": 20.0,
-    "sl_pct": 10.0,
-    "check_date": "2026-09-08"
-  },
-  {
-    "ticker": "DKS",
-    "signal_date": "2026-08-25",
-    "entry_price": 129.78,
-    "source": "WSB",
-    "tp_pct": 20.0,
-    "sl_pct": 10.0,
-    "check_date": "2026-09-08"
-  },
-  {
-    "ticker": "BMNR",
-    "signal_date": "2026-08-25",
-    "entry_price": 24.82,
-    "source": "EMA200",
-    "tp_pct": 10.0,
-    "sl_pct": 5.0,
-    "check_date": "2026-09-08",
-    "rel_vol": 1.72,
-    "pct_above_ema": 1.09
   }
 ]
