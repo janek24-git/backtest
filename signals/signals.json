@@ -1,23 +1,5 @@
 [
   {
-    "ticker": "ONDS",
-    "signal_date": "2026-08-13",
-    "entry_price": 9.77,
-    "source": "WSB",
-    "tp_pct": 20.0,
-    "sl_pct": 10.0,
-    "check_date": "2026-08-27"
-  },
-  {
-    "ticker": "ONDS",
-    "signal_date": "2026-08-13",
-    "entry_price": 9.065,
-    "source": "WSB",
-    "tp_pct": 20.0,
-    "sl_pct": 10.0,
-    "check_date": "2026-08-27"
-  },
-  {
     "ticker": "PATH",
     "signal_date": "2026-08-14",
     "entry_price": 16.68,
@@ -204,6 +186,42 @@
     "check_date": "2026-09-08",
     "rel_vol": 1.72,
     "pct_above_ema": 1.09
+  },
+  {
+    "ticker": "DKS",
+    "signal_date": "2026-08-26",
+    "entry_price": 124.31,
+    "source": "WSB",
+    "tp_pct": 20.0,
+    "sl_pct": 10.0,
+    "check_date": "2026-09-09"
+  },
+  {
+    "ticker": "BZ",
+    "signal_date": "2026-08-26",
+    "entry_price": 19.05,
+    "source": "WSB",
+    "tp_pct": 20.0,
+    "sl_pct": 10.0,
+    "check_date": "2026-09-09"
+  },
+  {
+    "ticker": "ONDS",
+    "signal_date": "2026-08-13",
+    "entry_price": 9.77,
+    "source": "WSB",
+    "tp_pct": 20.0,
+    "sl_pct": 10.0,
+    "check_date": "2026-08-27"
+  },
+  {
+    "ticker": "ONDS",
+    "signal_date": "2026-08-13",
+    "entry_price": 9.065,
+    "source": "WSB",
+    "tp_pct": 20.0,
+    "sl_pct": 10.0,
+    "check_date": "2026-08-27"
   },
   {
     "ticker": "ONDS",
@@ -1720,23 +1738,5 @@
     "tp_pct": 20.0,
     "sl_pct": 10.0,
     "check_date": "2026-05-22"
-  },
-  {
-    "ticker": "DKS",
-    "signal_date": "2026-08-26",
-    "entry_price": 124.31,
-    "source": "WSB",
-    "tp_pct": 20.0,
-    "sl_pct": 10.0,
-    "check_date": "2026-09-09"
-  },
-  {
-    "ticker": "BZ",
-    "signal_date": "2026-08-26",
-    "entry_price": 19.05,
-    "source": "WSB",
-    "tp_pct": 20.0,
-    "sl_pct": 10.0,
-    "check_date": "2026-09-09"
   }
 ]
