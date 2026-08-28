@@ -1,34 +1,5 @@
 [
   {
-    "ticker": "PATH",
-    "signal_date": "2026-08-14",
-    "entry_price": 16.68,
-    "source": "WSB",
-    "tp_pct": 20.0,
-    "sl_pct": 10.0,
-    "check_date": "2026-08-28"
-  },
-  {
-    "ticker": "DUOL",
-    "signal_date": "2026-08-14",
-    "entry_price": 134.44,
-    "source": "WSB",
-    "tp_pct": 20.0,
-    "sl_pct": 10.0,
-    "check_date": "2026-08-28"
-  },
-  {
-    "ticker": "NU",
-    "signal_date": "2026-08-14",
-    "entry_price": 15.23,
-    "source": "EMA200",
-    "tp_pct": 10.0,
-    "sl_pct": 5.0,
-    "check_date": "2026-08-28",
-    "rel_vol": 2.04,
-    "pct_above_ema": 7.41
-  },
-  {
     "ticker": "CIFR",
     "signal_date": "2026-08-17",
     "entry_price": 17.855,
@@ -204,6 +175,44 @@
     "tp_pct": 20.0,
     "sl_pct": 10.0,
     "check_date": "2026-09-09"
+  },
+  {
+    "ticker": "SRPT",
+    "signal_date": "2026-08-27",
+    "entry_price": 22.2,
+    "source": "WSB",
+    "tp_pct": 20.0,
+    "sl_pct": 10.0,
+    "check_date": "2026-09-10"
+  },
+  {
+    "ticker": "PATH",
+    "signal_date": "2026-08-14",
+    "entry_price": 16.68,
+    "source": "WSB",
+    "tp_pct": 20.0,
+    "sl_pct": 10.0,
+    "check_date": "2026-08-28"
+  },
+  {
+    "ticker": "DUOL",
+    "signal_date": "2026-08-14",
+    "entry_price": 134.44,
+    "source": "WSB",
+    "tp_pct": 20.0,
+    "sl_pct": 10.0,
+    "check_date": "2026-08-28"
+  },
+  {
+    "ticker": "NU",
+    "signal_date": "2026-08-14",
+    "entry_price": 15.23,
+    "source": "EMA200",
+    "tp_pct": 10.0,
+    "sl_pct": 5.0,
+    "check_date": "2026-08-28",
+    "rel_vol": 2.04,
+    "pct_above_ema": 7.41
   },
   {
     "ticker": "ONDS",
@@ -1738,14 +1747,5 @@
     "tp_pct": 20.0,
     "sl_pct": 10.0,
     "check_date": "2026-05-22"
-  },
-  {
-    "ticker": "SRPT",
-    "signal_date": "2026-08-27",
-    "entry_price": 22.2,
-    "source": "WSB",
-    "tp_pct": 20.0,
-    "sl_pct": 10.0,
-    "check_date": "2026-09-10"
   }
 ]
