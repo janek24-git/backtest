@@ -1,23 +1,5 @@
 [
   {
-    "ticker": "CIFR",
-    "signal_date": "2026-08-17",
-    "entry_price": 17.855,
-    "source": "WSB",
-    "tp_pct": 20.0,
-    "sl_pct": 10.0,
-    "check_date": "2026-08-31"
-  },
-  {
-    "ticker": "IEP",
-    "signal_date": "2026-08-17",
-    "entry_price": 6.975,
-    "source": "WSB",
-    "tp_pct": 20.0,
-    "sl_pct": 10.0,
-    "check_date": "2026-08-31"
-  },
-  {
     "ticker": "EYPT",
     "signal_date": "2026-08-18",
     "entry_price": 4.87,
@@ -184,6 +166,33 @@
     "tp_pct": 20.0,
     "sl_pct": 10.0,
     "check_date": "2026-09-10"
+  },
+  {
+    "ticker": "IREN",
+    "signal_date": "2026-08-28",
+    "entry_price": 35.45,
+    "source": "WSB",
+    "tp_pct": 20.0,
+    "sl_pct": 10.0,
+    "check_date": "2026-09-11"
+  },
+  {
+    "ticker": "CIFR",
+    "signal_date": "2026-08-17",
+    "entry_price": 17.855,
+    "source": "WSB",
+    "tp_pct": 20.0,
+    "sl_pct": 10.0,
+    "check_date": "2026-08-31"
+  },
+  {
+    "ticker": "IEP",
+    "signal_date": "2026-08-17",
+    "entry_price": 6.975,
+    "source": "WSB",
+    "tp_pct": 20.0,
+    "sl_pct": 10.0,
+    "check_date": "2026-08-31"
   },
   {
     "ticker": "PATH",
@@ -1747,14 +1756,5 @@
     "tp_pct": 20.0,
     "sl_pct": 10.0,
     "check_date": "2026-05-22"
-  },
-  {
-    "ticker": "IREN",
-    "signal_date": "2026-08-28",
-    "entry_price": 35.45,
-    "source": "WSB",
-    "tp_pct": 20.0,
-    "sl_pct": 10.0,
-    "check_date": "2026-09-11"
   }
 ]
