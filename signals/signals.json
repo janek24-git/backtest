@@ -1,23 +1,5 @@
 [
   {
-    "ticker": "EYPT",
-    "signal_date": "2026-08-18",
-    "entry_price": 4.87,
-    "source": "WSB",
-    "tp_pct": 20.0,
-    "sl_pct": 10.0,
-    "check_date": "2026-09-01"
-  },
-  {
-    "ticker": "AUR",
-    "signal_date": "2026-08-18",
-    "entry_price": 6.0098,
-    "source": "WSB",
-    "tp_pct": 20.0,
-    "sl_pct": 10.0,
-    "check_date": "2026-09-01"
-  },
-  {
     "ticker": "CRWV",
     "signal_date": "2026-08-19",
     "entry_price": 93.17,
@@ -175,6 +157,33 @@
     "tp_pct": 20.0,
     "sl_pct": 10.0,
     "check_date": "2026-09-11"
+  },
+  {
+    "ticker": "ASST",
+    "signal_date": "2026-08-31",
+    "entry_price": 23.82,
+    "source": "WSB",
+    "tp_pct": 20.0,
+    "sl_pct": 10.0,
+    "check_date": "2026-09-14"
+  },
+  {
+    "ticker": "EYPT",
+    "signal_date": "2026-08-18",
+    "entry_price": 4.87,
+    "source": "WSB",
+    "tp_pct": 20.0,
+    "sl_pct": 10.0,
+    "check_date": "2026-09-01"
+  },
+  {
+    "ticker": "AUR",
+    "signal_date": "2026-08-18",
+    "entry_price": 6.0098,
+    "source": "WSB",
+    "tp_pct": 20.0,
+    "sl_pct": 10.0,
+    "check_date": "2026-09-01"
   },
   {
     "ticker": "CIFR",
@@ -1756,14 +1765,5 @@
     "tp_pct": 20.0,
     "sl_pct": 10.0,
     "check_date": "2026-05-22"
-  },
-  {
-    "ticker": "ASST",
-    "signal_date": "2026-08-31",
-    "entry_price": 23.82,
-    "source": "WSB",
-    "tp_pct": 20.0,
-    "sl_pct": 10.0,
-    "check_date": "2026-09-14"
   }
 ]
