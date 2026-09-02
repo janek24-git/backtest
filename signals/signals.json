@@ -1792,5 +1792,14 @@
     "tp_pct": 20.0,
     "sl_pct": 10.0,
     "check_date": "2026-09-16"
+  },
+  {
+    "ticker": "SWKS",
+    "signal_date": "2026-09-02",
+    "entry_price": 72.87,
+    "source": "WSB",
+    "tp_pct": 20.0,
+    "sl_pct": 10.0,
+    "check_date": "2026-09-16"
   }
 ]
