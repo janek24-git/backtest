@@ -1810,5 +1810,14 @@
     "tp_pct": 20.0,
     "sl_pct": 10.0,
     "check_date": "2026-09-17"
+  },
+  {
+    "ticker": "SMMT",
+    "signal_date": "2026-09-03",
+    "entry_price": 16.89,
+    "source": "WSB",
+    "tp_pct": 20.0,
+    "sl_pct": 10.0,
+    "check_date": "2026-09-17"
   }
 ]
