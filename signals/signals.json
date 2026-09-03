@@ -1819,5 +1819,16 @@
     "tp_pct": 20.0,
     "sl_pct": 10.0,
     "check_date": "2026-09-17"
+  },
+  {
+    "ticker": "BMNR",
+    "signal_date": "2026-09-03",
+    "entry_price": 26.45,
+    "source": "EMA200",
+    "tp_pct": 10.0,
+    "sl_pct": 5.0,
+    "check_date": "2026-09-17",
+    "rel_vol": 1.65,
+    "pct_above_ema": 7.7
   }
 ]
