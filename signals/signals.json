@@ -1,34 +1,5 @@
 [
   {
-    "ticker": "ASST",
-    "signal_date": "2026-08-25",
-    "entry_price": 19.73,
-    "source": "WSB",
-    "tp_pct": 20.0,
-    "sl_pct": 10.0,
-    "check_date": "2026-09-08"
-  },
-  {
-    "ticker": "DKS",
-    "signal_date": "2026-08-25",
-    "entry_price": 129.78,
-    "source": "WSB",
-    "tp_pct": 20.0,
-    "sl_pct": 10.0,
-    "check_date": "2026-09-08"
-  },
-  {
-    "ticker": "BMNR",
-    "signal_date": "2026-08-25",
-    "entry_price": 24.82,
-    "source": "EMA200",
-    "tp_pct": 10.0,
-    "sl_pct": 5.0,
-    "check_date": "2026-09-08",
-    "rel_vol": 1.72,
-    "pct_above_ema": 1.09
-  },
-  {
     "ticker": "DKS",
     "signal_date": "2026-08-26",
     "entry_price": 124.31,
@@ -155,6 +126,53 @@
     "tp_pct": 20.0,
     "sl_pct": 10.0,
     "check_date": "2026-09-18"
+  },
+  {
+    "ticker": "IREN",
+    "signal_date": "2026-09-07",
+    "entry_price": 44.68,
+    "source": "WSB",
+    "tp_pct": 20.0,
+    "sl_pct": 10.0,
+    "check_date": "2026-09-21"
+  },
+  {
+    "ticker": "IREN",
+    "signal_date": "2026-09-07",
+    "entry_price": 44.68,
+    "source": "WSB",
+    "tp_pct": 20.0,
+    "sl_pct": 10.0,
+    "check_date": "2026-09-21"
+  },
+  {
+    "ticker": "ASST",
+    "signal_date": "2026-08-25",
+    "entry_price": 19.73,
+    "source": "WSB",
+    "tp_pct": 20.0,
+    "sl_pct": 10.0,
+    "check_date": "2026-09-08"
+  },
+  {
+    "ticker": "DKS",
+    "signal_date": "2026-08-25",
+    "entry_price": 129.78,
+    "source": "WSB",
+    "tp_pct": 20.0,
+    "sl_pct": 10.0,
+    "check_date": "2026-09-08"
+  },
+  {
+    "ticker": "BMNR",
+    "signal_date": "2026-08-25",
+    "entry_price": 24.82,
+    "source": "EMA200",
+    "tp_pct": 10.0,
+    "sl_pct": 5.0,
+    "check_date": "2026-09-08",
+    "rel_vol": 1.72,
+    "pct_above_ema": 1.09
   },
   {
     "ticker": "SLS",
@@ -1848,23 +1866,5 @@
     "tp_pct": 20.0,
     "sl_pct": 10.0,
     "check_date": "2026-05-22"
-  },
-  {
-    "ticker": "IREN",
-    "signal_date": "2026-09-07",
-    "entry_price": 44.68,
-    "source": "WSB",
-    "tp_pct": 20.0,
-    "sl_pct": 10.0,
-    "check_date": "2026-09-21"
-  },
-  {
-    "ticker": "IREN",
-    "signal_date": "2026-09-07",
-    "entry_price": 44.68,
-    "source": "WSB",
-    "tp_pct": 20.0,
-    "sl_pct": 10.0,
-    "check_date": "2026-09-21"
   }
 ]
