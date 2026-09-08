@@ -1875,5 +1875,14 @@
     "tp_pct": 20.0,
     "sl_pct": 10.0,
     "check_date": "2026-09-22"
+  },
+  {
+    "ticker": "INTC",
+    "signal_date": "2026-09-08",
+    "entry_price": 105.0047,
+    "source": "WSB",
+    "tp_pct": 20.0,
+    "sl_pct": 10.0,
+    "check_date": "2026-09-22"
   }
 ]
