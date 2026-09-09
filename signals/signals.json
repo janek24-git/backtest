@@ -1884,5 +1884,14 @@
     "tp_pct": 20.0,
     "sl_pct": 10.0,
     "check_date": "2026-05-22"
+  },
+  {
+    "ticker": "SMR",
+    "signal_date": "2026-09-09",
+    "entry_price": 11.18,
+    "source": "WSB",
+    "tp_pct": 20.0,
+    "sl_pct": 10.0,
+    "check_date": "2026-09-23"
   }
 ]
