@@ -1,14 +1,5 @@
 [
   {
-    "ticker": "SRPT",
-    "signal_date": "2026-08-27",
-    "entry_price": 22.2,
-    "source": "WSB",
-    "tp_pct": 20.0,
-    "sl_pct": 10.0,
-    "check_date": "2026-09-10"
-  },
-  {
     "ticker": "IREN",
     "signal_date": "2026-08-28",
     "entry_price": 35.45,
@@ -144,6 +135,33 @@
     "tp_pct": 20.0,
     "sl_pct": 10.0,
     "check_date": "2026-09-22"
+  },
+  {
+    "ticker": "SMR",
+    "signal_date": "2026-09-09",
+    "entry_price": 11.18,
+    "source": "WSB",
+    "tp_pct": 20.0,
+    "sl_pct": 10.0,
+    "check_date": "2026-09-23"
+  },
+  {
+    "ticker": "GME",
+    "signal_date": "2026-09-09",
+    "entry_price": 19.7501,
+    "source": "WSB",
+    "tp_pct": 20.0,
+    "sl_pct": 10.0,
+    "check_date": "2026-09-23"
+  },
+  {
+    "ticker": "SRPT",
+    "signal_date": "2026-08-27",
+    "entry_price": 22.2,
+    "source": "WSB",
+    "tp_pct": 20.0,
+    "sl_pct": 10.0,
+    "check_date": "2026-09-10"
   },
   {
     "ticker": "DKS",
@@ -1884,23 +1902,5 @@
     "tp_pct": 20.0,
     "sl_pct": 10.0,
     "check_date": "2026-05-22"
-  },
-  {
-    "ticker": "SMR",
-    "signal_date": "2026-09-09",
-    "entry_price": 11.18,
-    "source": "WSB",
-    "tp_pct": 20.0,
-    "sl_pct": 10.0,
-    "check_date": "2026-09-23"
-  },
-  {
-    "ticker": "GME",
-    "signal_date": "2026-09-09",
-    "entry_price": 19.7501,
-    "source": "WSB",
-    "tp_pct": 20.0,
-    "sl_pct": 10.0,
-    "check_date": "2026-09-23"
   }
 ]
