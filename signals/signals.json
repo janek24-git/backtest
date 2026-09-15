@@ -1947,5 +1947,14 @@
     "tp_pct": 20.0,
     "sl_pct": 10.0,
     "check_date": "2026-09-28"
+  },
+  {
+    "ticker": "FPS",
+    "signal_date": "2026-09-15",
+    "entry_price": 32.22,
+    "source": "WSB",
+    "tp_pct": 20.0,
+    "sl_pct": 10.0,
+    "check_date": "2026-09-29"
   }
 ]
