@@ -1,34 +1,5 @@
 [
   {
-    "ticker": "CPB",
-    "signal_date": "2026-09-03",
-    "entry_price": 23.78,
-    "source": "WSB",
-    "tp_pct": 20.0,
-    "sl_pct": 10.0,
-    "check_date": "2026-09-17"
-  },
-  {
-    "ticker": "SMMT",
-    "signal_date": "2026-09-03",
-    "entry_price": 16.89,
-    "source": "WSB",
-    "tp_pct": 20.0,
-    "sl_pct": 10.0,
-    "check_date": "2026-09-17"
-  },
-  {
-    "ticker": "BMNR",
-    "signal_date": "2026-09-03",
-    "entry_price": 26.45,
-    "source": "EMA200",
-    "tp_pct": 10.0,
-    "sl_pct": 5.0,
-    "check_date": "2026-09-17",
-    "rel_vol": 1.65,
-    "pct_above_ema": 7.7
-  },
-  {
     "ticker": "MARA",
     "signal_date": "2026-09-04",
     "entry_price": 11.6,
@@ -162,6 +133,53 @@
     "tp_pct": 20.0,
     "sl_pct": 10.0,
     "check_date": "2026-09-29"
+  },
+  {
+    "ticker": "SWKS",
+    "signal_date": "2026-09-16",
+    "entry_price": 88.0,
+    "source": "WSB",
+    "tp_pct": 20.0,
+    "sl_pct": 10.0,
+    "check_date": "2026-09-30"
+  },
+  {
+    "ticker": "CIFR",
+    "signal_date": "2026-09-16",
+    "entry_price": 16.9581,
+    "source": "WSB",
+    "tp_pct": 20.0,
+    "sl_pct": 10.0,
+    "check_date": "2026-09-30"
+  },
+  {
+    "ticker": "CPB",
+    "signal_date": "2026-09-03",
+    "entry_price": 23.78,
+    "source": "WSB",
+    "tp_pct": 20.0,
+    "sl_pct": 10.0,
+    "check_date": "2026-09-17"
+  },
+  {
+    "ticker": "SMMT",
+    "signal_date": "2026-09-03",
+    "entry_price": 16.89,
+    "source": "WSB",
+    "tp_pct": 20.0,
+    "sl_pct": 10.0,
+    "check_date": "2026-09-17"
+  },
+  {
+    "ticker": "BMNR",
+    "signal_date": "2026-09-03",
+    "entry_price": 26.45,
+    "source": "EMA200",
+    "tp_pct": 10.0,
+    "sl_pct": 5.0,
+    "check_date": "2026-09-17",
+    "rel_vol": 1.65,
+    "pct_above_ema": 7.7
   },
   {
     "ticker": "CRK",
@@ -1965,23 +1983,5 @@
     "tp_pct": 20.0,
     "sl_pct": 10.0,
     "check_date": "2026-05-22"
-  },
-  {
-    "ticker": "SWKS",
-    "signal_date": "2026-09-16",
-    "entry_price": 88.0,
-    "source": "WSB",
-    "tp_pct": 20.0,
-    "sl_pct": 10.0,
-    "check_date": "2026-09-30"
-  },
-  {
-    "ticker": "CIFR",
-    "signal_date": "2026-09-16",
-    "entry_price": 16.9581,
-    "source": "WSB",
-    "tp_pct": 20.0,
-    "sl_pct": 10.0,
-    "check_date": "2026-09-30"
   }
 ]
