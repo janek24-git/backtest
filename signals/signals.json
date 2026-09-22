@@ -1,23 +1,5 @@
 [
   {
-    "ticker": "IREN",
-    "signal_date": "2026-09-08",
-    "entry_price": 44.68,
-    "source": "WSB",
-    "tp_pct": 20.0,
-    "sl_pct": 10.0,
-    "check_date": "2026-09-22"
-  },
-  {
-    "ticker": "INTC",
-    "signal_date": "2026-09-08",
-    "entry_price": 105.0047,
-    "source": "WSB",
-    "tp_pct": 20.0,
-    "sl_pct": 10.0,
-    "check_date": "2026-09-22"
-  },
-  {
     "ticker": "SMR",
     "signal_date": "2026-09-09",
     "entry_price": 11.18,
@@ -151,6 +133,33 @@
     "tp_pct": 20.0,
     "sl_pct": 10.0,
     "check_date": "2026-10-02"
+  },
+  {
+    "ticker": "GRAL",
+    "signal_date": "2026-09-21",
+    "entry_price": 108.77,
+    "source": "WSB",
+    "tp_pct": 20.0,
+    "sl_pct": 10.0,
+    "check_date": "2026-10-05"
+  },
+  {
+    "ticker": "IREN",
+    "signal_date": "2026-09-08",
+    "entry_price": 44.68,
+    "source": "WSB",
+    "tp_pct": 20.0,
+    "sl_pct": 10.0,
+    "check_date": "2026-09-22"
+  },
+  {
+    "ticker": "INTC",
+    "signal_date": "2026-09-08",
+    "entry_price": 105.0047,
+    "source": "WSB",
+    "tp_pct": 20.0,
+    "sl_pct": 10.0,
+    "check_date": "2026-09-22"
   },
   {
     "ticker": "IREN",
@@ -2019,14 +2028,5 @@
     "tp_pct": 20.0,
     "sl_pct": 10.0,
     "check_date": "2026-05-22"
-  },
-  {
-    "ticker": "GRAL",
-    "signal_date": "2026-09-21",
-    "entry_price": 108.77,
-    "source": "WSB",
-    "tp_pct": 20.0,
-    "sl_pct": 10.0,
-    "check_date": "2026-10-05"
   }
 ]
