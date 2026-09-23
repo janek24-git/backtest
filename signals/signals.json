@@ -1,23 +1,5 @@
 [
   {
-    "ticker": "SMR",
-    "signal_date": "2026-09-09",
-    "entry_price": 11.18,
-    "source": "WSB",
-    "tp_pct": 20.0,
-    "sl_pct": 10.0,
-    "check_date": "2026-09-23"
-  },
-  {
-    "ticker": "GME",
-    "signal_date": "2026-09-09",
-    "entry_price": 19.7501,
-    "source": "WSB",
-    "tp_pct": 20.0,
-    "sl_pct": 10.0,
-    "check_date": "2026-09-23"
-  },
-  {
     "ticker": "M",
     "signal_date": "2026-09-10",
     "entry_price": 21.51,
@@ -142,6 +124,42 @@
     "tp_pct": 20.0,
     "sl_pct": 10.0,
     "check_date": "2026-10-05"
+  },
+  {
+    "ticker": "VKTX",
+    "signal_date": "2026-09-22",
+    "entry_price": 39.61,
+    "source": "WSB",
+    "tp_pct": 20.0,
+    "sl_pct": 10.0,
+    "check_date": "2026-10-06"
+  },
+  {
+    "ticker": "VKTX",
+    "signal_date": "2026-09-22",
+    "entry_price": 39.1264,
+    "source": "WSB",
+    "tp_pct": 20.0,
+    "sl_pct": 10.0,
+    "check_date": "2026-10-06"
+  },
+  {
+    "ticker": "SMR",
+    "signal_date": "2026-09-09",
+    "entry_price": 11.18,
+    "source": "WSB",
+    "tp_pct": 20.0,
+    "sl_pct": 10.0,
+    "check_date": "2026-09-23"
+  },
+  {
+    "ticker": "GME",
+    "signal_date": "2026-09-09",
+    "entry_price": 19.7501,
+    "source": "WSB",
+    "tp_pct": 20.0,
+    "sl_pct": 10.0,
+    "check_date": "2026-09-23"
   },
   {
     "ticker": "IREN",
@@ -2028,23 +2046,5 @@
     "tp_pct": 20.0,
     "sl_pct": 10.0,
     "check_date": "2026-05-22"
-  },
-  {
-    "ticker": "VKTX",
-    "signal_date": "2026-09-22",
-    "entry_price": 39.61,
-    "source": "WSB",
-    "tp_pct": 20.0,
-    "sl_pct": 10.0,
-    "check_date": "2026-10-06"
-  },
-  {
-    "ticker": "VKTX",
-    "signal_date": "2026-09-22",
-    "entry_price": 39.1264,
-    "source": "WSB",
-    "tp_pct": 20.0,
-    "sl_pct": 10.0,
-    "check_date": "2026-10-06"
   }
 ]
