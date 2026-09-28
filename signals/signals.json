@@ -1,14 +1,5 @@
 [
   {
-    "ticker": "SAIL",
-    "signal_date": "2026-09-14",
-    "entry_price": 19.67,
-    "source": "WSB",
-    "tp_pct": 20.0,
-    "sl_pct": 10.0,
-    "check_date": "2026-09-28"
-  },
-  {
     "ticker": "FPS",
     "signal_date": "2026-09-15",
     "entry_price": 32.22,
@@ -142,6 +133,33 @@
     "tp_pct": 20.0,
     "sl_pct": 10.0,
     "check_date": "2026-10-08"
+  },
+  {
+    "ticker": "AKAM",
+    "signal_date": "2026-09-25",
+    "entry_price": 118.98,
+    "source": "WSB",
+    "tp_pct": 20.0,
+    "sl_pct": 10.0,
+    "check_date": "2026-10-09"
+  },
+  {
+    "ticker": "TWST",
+    "signal_date": "2026-09-25",
+    "entry_price": 183.29,
+    "source": "WSB",
+    "tp_pct": 20.0,
+    "sl_pct": 10.0,
+    "check_date": "2026-10-09"
+  },
+  {
+    "ticker": "SAIL",
+    "signal_date": "2026-09-14",
+    "entry_price": 19.67,
+    "source": "WSB",
+    "tp_pct": 20.0,
+    "sl_pct": 10.0,
+    "check_date": "2026-09-28"
   },
   {
     "ticker": "MPT",
@@ -2082,23 +2100,5 @@
     "tp_pct": 20.0,
     "sl_pct": 10.0,
     "check_date": "2026-05-22"
-  },
-  {
-    "ticker": "AKAM",
-    "signal_date": "2026-09-25",
-    "entry_price": 118.98,
-    "source": "WSB",
-    "tp_pct": 20.0,
-    "sl_pct": 10.0,
-    "check_date": "2026-10-09"
-  },
-  {
-    "ticker": "TWST",
-    "signal_date": "2026-09-25",
-    "entry_price": 183.29,
-    "source": "WSB",
-    "tp_pct": 20.0,
-    "sl_pct": 10.0,
-    "check_date": "2026-10-09"
   }
 ]
