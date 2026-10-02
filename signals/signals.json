@@ -1,23 +1,5 @@
 [
   {
-    "ticker": "SDGR",
-    "signal_date": "2026-09-18",
-    "entry_price": 30.24,
-    "source": "WSB",
-    "tp_pct": 20.0,
-    "sl_pct": 10.0,
-    "check_date": "2026-10-02"
-  },
-  {
-    "ticker": "MARA",
-    "signal_date": "2026-09-18",
-    "entry_price": 13.09,
-    "source": "WSB",
-    "tp_pct": 20.0,
-    "sl_pct": 10.0,
-    "check_date": "2026-10-02"
-  },
-  {
     "ticker": "GRAL",
     "signal_date": "2026-09-21",
     "entry_price": 108.77,
@@ -124,6 +106,33 @@
     "tp_pct": 20.0,
     "sl_pct": 10.0,
     "check_date": "2026-10-14"
+  },
+  {
+    "ticker": "LQDA",
+    "signal_date": "2026-10-01",
+    "entry_price": 25.92,
+    "source": "WSB",
+    "tp_pct": 20.0,
+    "sl_pct": 10.0,
+    "check_date": "2026-10-15"
+  },
+  {
+    "ticker": "SDGR",
+    "signal_date": "2026-09-18",
+    "entry_price": 30.24,
+    "source": "WSB",
+    "tp_pct": 20.0,
+    "sl_pct": 10.0,
+    "check_date": "2026-10-02"
+  },
+  {
+    "ticker": "MARA",
+    "signal_date": "2026-09-18",
+    "entry_price": 13.09,
+    "source": "WSB",
+    "tp_pct": 20.0,
+    "sl_pct": 10.0,
+    "check_date": "2026-10-02"
   },
   {
     "ticker": "CRWV",
@@ -2127,14 +2136,5 @@
     "tp_pct": 20.0,
     "sl_pct": 10.0,
     "check_date": "2026-05-22"
-  },
-  {
-    "ticker": "LQDA",
-    "signal_date": "2026-10-01",
-    "entry_price": 25.92,
-    "source": "WSB",
-    "tp_pct": 20.0,
-    "sl_pct": 10.0,
-    "check_date": "2026-10-15"
   }
 ]
