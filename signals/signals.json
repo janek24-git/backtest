@@ -1,14 +1,5 @@
 [
   {
-    "ticker": "GRAL",
-    "signal_date": "2026-09-21",
-    "entry_price": 108.77,
-    "source": "WSB",
-    "tp_pct": 20.0,
-    "sl_pct": 10.0,
-    "check_date": "2026-10-05"
-  },
-  {
     "ticker": "VKTX",
     "signal_date": "2026-09-22",
     "entry_price": 39.61,
@@ -115,6 +106,24 @@
     "tp_pct": 20.0,
     "sl_pct": 10.0,
     "check_date": "2026-10-15"
+  },
+  {
+    "ticker": "IBRX",
+    "signal_date": "2026-10-02",
+    "entry_price": 10.48,
+    "source": "WSB",
+    "tp_pct": 20.0,
+    "sl_pct": 10.0,
+    "check_date": "2026-10-16"
+  },
+  {
+    "ticker": "GRAL",
+    "signal_date": "2026-09-21",
+    "entry_price": 108.77,
+    "source": "WSB",
+    "tp_pct": 20.0,
+    "sl_pct": 10.0,
+    "check_date": "2026-10-05"
   },
   {
     "ticker": "SDGR",
@@ -2136,14 +2145,5 @@
     "tp_pct": 20.0,
     "sl_pct": 10.0,
     "check_date": "2026-05-22"
-  },
-  {
-    "ticker": "IBRX",
-    "signal_date": "2026-10-02",
-    "entry_price": 10.48,
-    "source": "WSB",
-    "tp_pct": 20.0,
-    "sl_pct": 10.0,
-    "check_date": "2026-10-16"
   }
 ]
