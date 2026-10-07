@@ -1,23 +1,5 @@
 [
   {
-    "ticker": "QUBT",
-    "signal_date": "2026-09-23",
-    "entry_price": 9.38,
-    "source": "WSB",
-    "tp_pct": 20.0,
-    "sl_pct": 10.0,
-    "check_date": "2026-10-07"
-  },
-  {
-    "ticker": "IONQ",
-    "signal_date": "2026-09-23",
-    "entry_price": 43.165,
-    "source": "WSB",
-    "tp_pct": 20.0,
-    "sl_pct": 10.0,
-    "check_date": "2026-10-07"
-  },
-  {
     "ticker": "GRAL",
     "signal_date": "2026-09-24",
     "entry_price": 115.5,
@@ -106,6 +88,33 @@
     "tp_pct": 20.0,
     "sl_pct": 10.0,
     "check_date": "2026-10-19"
+  },
+  {
+    "ticker": "NVAX",
+    "signal_date": "2026-10-06",
+    "entry_price": 11.38,
+    "source": "WSB",
+    "tp_pct": 20.0,
+    "sl_pct": 10.0,
+    "check_date": "2026-10-20"
+  },
+  {
+    "ticker": "QUBT",
+    "signal_date": "2026-09-23",
+    "entry_price": 9.38,
+    "source": "WSB",
+    "tp_pct": 20.0,
+    "sl_pct": 10.0,
+    "check_date": "2026-10-07"
+  },
+  {
+    "ticker": "IONQ",
+    "signal_date": "2026-09-23",
+    "entry_price": 43.165,
+    "source": "WSB",
+    "tp_pct": 20.0,
+    "sl_pct": 10.0,
+    "check_date": "2026-10-07"
   },
   {
     "ticker": "VKTX",
@@ -2154,14 +2163,5 @@
     "tp_pct": 20.0,
     "sl_pct": 10.0,
     "check_date": "2026-05-22"
-  },
-  {
-    "ticker": "NVAX",
-    "signal_date": "2026-10-06",
-    "entry_price": 11.38,
-    "source": "WSB",
-    "tp_pct": 20.0,
-    "sl_pct": 10.0,
-    "check_date": "2026-10-20"
   }
 ]
