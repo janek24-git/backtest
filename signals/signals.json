@@ -1,23 +1,5 @@
 [
   {
-    "ticker": "AKAM",
-    "signal_date": "2026-09-25",
-    "entry_price": 118.98,
-    "source": "WSB",
-    "tp_pct": 20.0,
-    "sl_pct": 10.0,
-    "check_date": "2026-10-09"
-  },
-  {
-    "ticker": "TWST",
-    "signal_date": "2026-09-25",
-    "entry_price": 183.29,
-    "source": "WSB",
-    "tp_pct": 20.0,
-    "sl_pct": 10.0,
-    "check_date": "2026-10-09"
-  },
-  {
     "ticker": "KOD",
     "signal_date": "2026-09-28",
     "entry_price": 87.0545,
@@ -88,6 +70,33 @@
     "tp_pct": 20.0,
     "sl_pct": 10.0,
     "check_date": "2026-10-21"
+  },
+  {
+    "ticker": "CIFR",
+    "signal_date": "2026-10-08",
+    "entry_price": 13.49,
+    "source": "WSB",
+    "tp_pct": 20.0,
+    "sl_pct": 10.0,
+    "check_date": "2026-10-22"
+  },
+  {
+    "ticker": "AKAM",
+    "signal_date": "2026-09-25",
+    "entry_price": 118.98,
+    "source": "WSB",
+    "tp_pct": 20.0,
+    "sl_pct": 10.0,
+    "check_date": "2026-10-09"
+  },
+  {
+    "ticker": "TWST",
+    "signal_date": "2026-09-25",
+    "entry_price": 183.29,
+    "source": "WSB",
+    "tp_pct": 20.0,
+    "sl_pct": 10.0,
+    "check_date": "2026-10-09"
   },
   {
     "ticker": "GRAL",
@@ -2172,14 +2181,5 @@
     "tp_pct": 20.0,
     "sl_pct": 10.0,
     "check_date": "2026-05-22"
-  },
-  {
-    "ticker": "CIFR",
-    "signal_date": "2026-10-08",
-    "entry_price": 13.49,
-    "source": "WSB",
-    "tp_pct": 20.0,
-    "sl_pct": 10.0,
-    "check_date": "2026-10-22"
   }
 ]
