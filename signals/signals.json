@@ -2253,5 +2253,14 @@
     "tp_pct": 20.0,
     "sl_pct": 10.0,
     "check_date": "2026-10-30"
+  },
+  {
+    "ticker": "MTDR",
+    "signal_date": "2026-10-16",
+    "entry_price": 57.05,
+    "source": "WSB",
+    "tp_pct": 20.0,
+    "sl_pct": 10.0,
+    "check_date": "2026-10-30"
   }
 ]
