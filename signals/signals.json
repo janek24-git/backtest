@@ -2271,5 +2271,14 @@
     "tp_pct": 20.0,
     "sl_pct": 10.0,
     "check_date": "2026-05-22"
+  },
+  {
+    "ticker": "KVYO",
+    "signal_date": "2026-10-20",
+    "entry_price": 19.295,
+    "source": "WSB",
+    "tp_pct": 20.0,
+    "sl_pct": 10.0,
+    "check_date": "2026-11-03"
   }
 ]
