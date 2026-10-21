@@ -1,14 +1,5 @@
 [
   {
-    "ticker": "BKH",
-    "signal_date": "2026-10-07",
-    "entry_price": 77.67,
-    "source": "WSB",
-    "tp_pct": 20.0,
-    "sl_pct": 10.0,
-    "check_date": "2026-10-21"
-  },
-  {
     "ticker": "CIFR",
     "signal_date": "2026-10-08",
     "entry_price": 13.49,
@@ -106,6 +97,33 @@
     "tp_pct": 20.0,
     "sl_pct": 10.0,
     "check_date": "2026-11-02"
+  },
+  {
+    "ticker": "KVYO",
+    "signal_date": "2026-10-20",
+    "entry_price": 19.295,
+    "source": "WSB",
+    "tp_pct": 20.0,
+    "sl_pct": 10.0,
+    "check_date": "2026-11-03"
+  },
+  {
+    "ticker": "KVYO",
+    "signal_date": "2026-10-20",
+    "entry_price": 19.815,
+    "source": "WSB",
+    "tp_pct": 20.0,
+    "sl_pct": 10.0,
+    "check_date": "2026-11-03"
+  },
+  {
+    "ticker": "BKH",
+    "signal_date": "2026-10-07",
+    "entry_price": 77.67,
+    "source": "WSB",
+    "tp_pct": 20.0,
+    "sl_pct": 10.0,
+    "check_date": "2026-10-21"
   },
   {
     "ticker": "NVAX",
@@ -2271,23 +2289,5 @@
     "tp_pct": 20.0,
     "sl_pct": 10.0,
     "check_date": "2026-05-22"
-  },
-  {
-    "ticker": "KVYO",
-    "signal_date": "2026-10-20",
-    "entry_price": 19.295,
-    "source": "WSB",
-    "tp_pct": 20.0,
-    "sl_pct": 10.0,
-    "check_date": "2026-11-03"
-  },
-  {
-    "ticker": "KVYO",
-    "signal_date": "2026-10-20",
-    "entry_price": 19.815,
-    "source": "WSB",
-    "tp_pct": 20.0,
-    "sl_pct": 10.0,
-    "check_date": "2026-11-03"
   }
 ]
