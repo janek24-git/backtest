@@ -1,14 +1,5 @@
 [
   {
-    "ticker": "ASTS",
-    "signal_date": "2026-10-09",
-    "entry_price": 47.89,
-    "source": "WSB",
-    "tp_pct": 20.0,
-    "sl_pct": 10.0,
-    "check_date": "2026-10-23"
-  },
-  {
     "ticker": "FIGS",
     "signal_date": "2026-10-12",
     "entry_price": 17.915,
@@ -124,6 +115,33 @@
     "tp_pct": 20.0,
     "sl_pct": 10.0,
     "check_date": "2026-11-04"
+  },
+  {
+    "ticker": "BHVN",
+    "signal_date": "2026-10-22",
+    "entry_price": 15.33,
+    "source": "WSB",
+    "tp_pct": 20.0,
+    "sl_pct": 10.0,
+    "check_date": "2026-11-05"
+  },
+  {
+    "ticker": "KSS",
+    "signal_date": "2026-10-22",
+    "entry_price": 24.81,
+    "source": "WSB",
+    "tp_pct": 20.0,
+    "sl_pct": 10.0,
+    "check_date": "2026-11-05"
+  },
+  {
+    "ticker": "ASTS",
+    "signal_date": "2026-10-09",
+    "entry_price": 47.89,
+    "source": "WSB",
+    "tp_pct": 20.0,
+    "sl_pct": 10.0,
+    "check_date": "2026-10-23"
   },
   {
     "ticker": "CIFR",
@@ -2307,23 +2325,5 @@
     "tp_pct": 20.0,
     "sl_pct": 10.0,
     "check_date": "2026-05-22"
-  },
-  {
-    "ticker": "BHVN",
-    "signal_date": "2026-10-22",
-    "entry_price": 15.33,
-    "source": "WSB",
-    "tp_pct": 20.0,
-    "sl_pct": 10.0,
-    "check_date": "2026-11-05"
-  },
-  {
-    "ticker": "KSS",
-    "signal_date": "2026-10-22",
-    "entry_price": 24.81,
-    "source": "WSB",
-    "tp_pct": 20.0,
-    "sl_pct": 10.0,
-    "check_date": "2026-11-05"
   }
 ]
