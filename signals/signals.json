@@ -2325,5 +2325,14 @@
     "tp_pct": 20.0,
     "sl_pct": 10.0,
     "check_date": "2026-05-22"
+  },
+  {
+    "ticker": "TNGX",
+    "signal_date": "2026-10-23",
+    "entry_price": 23.135,
+    "source": "WSB",
+    "tp_pct": 20.0,
+    "sl_pct": 10.0,
+    "check_date": "2026-11-06"
   }
 ]
