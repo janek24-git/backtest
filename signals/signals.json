@@ -2361,5 +2361,14 @@
     "tp_pct": 20.0,
     "sl_pct": 10.0,
     "check_date": "2026-05-22"
+  },
+  {
+    "ticker": "SLS",
+    "signal_date": "2026-10-28",
+    "entry_price": 10.02,
+    "source": "WSB",
+    "tp_pct": 20.0,
+    "sl_pct": 10.0,
+    "check_date": "2026-11-11"
   }
 ]
