@@ -1,23 +1,5 @@
 [
   {
-    "ticker": "QS",
-    "signal_date": "2026-10-16",
-    "entry_price": 4.17,
-    "source": "WSB",
-    "tp_pct": 20.0,
-    "sl_pct": 10.0,
-    "check_date": "2026-10-30"
-  },
-  {
-    "ticker": "MTDR",
-    "signal_date": "2026-10-16",
-    "entry_price": 57.05,
-    "source": "WSB",
-    "tp_pct": 20.0,
-    "sl_pct": 10.0,
-    "check_date": "2026-10-30"
-  },
-  {
     "ticker": "IRON",
     "signal_date": "2026-10-19",
     "entry_price": 77.75,
@@ -124,6 +106,33 @@
     "tp_pct": 20.0,
     "sl_pct": 10.0,
     "check_date": "2026-11-11"
+  },
+  {
+    "ticker": "NCLH",
+    "signal_date": "2026-10-29",
+    "entry_price": 18.205,
+    "source": "WSB",
+    "tp_pct": 20.0,
+    "sl_pct": 10.0,
+    "check_date": "2026-11-12"
+  },
+  {
+    "ticker": "QS",
+    "signal_date": "2026-10-16",
+    "entry_price": 4.17,
+    "source": "WSB",
+    "tp_pct": 20.0,
+    "sl_pct": 10.0,
+    "check_date": "2026-10-30"
+  },
+  {
+    "ticker": "MTDR",
+    "signal_date": "2026-10-16",
+    "entry_price": 57.05,
+    "source": "WSB",
+    "tp_pct": 20.0,
+    "sl_pct": 10.0,
+    "check_date": "2026-10-30"
   },
   {
     "ticker": "PAG",
@@ -2370,14 +2379,5 @@
     "tp_pct": 20.0,
     "sl_pct": 10.0,
     "check_date": "2026-05-22"
-  },
-  {
-    "ticker": "NCLH",
-    "signal_date": "2026-10-29",
-    "entry_price": 18.205,
-    "source": "WSB",
-    "tp_pct": 20.0,
-    "sl_pct": 10.0,
-    "check_date": "2026-11-12"
   }
 ]
