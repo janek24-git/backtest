@@ -1,14 +1,5 @@
 [
   {
-    "ticker": "IRON",
-    "signal_date": "2026-10-19",
-    "entry_price": 77.75,
-    "source": "WSB",
-    "tp_pct": 20.0,
-    "sl_pct": 10.0,
-    "check_date": "2026-11-02"
-  },
-  {
     "ticker": "KVYO",
     "signal_date": "2026-10-20",
     "entry_price": 19.295,
@@ -115,6 +106,24 @@
     "tp_pct": 20.0,
     "sl_pct": 10.0,
     "check_date": "2026-11-12"
+  },
+  {
+    "ticker": "RIVN",
+    "signal_date": "2026-10-30",
+    "entry_price": 11.9797,
+    "source": "WSB",
+    "tp_pct": 20.0,
+    "sl_pct": 10.0,
+    "check_date": "2026-11-13"
+  },
+  {
+    "ticker": "IRON",
+    "signal_date": "2026-10-19",
+    "entry_price": 77.75,
+    "source": "WSB",
+    "tp_pct": 20.0,
+    "sl_pct": 10.0,
+    "check_date": "2026-11-02"
   },
   {
     "ticker": "QS",
@@ -2379,14 +2388,5 @@
     "tp_pct": 20.0,
     "sl_pct": 10.0,
     "check_date": "2026-05-22"
-  },
-  {
-    "ticker": "RIVN",
-    "signal_date": "2026-10-30",
-    "entry_price": 11.9797,
-    "source": "WSB",
-    "tp_pct": 20.0,
-    "sl_pct": 10.0,
-    "check_date": "2026-11-13"
   }
 ]
