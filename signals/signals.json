@@ -1,23 +1,5 @@
 [
   {
-    "ticker": "KVYO",
-    "signal_date": "2026-10-20",
-    "entry_price": 19.295,
-    "source": "WSB",
-    "tp_pct": 20.0,
-    "sl_pct": 10.0,
-    "check_date": "2026-11-03"
-  },
-  {
-    "ticker": "KVYO",
-    "signal_date": "2026-10-20",
-    "entry_price": 19.815,
-    "source": "WSB",
-    "tp_pct": 20.0,
-    "sl_pct": 10.0,
-    "check_date": "2026-11-03"
-  },
-  {
     "ticker": "SMCI",
     "signal_date": "2026-10-21",
     "entry_price": 35.81,
@@ -115,6 +97,44 @@
     "tp_pct": 20.0,
     "sl_pct": 10.0,
     "check_date": "2026-11-13"
+  },
+  {
+    "ticker": "RIVN",
+    "signal_date": "2026-11-02",
+    "entry_price": 13.3699,
+    "source": "WSB",
+    "tp_pct": 20.0,
+    "sl_pct": 10.0,
+    "check_date": "2026-11-16"
+  },
+  {
+    "ticker": "AMZN",
+    "signal_date": "2026-11-03",
+    "entry_price": 245.63,
+    "source": "EMA200",
+    "tp_pct": 10.0,
+    "sl_pct": 5.0,
+    "check_date": "2026-11-17",
+    "rel_vol": 1.4,
+    "pct_above_ema": 0.18
+  },
+  {
+    "ticker": "KVYO",
+    "signal_date": "2026-10-20",
+    "entry_price": 19.295,
+    "source": "WSB",
+    "tp_pct": 20.0,
+    "sl_pct": 10.0,
+    "check_date": "2026-11-03"
+  },
+  {
+    "ticker": "KVYO",
+    "signal_date": "2026-10-20",
+    "entry_price": 19.815,
+    "source": "WSB",
+    "tp_pct": 20.0,
+    "sl_pct": 10.0,
+    "check_date": "2026-11-03"
   },
   {
     "ticker": "IRON",
@@ -2388,25 +2408,5 @@
     "tp_pct": 20.0,
     "sl_pct": 10.0,
     "check_date": "2026-05-22"
-  },
-  {
-    "ticker": "RIVN",
-    "signal_date": "2026-11-02",
-    "entry_price": 13.3699,
-    "source": "WSB",
-    "tp_pct": 20.0,
-    "sl_pct": 10.0,
-    "check_date": "2026-11-16"
-  },
-  {
-    "ticker": "AMZN",
-    "signal_date": "2026-11-03",
-    "entry_price": 245.63,
-    "source": "EMA200",
-    "tp_pct": 10.0,
-    "sl_pct": 5.0,
-    "check_date": "2026-11-17",
-    "rel_vol": 1.4,
-    "pct_above_ema": 0.18
   }
 ]
