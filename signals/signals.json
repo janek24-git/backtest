@@ -2408,5 +2408,14 @@
     "tp_pct": 20.0,
     "sl_pct": 10.0,
     "check_date": "2026-05-22"
+  },
+  {
+    "ticker": "IT",
+    "signal_date": "2026-11-03",
+    "entry_price": 204.26,
+    "source": "WSB",
+    "tp_pct": 20.0,
+    "sl_pct": 10.0,
+    "check_date": "2026-11-17"
   }
 ]
