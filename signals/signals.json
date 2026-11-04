@@ -1,23 +1,5 @@
 [
   {
-    "ticker": "SMCI",
-    "signal_date": "2026-10-21",
-    "entry_price": 35.81,
-    "source": "WSB",
-    "tp_pct": 20.0,
-    "sl_pct": 10.0,
-    "check_date": "2026-11-04"
-  },
-  {
-    "ticker": "SKYD",
-    "signal_date": "2026-10-21",
-    "entry_price": 7.745,
-    "source": "WSB",
-    "tp_pct": 20.0,
-    "sl_pct": 10.0,
-    "check_date": "2026-11-04"
-  },
-  {
     "ticker": "BHVN",
     "signal_date": "2026-10-22",
     "entry_price": 15.33,
@@ -117,6 +99,44 @@
     "check_date": "2026-11-17",
     "rel_vol": 1.4,
     "pct_above_ema": 0.18
+  },
+  {
+    "ticker": "IT",
+    "signal_date": "2026-11-03",
+    "entry_price": 204.26,
+    "source": "WSB",
+    "tp_pct": 20.0,
+    "sl_pct": 10.0,
+    "check_date": "2026-11-17"
+  },
+  {
+    "ticker": "AMZN",
+    "signal_date": "2026-11-04",
+    "entry_price": 245.63,
+    "source": "EMA200",
+    "tp_pct": 10.0,
+    "sl_pct": 5.0,
+    "check_date": "2026-11-18",
+    "rel_vol": 1.4,
+    "pct_above_ema": 0.17
+  },
+  {
+    "ticker": "SMCI",
+    "signal_date": "2026-10-21",
+    "entry_price": 35.81,
+    "source": "WSB",
+    "tp_pct": 20.0,
+    "sl_pct": 10.0,
+    "check_date": "2026-11-04"
+  },
+  {
+    "ticker": "SKYD",
+    "signal_date": "2026-10-21",
+    "entry_price": 7.745,
+    "source": "WSB",
+    "tp_pct": 20.0,
+    "sl_pct": 10.0,
+    "check_date": "2026-11-04"
   },
   {
     "ticker": "KVYO",
@@ -2408,25 +2428,5 @@
     "tp_pct": 20.0,
     "sl_pct": 10.0,
     "check_date": "2026-05-22"
-  },
-  {
-    "ticker": "IT",
-    "signal_date": "2026-11-03",
-    "entry_price": 204.26,
-    "source": "WSB",
-    "tp_pct": 20.0,
-    "sl_pct": 10.0,
-    "check_date": "2026-11-17"
-  },
-  {
-    "ticker": "AMZN",
-    "signal_date": "2026-11-04",
-    "entry_price": 245.63,
-    "source": "EMA200",
-    "tp_pct": 10.0,
-    "sl_pct": 5.0,
-    "check_date": "2026-11-18",
-    "rel_vol": 1.4,
-    "pct_above_ema": 0.17
   }
 ]
