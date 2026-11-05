@@ -2437,5 +2437,16 @@
     "tp_pct": 20.0,
     "sl_pct": 10.0,
     "check_date": "2026-11-18"
+  },
+  {
+    "ticker": "NVDA",
+    "signal_date": "2026-11-05",
+    "entry_price": 206.69,
+    "source": "EMA200",
+    "tp_pct": 10.0,
+    "sl_pct": 5.0,
+    "check_date": "2026-11-19",
+    "rel_vol": 0.91,
+    "pct_above_ema": 1.01
   }
 ]
