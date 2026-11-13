@@ -2502,5 +2502,14 @@
     "tp_pct": 20.0,
     "sl_pct": 10.0,
     "check_date": "2026-05-22"
+  },
+  {
+    "ticker": "CBRS",
+    "signal_date": "2026-11-13",
+    "entry_price": 105.63,
+    "source": "WSB",
+    "tp_pct": 20.0,
+    "sl_pct": 10.0,
+    "check_date": "2026-11-27"
   }
 ]
