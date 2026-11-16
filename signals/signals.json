@@ -1,14 +1,5 @@
 [
   {
-    "ticker": "RIVN",
-    "signal_date": "2026-11-02",
-    "entry_price": 13.3699,
-    "source": "WSB",
-    "tp_pct": 20.0,
-    "sl_pct": 10.0,
-    "check_date": "2026-11-16"
-  },
-  {
     "ticker": "AMZN",
     "signal_date": "2026-11-03",
     "entry_price": 245.63,
@@ -112,6 +103,24 @@
     "tp_pct": 20.0,
     "sl_pct": 10.0,
     "check_date": "2026-11-26"
+  },
+  {
+    "ticker": "CBRS",
+    "signal_date": "2026-11-13",
+    "entry_price": 105.63,
+    "source": "WSB",
+    "tp_pct": 20.0,
+    "sl_pct": 10.0,
+    "check_date": "2026-11-27"
+  },
+  {
+    "ticker": "RIVN",
+    "signal_date": "2026-11-02",
+    "entry_price": 13.3699,
+    "source": "WSB",
+    "tp_pct": 20.0,
+    "sl_pct": 10.0,
+    "check_date": "2026-11-16"
   },
   {
     "ticker": "RIVN",
@@ -2502,14 +2511,5 @@
     "tp_pct": 20.0,
     "sl_pct": 10.0,
     "check_date": "2026-05-22"
-  },
-  {
-    "ticker": "CBRS",
-    "signal_date": "2026-11-13",
-    "entry_price": 105.63,
-    "source": "WSB",
-    "tp_pct": 20.0,
-    "sl_pct": 10.0,
-    "check_date": "2026-11-27"
   }
 ]
