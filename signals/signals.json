@@ -1,25 +1,5 @@
 [
   {
-    "ticker": "AMZN",
-    "signal_date": "2026-11-04",
-    "entry_price": 245.63,
-    "source": "EMA200",
-    "tp_pct": 10.0,
-    "sl_pct": 5.0,
-    "check_date": "2026-11-18",
-    "rel_vol": 1.4,
-    "pct_above_ema": 0.17
-  },
-  {
-    "ticker": "DUOL",
-    "signal_date": "2026-11-04",
-    "entry_price": 167.61,
-    "source": "WSB",
-    "tp_pct": 20.0,
-    "sl_pct": 10.0,
-    "check_date": "2026-11-18"
-  },
-  {
     "ticker": "NVDA",
     "signal_date": "2026-11-05",
     "entry_price": 206.69,
@@ -101,6 +81,46 @@
     "tp_pct": 20.0,
     "sl_pct": 10.0,
     "check_date": "2026-11-30"
+  },
+  {
+    "ticker": "SLS",
+    "signal_date": "2026-11-17",
+    "entry_price": 19.55,
+    "source": "WSB",
+    "tp_pct": 20.0,
+    "sl_pct": 10.0,
+    "check_date": "2026-12-01"
+  },
+  {
+    "ticker": "SLS",
+    "signal_date": "2026-11-18",
+    "entry_price": 19.15,
+    "source": "EMA200",
+    "tp_pct": 10.0,
+    "sl_pct": 5.0,
+    "check_date": "2026-12-02",
+    "rel_vol": 15.69,
+    "pct_above_ema": 110.52
+  },
+  {
+    "ticker": "AMZN",
+    "signal_date": "2026-11-04",
+    "entry_price": 245.63,
+    "source": "EMA200",
+    "tp_pct": 10.0,
+    "sl_pct": 5.0,
+    "check_date": "2026-11-18",
+    "rel_vol": 1.4,
+    "pct_above_ema": 0.17
+  },
+  {
+    "ticker": "DUOL",
+    "signal_date": "2026-11-04",
+    "entry_price": 167.61,
+    "source": "WSB",
+    "tp_pct": 20.0,
+    "sl_pct": 10.0,
+    "check_date": "2026-11-18"
   },
   {
     "ticker": "AMZN",
@@ -2520,25 +2540,5 @@
     "tp_pct": 20.0,
     "sl_pct": 10.0,
     "check_date": "2026-05-22"
-  },
-  {
-    "ticker": "SLS",
-    "signal_date": "2026-11-17",
-    "entry_price": 19.55,
-    "source": "WSB",
-    "tp_pct": 20.0,
-    "sl_pct": 10.0,
-    "check_date": "2026-12-01"
-  },
-  {
-    "ticker": "SLS",
-    "signal_date": "2026-11-18",
-    "entry_price": 19.15,
-    "source": "EMA200",
-    "tp_pct": 10.0,
-    "sl_pct": 5.0,
-    "check_date": "2026-12-02",
-    "rel_vol": 15.69,
-    "pct_above_ema": 110.52
   }
 ]
