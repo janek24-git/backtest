@@ -2529,5 +2529,16 @@
     "tp_pct": 20.0,
     "sl_pct": 10.0,
     "check_date": "2026-12-01"
+  },
+  {
+    "ticker": "SLS",
+    "signal_date": "2026-11-18",
+    "entry_price": 19.15,
+    "source": "EMA200",
+    "tp_pct": 10.0,
+    "sl_pct": 5.0,
+    "check_date": "2026-12-02",
+    "rel_vol": 15.69,
+    "pct_above_ema": 110.52
   }
 ]
