@@ -1,25 +1,5 @@
 [
   {
-    "ticker": "NVDA",
-    "signal_date": "2026-11-05",
-    "entry_price": 206.69,
-    "source": "EMA200",
-    "tp_pct": 10.0,
-    "sl_pct": 5.0,
-    "check_date": "2026-11-19",
-    "rel_vol": 0.91,
-    "pct_above_ema": 1.01
-  },
-  {
-    "ticker": "WRBY",
-    "signal_date": "2026-11-05",
-    "entry_price": 26.495,
-    "source": "WSB",
-    "tp_pct": 20.0,
-    "sl_pct": 10.0,
-    "check_date": "2026-11-19"
-  },
-  {
     "ticker": "IREN",
     "signal_date": "2026-11-06",
     "entry_price": 21.5022,
@@ -101,6 +81,35 @@
     "check_date": "2026-12-02",
     "rel_vol": 15.69,
     "pct_above_ema": 110.52
+  },
+  {
+    "ticker": "BLSH",
+    "signal_date": "2026-11-18",
+    "entry_price": 21.735,
+    "source": "WSB",
+    "tp_pct": 20.0,
+    "sl_pct": 10.0,
+    "check_date": "2026-12-02"
+  },
+  {
+    "ticker": "NVDA",
+    "signal_date": "2026-11-05",
+    "entry_price": 206.69,
+    "source": "EMA200",
+    "tp_pct": 10.0,
+    "sl_pct": 5.0,
+    "check_date": "2026-11-19",
+    "rel_vol": 0.91,
+    "pct_above_ema": 1.01
+  },
+  {
+    "ticker": "WRBY",
+    "signal_date": "2026-11-05",
+    "entry_price": 26.495,
+    "source": "WSB",
+    "tp_pct": 20.0,
+    "sl_pct": 10.0,
+    "check_date": "2026-11-19"
   },
   {
     "ticker": "AMZN",
@@ -2540,14 +2549,5 @@
     "tp_pct": 20.0,
     "sl_pct": 10.0,
     "check_date": "2026-05-22"
-  },
-  {
-    "ticker": "BLSH",
-    "signal_date": "2026-11-18",
-    "entry_price": 21.735,
-    "source": "WSB",
-    "tp_pct": 20.0,
-    "sl_pct": 10.0,
-    "check_date": "2026-12-02"
   }
 ]
