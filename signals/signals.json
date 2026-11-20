@@ -1,14 +1,5 @@
 [
   {
-    "ticker": "IREN",
-    "signal_date": "2026-11-06",
-    "entry_price": 21.5022,
-    "source": "WSB",
-    "tp_pct": 20.0,
-    "sl_pct": 10.0,
-    "check_date": "2026-11-20"
-  },
-  {
     "ticker": "IBRX",
     "signal_date": "2026-11-09",
     "entry_price": 7.1799,
@@ -90,6 +81,35 @@
     "tp_pct": 20.0,
     "sl_pct": 10.0,
     "check_date": "2026-12-02"
+  },
+  {
+    "ticker": "SLS",
+    "signal_date": "2026-11-19",
+    "entry_price": 14.76,
+    "source": "WSB",
+    "tp_pct": 20.0,
+    "sl_pct": 10.0,
+    "check_date": "2026-12-03"
+  },
+  {
+    "ticker": "SQQQ",
+    "signal_date": "2026-11-20",
+    "entry_price": 49.42,
+    "source": "EMA200",
+    "tp_pct": 10.0,
+    "sl_pct": 5.0,
+    "check_date": "2026-12-04",
+    "rel_vol": 1.52,
+    "pct_above_ema": 1.29
+  },
+  {
+    "ticker": "IREN",
+    "signal_date": "2026-11-06",
+    "entry_price": 21.5022,
+    "source": "WSB",
+    "tp_pct": 20.0,
+    "sl_pct": 10.0,
+    "check_date": "2026-11-20"
   },
   {
     "ticker": "NVDA",
@@ -2549,25 +2569,5 @@
     "tp_pct": 20.0,
     "sl_pct": 10.0,
     "check_date": "2026-05-22"
-  },
-  {
-    "ticker": "SLS",
-    "signal_date": "2026-11-19",
-    "entry_price": 14.76,
-    "source": "WSB",
-    "tp_pct": 20.0,
-    "sl_pct": 10.0,
-    "check_date": "2026-12-03"
-  },
-  {
-    "ticker": "SQQQ",
-    "signal_date": "2026-11-20",
-    "entry_price": 49.42,
-    "source": "EMA200",
-    "tp_pct": 10.0,
-    "sl_pct": 5.0,
-    "check_date": "2026-12-04",
-    "rel_vol": 1.52,
-    "pct_above_ema": 1.29
   }
 ]
