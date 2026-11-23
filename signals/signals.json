@@ -1,14 +1,5 @@
 [
   {
-    "ticker": "IBRX",
-    "signal_date": "2026-11-09",
-    "entry_price": 7.1799,
-    "source": "WSB",
-    "tp_pct": 20.0,
-    "sl_pct": 10.0,
-    "check_date": "2026-11-23"
-  },
-  {
     "ticker": "HIMS",
     "signal_date": "2026-11-10",
     "entry_price": 18.71,
@@ -101,6 +92,35 @@
     "check_date": "2026-12-04",
     "rel_vol": 1.52,
     "pct_above_ema": 1.29
+  },
+  {
+    "ticker": "GAP",
+    "signal_date": "2026-11-20",
+    "entry_price": 21.135,
+    "source": "WSB",
+    "tp_pct": 20.0,
+    "sl_pct": 10.0,
+    "check_date": "2026-12-04"
+  },
+  {
+    "ticker": "VXX",
+    "signal_date": "2026-11-21",
+    "entry_price": 27.31,
+    "source": "EMA200",
+    "tp_pct": 10.0,
+    "sl_pct": 5.0,
+    "check_date": "2026-12-05",
+    "rel_vol": 2.83,
+    "pct_above_ema": 13.16
+  },
+  {
+    "ticker": "IBRX",
+    "signal_date": "2026-11-09",
+    "entry_price": 7.1799,
+    "source": "WSB",
+    "tp_pct": 20.0,
+    "sl_pct": 10.0,
+    "check_date": "2026-11-23"
   },
   {
     "ticker": "IREN",
@@ -2569,25 +2589,5 @@
     "tp_pct": 20.0,
     "sl_pct": 10.0,
     "check_date": "2026-05-22"
-  },
-  {
-    "ticker": "GAP",
-    "signal_date": "2026-11-20",
-    "entry_price": 21.135,
-    "source": "WSB",
-    "tp_pct": 20.0,
-    "sl_pct": 10.0,
-    "check_date": "2026-12-04"
-  },
-  {
-    "ticker": "VXX",
-    "signal_date": "2026-11-21",
-    "entry_price": 27.31,
-    "source": "EMA200",
-    "tp_pct": 10.0,
-    "sl_pct": 5.0,
-    "check_date": "2026-12-05",
-    "rel_vol": 2.83,
-    "pct_above_ema": 13.16
   }
 ]
