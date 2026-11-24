@@ -2598,5 +2598,38 @@
     "tp_pct": 20.0,
     "sl_pct": 10.0,
     "check_date": "2026-12-07"
+  },
+  {
+    "ticker": "AMZN",
+    "signal_date": "2026-11-24",
+    "entry_price": 255.39,
+    "source": "EMA200",
+    "tp_pct": 10.0,
+    "sl_pct": 5.0,
+    "check_date": "2026-12-08",
+    "rel_vol": 1.0,
+    "pct_above_ema": 3.22
+  },
+  {
+    "ticker": "HPE",
+    "signal_date": "2026-11-24",
+    "entry_price": 48.02,
+    "source": "EMA200",
+    "tp_pct": 10.0,
+    "sl_pct": 5.0,
+    "check_date": "2026-12-08",
+    "rel_vol": 3.03,
+    "pct_above_ema": 6.08
+  },
+  {
+    "ticker": "XLU",
+    "signal_date": "2026-11-24",
+    "entry_price": 43.32,
+    "source": "EMA200",
+    "tp_pct": 10.0,
+    "sl_pct": 5.0,
+    "check_date": "2026-12-08",
+    "rel_vol": 1.5,
+    "pct_above_ema": 0.81
   }
 ]
