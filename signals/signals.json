@@ -1,14 +1,5 @@
 [
   {
-    "ticker": "CBRS",
-    "signal_date": "2026-11-13",
-    "entry_price": 105.63,
-    "source": "WSB",
-    "tp_pct": 20.0,
-    "sl_pct": 10.0,
-    "check_date": "2026-11-27"
-  },
-  {
     "ticker": "CGON",
     "signal_date": "2026-11-16",
     "entry_price": 84.45,
@@ -145,6 +136,24 @@
     "tp_pct": 20.0,
     "sl_pct": 10.0,
     "check_date": "2026-12-09"
+  },
+  {
+    "ticker": "RKT",
+    "signal_date": "2026-11-26",
+    "entry_price": 15.3,
+    "source": "WSB",
+    "tp_pct": 20.0,
+    "sl_pct": 10.0,
+    "check_date": "2026-12-10"
+  },
+  {
+    "ticker": "CBRS",
+    "signal_date": "2026-11-13",
+    "entry_price": 105.63,
+    "source": "WSB",
+    "tp_pct": 20.0,
+    "sl_pct": 10.0,
+    "check_date": "2026-11-27"
   },
   {
     "ticker": "LUNR",
@@ -2649,14 +2658,5 @@
     "tp_pct": 20.0,
     "sl_pct": 10.0,
     "check_date": "2026-05-22"
-  },
-  {
-    "ticker": "RKT",
-    "signal_date": "2026-11-26",
-    "entry_price": 15.3,
-    "source": "WSB",
-    "tp_pct": 20.0,
-    "sl_pct": 10.0,
-    "check_date": "2026-12-10"
   }
 ]
